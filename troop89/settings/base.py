@@ -37,7 +37,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     # Internal apps
-    # *crickets*
+    'troop89.auth.apps.AuthConfig',
 
     # Third party apps
     # *crickets*
@@ -126,3 +126,5 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "../assets"),
 )
 
+# User auth model
+AUTH_USER_MODEL = 'troop89_auth.User'
