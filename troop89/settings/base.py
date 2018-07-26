@@ -16,8 +16,10 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+_secrets_default = os.path.join(BASE_DIR, '../.secrets.json')
+
 # Load local settings that we don't like to talk about
-with open(os.path.join(BASE_DIR, '../.secrets.json')) as secrets_file:
+with open(os.getenv('DJANGO_SETTINGS_SECRETS', _secrets_default)) as secrets_file:
     SECRETS = json.load(secrets_file)
 
 # Quick-start development settings - unsuitable for production
@@ -119,6 +121,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
+
+STATIC_ROOT = os.path.join(BASE_DIR, "../static")
 
 STATIC_URL = '/static/'
 
