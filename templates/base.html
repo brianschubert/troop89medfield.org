@@ -1,0 +1,46 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="{% block html_language_code %}en-US{% endblock %}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ROBOTS" content="ALL"/>
+    <meta name="Copyright" content="Brian Schubert"/>
+    <meta name="author" content="Brian Schubert"/>
+    <meta name="keywords" content="Troop 89, Boy Scouts, Medfield"/>
+    <meta name="description"
+          content="{% block description %}Boy Scouts of America Troop 89 - Medfield, Massachusetts{% endblock %}"/>
+
+    <title>{% block title %}Medfield Scouting{% endblock %} | Troop 89</title>
+
+    <link rel="stylesheet" type="text/css" href="{% static "css/output.css" %}">
+    {% block stylesheets %}{% endblock %}{# Incase subtemples need to add their own specicialized style sheets e.g. holiday theme #}
+
+</head>
+
+<body id="{% block body_id %}{% endblock %}" class="{% block body_class %}default{% endblock %}">
+
+{% block site_header %}
+    {% include "includes/header.html" %}
+{% endblock %}
+
+<div class="info-banner">
+    <div class="container">
+        {% block info_banner %}
+        {% endblock %}
+    </div>
+</div>
+
+
+{% block content %}
+    <div class="container">
+        {% include "includes/lorem_ipsum.html" %}
+    </div>
+{% endblock %}
+
+{% block site_footer %}
+    {% include "includes/footer.html" %}
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,89 @@
+// Utility mixins and color definitions
+
+// Colors
+
+$palm_green: #213B2B;
+$forest_green: #0C3C26;
+$tolopea: #231836;
+$grey_tan: #E2E2D1;
+$rum_swizzle: #EEE7CD;
+$tan: #F4F2E6;
+$pale_tan: #FBFAF4;
+$grey_grey_green: #8F9A8D;
+
+$colors: (
+    text: $forest_green,
+    banner: $palm_green,
+    fleur: $tolopea,
+    info_banner: $rum_swizzle,
+    background: $pale_tan,
+    sidebar: $tan,
+    body: $pale_tan,
+    rule: $grey_grey_green,
+    header_link: lighten($forest_green, 5%),
+    footer_text: $grey_grey_green,
+    content_lip: $grey_tan,
+);
+
+// Adapted from https://www.sitepoint.com/using-sass-maps/
+@function get_color($key) {
+  @if map-has-key($colors, $key) {
+    @return map-get($colors, $key);
+  }
+
+  @error "Color `#{$key}` is not defined";
+  @return null;
+}
+
+// Font Family Mixins, acquired from djangoproject.com
+@mixin serif {
+  font-family: Palatino, "Palatino Linotype", "Book Antiqua", "Hoefler Text", Georgia, "Lucida Bright", Cambria, Times, "Times New Roman", serif;
+}
+
+@mixin sans-serif {
+  font-family: "Roboto", Corbel, Avenir, "Lucida Grande", "Lucida Sans", sans-serif;
+}
+
+// Media query breaks
+// Inspired by http://thesassway.com/intermediate/responsive-web-design-in-sass-using-media-queries-in-sass-32
+
+$break-small: 768px;
+$break-large: 1400px;
+
+@mixin respond-above($width) {
+  @if type_of($width) != number {
+    @error "Width must be a valid dimension"
+  }
+  @media screen and (min-width: $width) {
+    @content;
+  }
+}
+
+@mixin respond-below($width) {
+  @if type_of($width) != number {
+    @error "Width must be a valid dimension"
+  }
+  @media screen and (max-width: $width) {
+    @content;
+  }
+}
+
+// Font size mixin
+// Adapted from https://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
+@mixin font-size($size: 16) {
+  font-size: $size + px; /* px-based Backup for IE8 and below */
+  font-size: ($size / 10) + rem;
+}
+
+// Generic clearfix.
+//
+// A note to future maintainers:
+// If you don't understand why the below has been implemented, you may
+// want to google around for "float extend to bottom".
+@mixin clearfix {
+  content: "";
+  clear: both;
+  display: table;
+  visibility: hidden;
+}
+

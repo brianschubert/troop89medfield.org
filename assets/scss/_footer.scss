@@ -1,0 +1,145 @@
+body > footer {
+  @include font-size(14);
+  padding-top: 40px;
+
+  .transition {
+    padding: 20px 0;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0), get_color(info_banner));
+  }
+
+  .sock {
+    background: get_color(info_banner);
+
+    padding: {
+      top: 8px;
+      bottom: 20px;
+    }
+
+    .ramble {
+      vertical-align: top;
+
+      p {
+        margin: 10px 8px;
+      }
+
+      @include respond-above($break-small) {
+        display: inline-block;
+        width: (100%* 3/8);
+      }
+    }
+
+    .map {
+      display: inline-block;
+      width: 100%;
+
+      @include respond-above($break-small) {
+        border-left: 1px solid get_color(rule);
+        padding-left: 5%;
+        box-sizing: border-box;
+        width: (100% * 5/8);
+      }
+
+      h2 {
+        @include font-size(20);
+        margin: 0;
+      }
+
+      ul {
+        margin-top: 0;
+        padding-left: 0;
+      }
+
+      li {
+        list-style: none;
+        a {
+          text-decoration: none;
+        }
+      }
+
+      .column {
+        @include respond-above($break-small) {
+          vertical-align: top;
+          display: inline-block;
+          width: (100% * 1/3);
+        }
+
+        @include respond-below($break-small) {
+          &:not(:last-child) {
+            border-bottom: 1px solid get_color(rule);
+          }
+        }
+      }
+
+    }
+  }
+
+  .shoe {
+    background: get_color(banner);
+    padding: 20px 0;
+
+    p {
+      margin-top: 0;
+      margin-bottom: 5px;
+      color: get_color(footer_text);
+      text-align: center;
+    }
+
+    ul.acknowledgements {
+      padding-left: 0;
+      margin: 0;
+
+      li {
+        margin-top: 5px;
+        margin-bottom: 25px;
+
+        @include respond-above($break-small) {
+          margin-top: 20px;
+          margin-bottom: 35px;
+          vertical-align: top;
+          box-sizing: border-box;
+          display: inline-block;
+          width: (100% * 1/3);
+        }
+
+        a {
+          display: block;
+          width: 100%;
+          margin: auto;
+
+          &.bsa-logo {
+            height: 60px;
+          }
+
+          &.bsa-logo {
+            height: 50px;
+          }
+
+          &.django-logo {
+            height: 30px;
+            @include respond-above($break-small) {
+              height: 50px;
+            }
+          }
+
+          &.webfaction-logo {
+            margin-top: 5px;
+            height: 20px;
+            @include respond-above($break-small) {
+              margin-top: 10px; // to align with Django logo
+              height: 30px;
+            }
+          }
+        }
+
+        img {
+          text-align: center; // for alt text
+          display: block;
+          margin: auto;
+          height: 100%;
+          width: auto;
+        }
+      }
+
+    }
+  }
+}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block info_banner %}
+    <h1> Binary Template </h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container content content-binary">
+        <main>
+            {% block content_main %} {% include "includes/lorem_ipsum.html" %} {% endblock %}
+        </main>
+        <div class="sidebar">
+            {% block content_sidebar %} {% include "includes/lorem_ipsum_short.html" %} {% endblock %}
+        </div>
+    </div>
+{% endblock %}

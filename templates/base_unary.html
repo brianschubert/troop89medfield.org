@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block info_banner %}
+    <h1> Unary Template </h1>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="content content-unary">
+            <main>
+                {% block content_main %} {% include "includes/lorem_ipsum.html" %}{% endblock %}
+            </main>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% load staticfiles %}
+
+<footer>{% spaceless %} {# note: spaceless is is used here to prevent whitespace element from breaking column layouts #}
+    <div class="transition"></div>
+    <div class="sock">
+        <div class="container">
+            <div class="ramble">
+                <p>{% lorem 40 w random %}</p>
+            </div>
+            <div class="map">
+                <div class="column">
+                    <h2> See Also </h2>
+                    <ul>
+                        <li><a href="https://www.troop10medfield.org/">Troop 10, Medfield</a></li>
+                        <li><a href="https://www.scouting.org/">Boy Scouts of America </a></li>
+                        <li><a href="https://www.mayflowerbsa.org/"> Mayflower Council </a></li>
+                        <li><a href="https://oa-bsa.org/">Order of the Arrow </a></li>
+                        <li><a href="https://www.mayflowerbsa.org/program/activities/tantamous-lodge/">
+                            Tantamous Lodge
+                        </a></li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h2> More Info </h2>
+                    <ul>
+                        <li><a href="#">Joining</a></li>
+                        <li><a href="#">About the Troop</a></li>
+                        <li><a href="#">About this Site</a></li>
+                        <li><a href="#">Privacy</a></li>
+                        <li><a href="#">Security</a></li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <h2> Follow the Troop </h2>
+                    <ul>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Github</a></li>
+                        <li><a href="https://twitter.com/troop89medfield">Twitter</a></li>
+                        <li><a href="#">Mailing Lists</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shoe">
+        <div class="container">
+            <ul class="acknowledgements">
+                <li>
+                    <p>Mayflower Council's Troop 89</p>
+                    <a class="bsa-logo" href="https://www.scouting.org/">
+                        <img src="{% static "img/fleur-de-lis-white-transparent.png" %}"
+                             alt="The Boy Scouts of America">
+                    </a>
+                </li>
+                <li>
+                    <p>Hosting by</p>
+                    <a class="webfaction-logo" href="https://www.webfaction.com/?aid=120145">
+                        <img src="https://www.webfaction.com/local_media/images/logo-white.png" alt="webfaction">
+                    </a>
+                </li>
+                <li>
+                    <p> Powered by </p>
+                    <a class="django-logo" href="https://www.djangoproject.com/">
+                        <img src="https://www.djangoproject.com/s/img/logos/django-logo-negative.svg" alt="django">
+                    </a>
+
+                </li>
+            </ul>
+            <p class="copyright">Boy Scouts of America's Troop 89 Medfield, Mayflower Council. Copyright &copy; 2018
+                Brian Schubert.</p>
+        </div>
+    </div>
+{% endspaceless %}</footer>

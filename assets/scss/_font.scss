@@ -1,0 +1,81 @@
+// Styling for font face, color, sizing, etc.
+// Basic font sizing was inspired by djangoproject.com. See their `_style.scss`_ file.
+//
+// .. _\_style.scss: https://github.com/django/djangoproject.com/blob/master/djangoproject/scss/_style.scss
+
+// See https://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/.
+html {
+  font-size: 62.5%;
+}
+
+body {
+  // Body font, serif
+  @include serif;
+  @include font-size(18);
+  line-height: 1.6;
+  color: get_color(text);
+}
+
+// Default formatting for anchors
+a {
+  color: get_color(text);
+  text-decoration: underline;
+
+  &:visited {
+    color: lighten(get_color(text), 10%);
+  }
+
+  &:hover, &:active, &:focus {
+    color: lighten(get_color(text), 20%);
+    outline: none;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  // Header font, sans-sherif
+  @include sans-serif;
+  font-weight: 400;
+  letter-spacing: -2px;
+
+  &:first-letter {
+    text-transform: capitalize;
+  }
+  // Anchors in headers
+  a {
+    text-decoration: none;
+    color: get_color(header_link);
+
+    &:visited {
+      color: get_color(header_link);
+    }
+
+    &:hover, &:focus {
+      color: lighten(get_color(header_link), 10%);
+    }
+  }
+}
+
+// Header 1-4 size definitions.
+// Only headers 1 - 4 are defined as header 4 is already smaller than
+// the body's font size. Going any deeper is simply not necessary.
+
+h1 {
+  @include font-size(28);
+
+  @include respond-above($break-small) {
+    @include font-size(32)
+  }
+}
+
+h2 {
+  @include font-size(24);
+
+}
+
+h3 {
+  @include font-size(20);
+}
+
+h4 {
+  @include font-size(16)
+}

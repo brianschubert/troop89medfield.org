@@ -1,0 +1,101 @@
+// Note: see https://opensource.org/licenses/Apache-2.0 for bootstrap blockquote
+
+// Known issues:
+// 1. The bottom corner of the main element or sidebar div will visibly
+// extend through the content wrapper. Possible solutions:
+//  a. Add additional padding to main element.
+//  b. Add an equivalent border radius to the sidebar div.
+
+body {
+  margin: 0;
+  background: get_color(background);
+
+  @include respond-above($break-large) {
+    background-size: cover;
+    // Omitting background image until a compressed copy is produced.
+    // background: url("../img/leaving-ring-place-2017.jpg") fixed get_color(background);
+    background-color: get_color(background);
+  }
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1400px;
+  padding: 0 4%;
+}
+
+.info-banner {
+  background: get_color(info_banner);
+  border-bottom: solid get_color(banner) 1px;
+
+  h1 {
+    margin: 0;
+    padding: 7px 0;
+    color: get_color(text);
+    letter-spacing: -2px;
+
+    &:before {
+      @include serif;
+      @include font-size(58);
+      color: get_color(fleur);
+      content: "\269C"; // fleur-de-lis
+      line-height: 0;
+      position: relative;
+      right: 8px;
+      top: 4px;
+    }
+  }
+}
+
+.content {
+  padding: 0;
+
+  background: get_color(background);
+
+  @include respond-above($break-large) {
+
+    margin-top: 2%;
+    box-shadow: 1px 1px 3px 1px get_color(banner);
+    border-top: solid get_color(content_lip) 14px; //#E2E2D1 #933441
+    border-radius: 15px;
+  }
+
+  &:after {
+    // Note: if this clearfix is removed during a restyling in the future,
+    // be sure to add a ``clear: both`` tag to the footer element. Otherwise,
+    // the footer won't be pushed to the bottom of the floating elements.
+    @include clearfix;
+  }
+}
+
+main {
+  background: get_color(body);
+  min-height: 800px;
+  padding: 0 2%;
+
+  @include respond-above($break-small) {
+
+    .content-binary & {
+      box-sizing: border-box;
+      float: left;
+      width: (100% * 2/3);
+    }
+  }
+}
+
+.sidebar {
+  @include font-size(14);
+  background: get_color(sidebar);
+  padding: 0 1%;
+
+  @include respond-above($break-small) {
+    box-sizing: border-box;
+    float: right;
+    width: (100% * 1/3);
+  }
+}
+
+section {
+  padding-bottom: 35px;
+  border-bottom: 1px solid get_color(rule);
+}
