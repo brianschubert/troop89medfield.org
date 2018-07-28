@@ -3,3 +3,4 @@ __pycache__/
 .idea/
 .secrets.json
 /static/
+/assets/css/output.css
