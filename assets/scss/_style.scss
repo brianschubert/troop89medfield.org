@@ -12,9 +12,7 @@ body {
 
   @include respond-above($break-large) {
     background-size: cover;
-    // Omitting background image until a compressed copy is produced.
-    // background: url("../img/leaving-ring-place-2017.jpg") fixed get_color(background);
-    background-color: get_color(background);
+    background: url("../img/leaving-ring-place-2017.jpg") fixed get_color(background);
   }
 }
 
