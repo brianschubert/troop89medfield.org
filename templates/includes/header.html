@@ -11,7 +11,7 @@
         <nav>
             <ul> {% spaceless %}
                 <li><a class="nav" href="#"> News </a></li>
-                <li><a class="nav" href="#"> Calendar </a></li>
+                <li><a class="nav" href="{% url "events:current-month" %}"> Calendar </a></li>
                 <li><a class="nav" href="#"> Information </a></li>
                 <li><a class="nav" href="#"> About </a></li>
             {% endspaceless %}</ul>

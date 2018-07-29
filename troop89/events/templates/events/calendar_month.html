@@ -1,0 +1,54 @@
+{% extends "events/base.html" %}
+{% load event_format %}
+
+{% block content_main %}
+    <div class="calendar">
+        <div class="nav">
+            <ul>
+                <li class="prev"><a href="{% url "events:calendar-month" previous_month.year previous_month.month %}"> </a>
+                </li>
+                <li class="next"><a href="{% url "events:calendar-month" next_month.year next_month.month %}"></a></li>
+                <li class="title">{{ calendar.title }}</li>
+            </ul>
+        </div>
+        <div class="dates">
+            {% spaceless %}{# Collapse whitespace nodes between list items #}
+                <ul class="weekdays">
+                    <li>sun</li>
+                    <li>mon</li>
+                    <li>tues</li>
+                    <li>wed</li>
+                    <li>thurs</li>
+                    <li>fri</li>
+                    <li>sat</li>
+                </ul>
+
+                <ul class="days">
+                    {% for week in calendar.events_by_month_dates %}
+                        {% for cal_day in week %}
+                            {% with cal_day.date as date %}
+                                <li class="{% if calendar.month != date.month %} othermonth {% endif %}{% if date|is_today %} today {% endif %}">
+                                    <a class="number"
+                                       href="{% url "events:event-archive-day" date.year date.month date.day %}">{{ date.day }}</a>
+                                    {% if cal_day.events %}
+                                        <ul class="events">
+                                            {% for event in cal_day.events %}
+                                                <li><a href="{% url "events:event-detail" event.start.year event.start.month event.start.day event.slug %}">
+                                                    {{ event.title|escape }} ({% event_date_overlap event date %})
+                                                </a></li>
+                                            {% endfor %}
+                                        </ul>
+                                        {% repeat_str "&compfn;" cal_day.events|length as dots %}
+                                        <span class="eventdots">{{ dots|safe }}</span>
+                                    {% endif %}
+                                </li>
+                            {% endwith %}
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            {% endspaceless %}
+        </div>
+    </div>
+{% endblock %}
+
+

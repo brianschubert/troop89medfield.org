@@ -40,6 +40,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     # Internal apps
     'troop89.auth.apps.AuthConfig',
+    'troop89.events.apps.EventsConfig',
 
     # Third party apps
     # *crickets*

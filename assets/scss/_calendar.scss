@@ -1,0 +1,221 @@
+// Rough style sheet for events/calendar layout. To be revised.
+
+main {
+  div.notice {
+    a.month {
+      text-decoration: none;
+      @include font-size(20);
+
+      &::before {
+        content: "\276E";
+        margin-right: 10px;
+      }
+    }
+  }
+
+  div.event-detail {
+    span.meta {
+      margin-top: 8px;
+      color: get_color(rule); //or #859D94;?
+    }
+  }
+
+  & > ul.events {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      &:first-child {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: none;
+      }
+
+      margin-top: 15px;
+      margin-bottom: 50px;
+      padding-top: 20px;
+      border-top: 1px solid #cccccc;
+
+    }
+  }
+
+  .calendar {
+
+    margin-top: 1%;
+    margin-bottom: 3%;
+
+    * {
+      // Required to properly render the width calendar cells.
+      box-sizing: border-box;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .nav {
+      border: 1px black solid;
+      background-color: get_color(banner);
+      border-radius: 15px 15px 0 0;
+      ul {
+        padding-left: 0;
+        list-style-type: none;
+        li {
+          font-size: 3.2rem;
+          color: white;
+
+          a {
+            padding: 20px 30px;
+            color: white;
+          }
+
+          &.prev {
+            float: left;
+            a::before {
+              content: "\276E";
+            }
+          }
+
+          &.next {
+            float: right;
+            a::after {
+              content: "\276F";
+            }
+          }
+
+          &.title {
+            @include sans-serif;
+            color: white;
+            text-align: center;
+          }
+        }
+      }
+
+    }
+
+    // Calendar body (days of week and calendar days)
+    .dates {
+      @mixin calendar-cell {
+        display: inline-block;
+        vertical-align: top;
+        width: (100% / 7);
+      }
+
+      ul {
+        padding-left: 0;
+        width: 100%;
+        margin: 0;
+
+        &.weekdays {
+          padding: 10px 0;
+          text-align: center;
+          background-color: #EEE7CD;
+
+          li {
+            @include calendar-cell;
+            @include sans-serif;
+
+            @include respond-below(500px) {
+              @include font-size(14);
+            }
+
+            &:first-letter {
+              text-transform: capitalize;
+            }
+            &::after {
+              content: ".";
+            }
+          }
+        }
+
+        &.days {
+          background-color: get_color(sidebar);
+
+          & > li {
+            @include calendar-cell;
+            margin: 0;
+            padding: 0;
+            border: 1px dashed #dcd;
+            height: 10vw;
+
+            @include sans-serif;
+
+            overflow-x: hidden;
+            overflow-y: hidden;
+
+            @include respond-above($break-small) {
+              overflow-y: auto;
+            }
+
+            &.othermonth {
+              background: #eee;
+            }
+
+            &.today {
+              // todo: register to color map
+              background-color: #A54D49;
+            }
+          }
+
+          a.number {
+            margin: 2px;
+            padding: 2px 6px;
+            display: inline-block;
+            background: #cccccc;
+            border-radius: 15px;
+
+            @include font-size(8);
+
+            @include respond-above(500px) {
+              @include font-size(12);
+              padding: 3px 10px;
+              margin: 5px;
+            }
+
+            @include respond-above(1200px) {
+              @include font-size(16);
+            }
+          }
+
+          ul.events {
+            @include respond-below($break-small) {
+              display: none;
+            }
+            li {
+              list-style-type: none;
+              a {
+                display: block;
+                background-color: ghostwhite;
+                border-radius: 15px;
+                padding: 10px 5px;
+                margin: {
+                  left: 3px;
+                  right: 3px;
+                  bottom: 3px;
+                }
+                @include font-size(11);
+                line-height: 1.2rem;
+                @include sans-serif;
+              }
+
+            }
+          }
+
+          span.eventdots {
+            display: inline-block;
+            text-align: center;
+            @include font-size(20);
+            font-weight: bold;
+            color: get_color(fleur);
+
+            @include respond-above($break-small) {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+
+  }
+}

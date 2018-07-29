@@ -1,0 +1,25 @@
+{% extends "events/base.html" %}
+{% load event_format %}
+
+{% block content_main %}
+    <div class="notice">
+        <a class="month" href="{% url "events:calendar-month" day.year day.month %}">See month</a>
+    </div>
+    {% if events %}
+        <ul class="events">
+            {% for event in events %}
+                <li>
+                    <div class="event-detail">
+                        <h2><a href="{% url "events:event-detail" event.start.year event.start.month event.start.day event.slug %}">{{ event.title }}</a></h2>
+                        <span class="meta"> {{ day }} ({% event_date_overlap event day %})</span>
+                        <p> {{ event.description|truncatewords:80 }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p> There are no events scheduled for this day.</p> {# Add link to add one if use has add perm. #}
+    {% endif %}
+{% endblock %}
+
+
