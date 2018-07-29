@@ -1,0 +1,24 @@
+{% extends "events/base.html" %}
+
+{% block content_main %}
+    <div class="notice">
+       {% block notice %}{% endblock %}
+    </div>
+    {% if events %}
+        <ul class="events">
+            {% for event in events %}
+                <li>
+                    <div class="event-detail">
+                        <h2><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h2>
+                        <span class="meta"> {% block event_meta %}{% endblock %}</span>
+                        <p> {{ event.description|truncatewords:80 }}</p>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        {% block no_event %}{% endblock %}
+    {% endif %}
+{% endblock %}
+
+

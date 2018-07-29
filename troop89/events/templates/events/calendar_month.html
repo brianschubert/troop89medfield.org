@@ -8,7 +8,7 @@
                 <li class="prev"><a href="{% url "events:calendar-month" previous_month.year previous_month.month %}"> </a>
                 </li>
                 <li class="next"><a href="{% url "events:calendar-month" next_month.year next_month.month %}"></a></li>
-                <li class="title">{{ calendar.title }}</li>
+                <li class="title"><a href="{% url "events:event-archive-month" month.year month.month %}">{{ calendar.title }}</a></li>
             </ul>
         </div>
         <div class="dates">
@@ -33,7 +33,7 @@
                                     {% if cal_day.events %}
                                         <ul class="events">
                                             {% for event in cal_day.events %}
-                                                <li><a href="{% url "events:event-detail" event.start.year event.start.month event.start.day event.slug %}">
+                                                <li><a href="{{ event.get_absolute_url }}">
                                                     {{ event.title|escape }} ({% event_date_overlap event date %})
                                                 </a></li>
                                             {% endfor %}

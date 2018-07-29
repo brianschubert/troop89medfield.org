@@ -28,7 +28,7 @@ class CalendarMonthView(generic.MonthArchiveView):
         key = date_field + '__gte'
 
         lookup[key] = self.get_previous_month(lookup[key])
-        return super().get_dated_queryset()
+        return super().get_dated_queryset(**lookup)
 
     def get_context_data(self, *, object_list=None, **kwargs):
         year = self.get_year()
@@ -41,6 +41,17 @@ class CalendarMonthView(generic.MonthArchiveView):
         context['calendar'] = calendar
 
         return context
+
+
+class EventMonthView(generic.MonthArchiveView):
+    """
+    Note: this view will only produce events that *start* in the specified month.
+    """
+    model = Event
+    allow_empty = True
+    allow_future = True
+    date_field = 'start'
+    context_object_name = 'events'
 
 
 class EventDayView(generic.DayArchiveView):

@@ -26,5 +26,10 @@ urlpatterns = [
         'currentmonth/',
         views.RedirectCurrentMonth.as_view(),
         name='current-month'
-    )
+    ),
+    path(
+        '<int:year>/<int:month>/events',
+        views.EventMonthView.as_view(month_format=MONTH_FORMAT),
+        name='event-archive-month'
+    ),
 ]

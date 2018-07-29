@@ -1,0 +1,14 @@
+{% extends "events/event_archive_base.html" %}
+{% load event_format %}
+
+{% block notice %}
+    <a class="month" href="{% url "events:calendar-month" month.year month.month %}">See month</a>
+{% endblock %}
+
+{% block event_meta %}
+    {{ event.start }} - {{ event.end }}
+{% endblock %}
+
+{% block no_event %}
+    <p> There are no events scheduled to start in this month.</p> {# Add link to add one if use has add perm. #}
+{% endblock %}
