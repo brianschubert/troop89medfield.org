@@ -33,17 +33,6 @@ body {
     padding: 7px 0;
     color: get_color(text);
     letter-spacing: -2px;
-
-    &:before {
-      @include serif;
-      @include font-size(58);
-      color: get_color(fleur);
-      content: "\269C"; // fleur-de-lis
-      line-height: 0;
-      position: relative;
-      right: 8px;
-      top: 4px;
-    }
   }
 }
 
