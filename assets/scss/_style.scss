@@ -75,7 +75,9 @@ main {
 .sidebar {
   @include font-size(14);
   background: get_color(sidebar);
-  padding: 0 1%;
+  // 1px bottom padding is required to prevent a gap between the sidebar
+  // and the foot on mobile devices.
+  padding: 0 1% 1px;
 
   @include respond-above($break-small) {
     box-sizing: border-box;
