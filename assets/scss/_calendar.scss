@@ -53,6 +53,16 @@ main {
     span.meta {
       margin-top: 8px;
       color: get_color(rule); //or #859D94;?
+
+      a {
+        text-decoration: none;
+
+        color: get_color(rule);
+
+        &:hover, &:active, &:focus {
+          color: darken(get_color(rule), 20%);
+        }
+      }
     }
   }
 
