@@ -1,6 +1,8 @@
 {% extends "events/event_archive_base.html" %}
 {% load event_format %}
 
+{% block title %}{{ day|date:"F d Y" }} Events{% endblock %}
+
 {% block notice %}
     <div class="notice">
         <ul class="nav">{% spaceless %}

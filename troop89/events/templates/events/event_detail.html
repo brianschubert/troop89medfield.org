@@ -1,7 +1,11 @@
 {% extends "events/base.html" %}
 {% load event_format %}
 
+{% block title %}{{ event.title }}{% endblock %}
 
+{% block info_banner %}
+<h1>Event Details</h1>
+{% endblock %}
 
 {% block content_main %}
     <div class="notice">

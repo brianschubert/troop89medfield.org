@@ -1,6 +1,8 @@
 {% extends "events/base.html" %}
 {% load event_format %}
 
+{% block title %}{{ month|date:"F Y" }} Calendar{% endblock %}
+
 {% block content_main %}
     <div class="calendar">
         <div class="nav">
