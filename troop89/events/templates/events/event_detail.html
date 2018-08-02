@@ -1,9 +1,11 @@
 {% extends "events/base.html" %}
 {% load event_format %}
 
+
+
 {% block content_main %}
     <div class="notice">
-        {# todo: add stuff here #}
+        <a href="{% url "events:calendar-month" event.start.year event.start.month%}"> See calendar</a>
     </div>
     <div class="event-detail">
         <h2>{{ event.title }}</h2>

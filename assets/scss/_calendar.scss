@@ -2,25 +2,61 @@
 
 main {
   div.notice {
-    a.month {
-      text-decoration: none;
-      @include font-size(20);
+    margin-top: 10px;
+    padding: 0 10px;
+    background-color: get_color(sidebar);
+    border-radius: 10px;
 
-      &::before {
-        content: "\276E";
-        margin-right: 10px;
+    ul.nav {
+      padding-left: 0;
+      margin: 5px 0;
+
+      li {
+        margin: 0;
+        box-sizing: border-box;
+        display: inline-block;
+        width: (100% * 1/ 3);
+
+        a {
+          display: block;
+          text-decoration: none;
+          @include font-size(20);
+        }
+
+        &.prev a {
+          text-align: left;
+          &::before {
+            content: "\276E";
+            margin-right: 10px;
+          }
+        }
+
+        &.current a {
+
+          text-align: center;
+        }
+
+        &.next a {
+          text-align: right;
+          &::after {
+            content: "\276F";
+            margin-left: 10px;
+          }
+        }
+
       }
     }
   }
 
   div.event-detail {
+    // Styling for event archive lists and event detail pages
     span.meta {
       margin-top: 8px;
       color: get_color(rule); //or #859D94;?
     }
   }
 
-  & > ul.events {
+  ul.event-archive {
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -35,34 +71,28 @@ main {
       margin-top: 15px;
       margin-bottom: 50px;
       padding-top: 20px;
-      border-top: 1px solid #cccccc;
+      border-top: 1px solid get_color(rule);
 
     }
   }
 
   .calendar {
-
     margin-top: 1%;
-    margin-bottom: 3%;
-
-    * {
-      // Required to properly render the width calendar cells.
-      box-sizing: border-box;
-    }
 
     a {
       text-decoration: none;
     }
 
     .nav {
-      border: 1px black solid;
       background-color: get_color(banner);
+      border: 1px black solid;
       border-radius: 15px 15px 0 0;
+
       ul {
         padding-left: 0;
         list-style-type: none;
         li {
-          font-size: 3.2rem;
+          @include font-size(32);
           color: white;
 
           a {
@@ -97,6 +127,7 @@ main {
     // Calendar body (days of week and calendar days)
     .dates {
       @mixin calendar-cell {
+        box-sizing: border-box;
         display: inline-block;
         vertical-align: top;
         width: (100% / 7);
@@ -104,13 +135,12 @@ main {
 
       ul {
         padding-left: 0;
-        width: 100%;
         margin: 0;
 
         &.weekdays {
           padding: 10px 0;
           text-align: center;
-          background-color: #EEE7CD;
+          background-color: get_color(info_banner);
 
           li {
             @include calendar-cell;
@@ -136,7 +166,9 @@ main {
             @include calendar-cell;
             margin: 0;
             padding: 0;
+            // todo: add to color map
             border: 1px dashed #dcd;
+            // vary height with width
             height: 10vw;
 
             @include sans-serif;
@@ -153,7 +185,7 @@ main {
             }
 
             &.today {
-              // todo: register to color map
+              // todo: add to color map
               background-color: #A54D49;
             }
           }
@@ -182,10 +214,12 @@ main {
             @include respond-below($break-small) {
               display: none;
             }
+
             li {
               list-style-type: none;
               a {
                 display: block;
+                // todo: use theme color
                 background-color: ghostwhite;
                 border-radius: 15px;
                 padding: 10px 5px;
@@ -203,6 +237,7 @@ main {
           }
 
           span.eventdots {
+            // todo: refine dot rendering to be a practical alternative to showing full events
             display: inline-block;
             text-align: center;
             @include font-size(20);

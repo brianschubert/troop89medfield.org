@@ -2,7 +2,14 @@
 {% load event_format %}
 
 {% block notice %}
-    <a class="month" href="{% url "events:calendar-month" day.year day.month %}">See month</a>
+    <div class="notice">
+        <ul class="nav">{% spaceless %}
+        <li class="prev"><a href="{% url "events:event-archive-day" previous_day.year previous_day.month previous_day.day%}">Previous day</a></li>
+        <li class="current"><a  href="{% url "events:calendar-month" day.year day.month %}">See calendar</a></li>
+        <li class="next"><a href="{% url "events:event-archive-day" next_day.year next_day.month next_day.day%}">Next day</a></li>
+    {% endspaceless %}</ul>
+    </div>
+    <h1>{{ day|date:"F d Y" }} events</h1>
 {% endblock %}
 
 {% block event_meta %}
