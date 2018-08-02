@@ -58,11 +58,11 @@ body {
 
 main {
   background: get_color(body);
-  min-height: 800px;
   padding: 0 2%;
 
   @include respond-above($break-small) {
     margin-bottom: 2%;
+    min-height: 800px;
     .content-binary & {
       box-sizing: border-box;
       float: left;
