@@ -6,13 +6,17 @@ from .models import Event
 from .util import EventCalendar
 
 
-class CalendarMonthView(MonthDateRangeView):
+class EventMonthView(MonthDateRangeView):
     model = Event
     allow_empty = True
     allow_future = True
-    template_name = 'events/calendar_month.html'
     date_field_start = 'start'
     date_field_end = 'end'
+    context_object_name = 'events'
+
+
+class CalendarMonthView(EventMonthView):
+    template_name = 'events/calendar_month.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         year = self.get_year()
@@ -25,15 +29,6 @@ class CalendarMonthView(MonthDateRangeView):
         context['calendar'] = calendar
 
         return context
-
-
-class EventMonthView(MonthDateRangeView):
-    model = Event
-    allow_empty = True
-    allow_future = True
-    date_field_start = 'start'
-    date_field_end = 'end'
-    context_object_name = 'events'
 
 
 class EventDayView(DayDateRangeView):
