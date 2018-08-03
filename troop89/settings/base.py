@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'troop89.auth.apps.AuthConfig',
     'troop89.events.apps.EventsConfig',
     'troop89.date_range.apps.DateRangeConfig',
+    'troop89.trooporg.apps.TroopOrgConfig',
 
     # Third party apps
     # *crickets*
