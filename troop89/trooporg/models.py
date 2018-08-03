@@ -28,19 +28,10 @@ class Patrol(models.Model):
 
     date_created = models.DateField(default=datetime.date.today)
 
-    date_retired = models.DateField(null=True, blank=True)
-
     members = models.ManyToManyField(ScoutMembership, through='PatrolMembership')
 
     def __str__(self):
         return "{} Patrol".format(self.name)
-
-    @property
-    def is_active(self) -> bool:
-        return self.date_retired is None or self.active_on(datetime.date.today())
-
-    def active_on(self, day: datetime.date) -> bool:
-        return self.date_created <= day < self.date_retired
 
 
 class PatrolMembership(models.Model):
