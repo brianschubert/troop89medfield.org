@@ -17,3 +17,5 @@ class ScoutMembershipAdmin(admin.ModelAdmin):
 class PatrolAdmin(admin.ModelAdmin):
     inlines = (PatrolMembershipInline,)
 
+    list_display = ('name', 'date_created', 'is_active')
+

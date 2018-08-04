@@ -2,6 +2,7 @@ import datetime
 
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -20,6 +21,15 @@ class ScoutMembership(models.Model):
         return self.user.username
 
 
+class PatrolQuerySet(models.QuerySet):
+    def active(self):
+        today = datetime.date.today()
+        return self.filter(
+            Q(memberships__date_expired__isnull=True) | Q(memberships__date_expired__gt=today),
+            memberships__date_joined__lte=today
+        )
+
+
 class Patrol(models.Model):
     """
     A scout patrol.
@@ -30,8 +40,18 @@ class Patrol(models.Model):
 
     members = models.ManyToManyField(ScoutMembership, through='PatrolMembership')
 
+    objects = PatrolQuerySet.as_manager()
+
     def __str__(self):
         return "{} Patrol".format(self.name)
+
+    def is_active(self) -> bool:
+        today = datetime.date.today()
+        return self.memberships.filter(
+            Q(date_expired__isnull=True) | Q(date_expired__gt=today),
+            date_joined__lte=today
+        ).exists()
+    is_active.boolean = True
 
 
 class PatrolMembership(models.Model):
