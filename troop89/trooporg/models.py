@@ -28,6 +28,16 @@ class Term(models.Model):
 
     end = models.DateField()
 
+    def __str__(self):
+        form = '{} - {}'.format(
+            self.start.strftime("%b %Y"),
+            self.end.strftime("%b %Y")
+        )
+        if self.nickname:
+            form += ' ("{}")'.format(self.nickname)
+        return form
+
+
 
 class PatrolQuerySet(models.QuerySet):
     pass
