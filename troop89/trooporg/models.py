@@ -22,7 +22,7 @@ class ScoutMembership(models.Model):
 
 
 class Term(models.Model):
-    nickname = models.CharField(blank=True, max_length=32, unique=True)
+    nickname = models.CharField(null=True, blank=True, max_length=32, unique=True)
 
     start = models.DateField(default=datetime.date.today)
 
