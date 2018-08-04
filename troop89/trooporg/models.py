@@ -30,12 +30,7 @@ class Term(models.Model):
 
 
 class PatrolQuerySet(models.QuerySet):
-    def active(self):
-        today = datetime.date.today()
-        return self.filter(
-            Q(memberships__date_expired__isnull=True) | Q(memberships__date_expired__gt=today),
-            memberships__date_joined__lte=today
-        )
+    pass
 
 
 class Patrol(models.Model):
@@ -56,8 +51,8 @@ class Patrol(models.Model):
     def is_active(self) -> bool:
         today = datetime.date.today()
         return self.memberships.filter(
-            Q(date_expired__isnull=True) | Q(date_expired__gt=today),
-            date_joined__lte=today
+            Q(term__end__isnull=True) | Q(term__end__gt=today),
+            term__start__lte=today
         ).exists()
     is_active.boolean = True
 
