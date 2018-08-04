@@ -21,6 +21,14 @@ class ScoutMembership(models.Model):
         return self.user.username
 
 
+class Term(models.Model):
+    nickname = models.CharField(blank=True, max_length=32, unique=True)
+
+    start = models.DateField(default=datetime.date.today)
+
+    end = models.DateField()
+
+
 class PatrolQuerySet(models.QuerySet):
     def active(self):
         today = datetime.date.today()
@@ -82,9 +90,11 @@ class PatrolMembership(models.Model):
         on_delete=models.PROTECT
     )
 
-    date_joined = models.DateField(default=datetime.date.today)
-
-    date_expired = models.DateField(null=True, blank=True)
+    term = models.ForeignKey(
+        Term,
+        related_name='patrol_memberships',
+        on_delete=models.PROTECT
+    )
 
     type = models.CharField(
         max_length=1,
