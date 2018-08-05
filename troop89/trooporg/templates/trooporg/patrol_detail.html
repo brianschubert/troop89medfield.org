@@ -1,0 +1,32 @@
+{% extends "trooporg/base.html" %}
+
+{% block content_main %}
+    {# Tempoary layout - to be formated #}
+    {{ patrol.name }} {{ patrol.date_created }}
+
+    {# All patrol memberships grouped by descending term. #}
+    {# It is unfortuenly non-trivial to perform this sorting within the query. If loading this page becomes resource #}
+    {# intensive in the future, consider substituing the below with a more robust query. #}
+    {% regroup patrol.memberships.all|dictsortreversed:"term.start" by term as term_list %}
+
+    {% for term in term_list %}
+        <div style="border: 1px dashed black">
+            {{ term.grouper }} {{ term.list|length }}
+            {# Group this term's memberships by their type. #}
+            {# This ordering is specified by the type's integral value in the database. Changes to the schema may #}
+            {# change the display order. #}
+            {% regroup term.list|dictsort:"type" by get_type_display as memberships_list %}
+
+            {% for memberships in memberships_list %}
+                <div style="border: 1px dashed blue">
+                    {{ memberships.grouper }}
+                <ul>
+                    {% for membership in memberships.list %}
+                        <li>{{ membership.scout.user.get_full_name }} </li>
+                    {% endfor %}
+                </ul>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock %}

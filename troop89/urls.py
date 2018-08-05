@@ -23,6 +23,7 @@ urlpatterns = [
     path('base-unary/', TemplateView.as_view(template_name='base_unary.html'), name='base_unary'),
     path('base-binary/', TemplateView.as_view(template_name='base_binary.html'), name='base_binary'),
     path('calendar/', include('troop89.events.urls', namespace='events')),
+    path('members/', include('troop89.trooporg.urls', namespace='trooporg')),
     path('admin/', admin.site.urls),
 ]
 
