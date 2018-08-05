@@ -1,7 +1,9 @@
 import datetime
 
+from django.core.exceptions import ValidationError
 from django.conf import settings
 from django.db import models
+from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -48,6 +50,23 @@ class Term(models.Model):
         if self.nickname:
             form += ' ("{}")'.format(self.nickname)
         return form
+
+    def clean(self):
+        # Calling parent in case it is given a non-empty body in the future (currently it is empty).
+        super().clean()
+
+        if not self.start < self.end:
+            raise ValidationError('Term start MUST occur before the term\'s end.')
+
+        one_day = datetime.timedelta(days=1)
+
+        if Term.objects.exclude(pk=self.pk).filter(
+            # Allow one term's end date to coincide with another term's start date
+            Q(start__range=(self.start, self.end - one_day)) |
+            Q(end__range=(self.start + one_day, self.end)) |
+            Q(start__lt=self.start, end__gt=self.end)
+        ).exists():
+            raise ValidationError('Term overlaps with an existing term.')
 
 
 class PatrolQuerySet(models.QuerySet):
