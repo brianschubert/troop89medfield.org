@@ -22,10 +22,12 @@ class ScoutMembership(models.Model):
 
 class TermManager(models.Manager):
     def current(self):
+        """Return the term that overlaps with the current date."""
         today = datetime.date.today()
         return self.for_date(today)
 
     def for_date(self, date: datetime.date):
+        """Return the term that overlaps with the given date."""
         return self.get_queryset().get(start__lte=date, end__gt=date)
 
 
@@ -53,9 +55,7 @@ class PatrolQuerySet(models.QuerySet):
 
 
 class Patrol(models.Model):
-    """
-    A scout patrol.
-    """
+    """A scout patrol."""
     name = models.CharField(max_length=32, unique=True)
 
     date_created = models.DateField(default=datetime.date.today)
@@ -68,6 +68,7 @@ class Patrol(models.Model):
         return "{} Patrol".format(self.name)
 
     def is_active(self) -> bool:
+        """Return True if there exists an active membership for this patrol."""
         try:
             return self.memberships.active().exists()
         except Term.DoesNotExist:
@@ -78,14 +79,13 @@ class Patrol(models.Model):
 
 class PatrolMembershipQuerySet(models.QuerySet):
     def active(self):
+        """Exclude memberships not associated with the current term."""
         current_term = Term.objects.current()
         return self.filter(term=current_term)
 
 
 class PatrolMembership(models.Model):
-    """
-    A membership to a scout patrol.
-    """
+    """A membership to a scout patrol."""
     LEADER = 'L'
 
     ASSISTANT = 'A'
