@@ -77,6 +77,12 @@ class Patrol(models.Model):
     """A scout patrol."""
     name = models.CharField(max_length=32, unique=True)
 
+    slug = models.SlugField(
+        unique=True,
+        help_text="URL Slug that identifies this patrol. "
+                  "Changing this will invalidate any existing urls pointing to this patrol."
+    )
+
     date_created = models.DateField(default=datetime.date.today)
 
     members = models.ManyToManyField(ScoutMembership, through='PatrolMembership')

@@ -27,3 +27,15 @@ class PatrolAdmin(admin.ModelAdmin):
     inlines = (PatrolMembershipInline,)
 
     list_display = ('name', 'date_created', 'is_active')
+
+    prepopulated_fields = {'slug': ('name',)}
+
+    fieldsets = (
+        (None, {
+            'fields': ('name', 'date_created')
+        }),
+        ('Advanced', {
+            'classes': ('collapse',),
+            'fields': ('slug',)
+        })
+    )
