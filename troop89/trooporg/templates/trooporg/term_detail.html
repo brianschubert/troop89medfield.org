@@ -1,0 +1,10 @@
+{% extends "trooporg/base.html" %}
+
+{% block content_main %}
+    {% if term %}
+        {{ term }}
+    {% else %}
+        {# Todo: revise to include link to term archive. #}
+        <p> There are no records for {{ date|date:"M d Y" }}</p>
+    {% endif %}
+{% endblock %}
