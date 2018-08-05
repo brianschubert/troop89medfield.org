@@ -2,7 +2,6 @@ import datetime
 
 from django.conf import settings
 from django.db import models
-from django.db.models import Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -21,12 +20,23 @@ class ScoutMembership(models.Model):
         return self.user.username
 
 
+class TermManager(models.Manager):
+    def current(self):
+        today = datetime.date.today()
+        return self.for_date(today)
+
+    def for_date(self, date: datetime.date):
+        return self.get_queryset().get(start__lte=date, end__gt=date)
+
+
 class Term(models.Model):
     nickname = models.CharField(null=True, blank=True, max_length=32, unique=True)
 
     start = models.DateField(default=datetime.date.today)
 
     end = models.DateField()
+
+    objects = TermManager()
 
     def __str__(self):
         form = '{} - {}'.format(
@@ -36,7 +46,6 @@ class Term(models.Model):
         if self.nickname:
             form += ' ("{}")'.format(self.nickname)
         return form
-
 
 
 class PatrolQuerySet(models.QuerySet):
@@ -59,12 +68,18 @@ class Patrol(models.Model):
         return "{} Patrol".format(self.name)
 
     def is_active(self) -> bool:
-        today = datetime.date.today()
-        return self.memberships.filter(
-            Q(term__end__isnull=True) | Q(term__end__gt=today),
-            term__start__lte=today
-        ).exists()
+        try:
+            return self.memberships.active().exists()
+        except Term.DoesNotExist:
+            return False
+
     is_active.boolean = True
+
+
+class PatrolMembershipQuerySet(models.QuerySet):
+    def active(self):
+        current_term = Term.objects.current()
+        return self.filter(term=current_term)
 
 
 class PatrolMembership(models.Model):
@@ -106,6 +121,8 @@ class PatrolMembership(models.Model):
         choices=PATROL_MEMBERSHIP_TYPE_CHOICES,
         default=MEMBER
     )
+
+    objects = PatrolMembershipQuerySet.as_manager()
 
     def __str__(self):
         return '{name} ({patrol} {pos})'.format(
