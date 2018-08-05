@@ -4,13 +4,19 @@
 {% block title %}{{ event.title }}{% endblock %}
 
 {% block info_banner %}
-<h1>Event Details</h1>
+    <h1>Event Details</h1>
 {% endblock %}
 
 {% block content_main %}
     <div class="notice">
-        <a href="{% url "events:calendar-month" event.start.year event.start.month %}"> See calendar</a>
+        <ul class="nav">{% spaceless %}
+            <li class="prev"><a href="{{ event.get_previous_by_start.get_absolute_url }}">Previous event</a></li>
+            <li class="current"><a href="{% url "events:calendar-month" event.start.year event.start.month %}"> See calendar</a></li>
+            <li class="next"><a href="{{ event.get_next_by_start.get_absolute_url }}">Next event</a></li>
+        {% endspaceless %}</ul>
+
     </div>
+
     <div class="event-detail">
         <h2>{{ event.title }}</h2>
         <span class="meta">
