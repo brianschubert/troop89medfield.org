@@ -19,6 +19,8 @@ class TermAdmin(admin.ModelAdmin):
 
     list_display = ('nickname', 'start', 'end')
 
+    date_hierarchy = 'start'
+
 
 @admin.register(Patrol)
 class PatrolAdmin(admin.ModelAdmin):
