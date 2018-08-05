@@ -111,11 +111,11 @@ class PatrolMembershipQuerySet(models.QuerySet):
 
 class PatrolMembership(models.Model):
     """A membership to a scout patrol."""
-    LEADER = 'L'
+    LEADER = 0
 
-    ASSISTANT = 'A'
+    ASSISTANT = 1
 
-    MEMBER = 'M'
+    MEMBER = 2
 
     PATROL_MEMBERSHIP_TYPE_CHOICES = (
         (LEADER, 'Leader'),
@@ -141,8 +141,7 @@ class PatrolMembership(models.Model):
         on_delete=models.PROTECT
     )
 
-    type = models.CharField(
-        max_length=1,
+    type = models.SmallIntegerField(
         choices=PATROL_MEMBERSHIP_TYPE_CHOICES,
         default=MEMBER
     )
