@@ -42,6 +42,10 @@ class Term(models.Model):
 
     objects = TermManager()
 
+    class Meta:
+        ordering = ('-start',)
+        get_latest_by = ('start',)
+
     def __str__(self):
         form = '{} - {}'.format(
             self.start.strftime("%b %Y"),
@@ -147,6 +151,9 @@ class PatrolMembership(models.Model):
     )
 
     objects = PatrolMembershipQuerySet.as_manager()
+
+    class Meta:
+        ordering = ('-term__start', 'type')
 
     def __str__(self):
         return '{name} ({patrol} {pos})'.format(
