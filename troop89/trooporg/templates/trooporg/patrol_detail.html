@@ -20,7 +20,7 @@
                     {{ memberships.grouper }}
                 <ul>
                     {% for membership in memberships.list %}
-                        <li>{{ membership.scout.user.get_full_name }} </li>
+                        <li>{{ membership.scout.get_full_name }} </li>
                     {% endfor %}
                 </ul>
                 </div>

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Patrol, ScoutMembership, Term
+from .models import Member, Patrol, Term
 
 
 class PatrolMembershipInline(admin.TabularInline):
@@ -8,9 +8,14 @@ class PatrolMembershipInline(admin.TabularInline):
     extra = 0
 
 
-@admin.register(ScoutMembership)
-class ScoutMembershipAdmin(admin.ModelAdmin):
+@admin.register(Member)
+class MemberAdmin(admin.ModelAdmin):
+    # Note: if editing user fields from the member admin is desired, simply
+    # swap out the base class with the standard UserAdmin or derivative and
+    # add the relevant fields/fieldsets.
     inlines = (PatrolMembershipInline,)
+
+    fields = ('first_name', 'last_name')
 
 
 @admin.register(Term)

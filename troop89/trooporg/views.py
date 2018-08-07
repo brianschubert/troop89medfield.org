@@ -18,7 +18,7 @@ class PatrolDetailView(DetailView):
     def get_queryset(self):
         return (
             super().get_queryset()
-                .prefetch_related('memberships__scout__user')
+                .prefetch_related('memberships__scout')
                 .prefetch_related('memberships__term')
         )
 
