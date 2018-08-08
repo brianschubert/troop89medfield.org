@@ -1,30 +1,50 @@
 {% extends "trooporg/base.html" %}
 
+{% block title %}{{ patrol.name }} Patrol{% endblock %}
+
 {% block content_main %}
     {# Tempoary layout - to be formated #}
-    {{ patrol.name }} {{ patrol.date_created }}
+    <div class="members-header">
+        <h1 class="title">{{ patrol.name }} Patrol</h1>
+        <span class="meta">Founded {{ patrol.date_created }}</span>
+    </div>
+    <section>
+        All time member count: {{ patrol.memberships.all|length }}
+        {# todo: add additional patrol summaries e.g. all time member count, leaders #}
+    </section>
 
-    {# All patrol memberships grouped by descending term. #}
-    {% regroup patrol.memberships.all by term as term_list %}
 
-    {% for term in term_list %}
-        <div style="border: 1px dashed black">
-            {{ term.grouper }} {{ term.list|length }}
-            {# Group this term's memberships by their type. #}
-            {# This ordering is specified by the type's integral value in the database. Changes to the schema may #}
-            {# change the display order. #}
-            {% regroup term.list by get_type_display as memberships_list %}
+    <section>
+        <h2>Current Members</h2>
+        {% if current_memberships %}
+            <div class="bubble-header">
+                <span class="title">
+                    <a href="{{ current_term.get_absolute_url }}">{{ current_term.period_str }}</a>
+                </span>
+                {{ current_memberships|length }} Members
+            </div>
+            {% include "trooporg/includes/patrol-members.html" with memberships=current_memberships %}
+        {% else %}
+            The {{ patrol.name }} patrol currently has no members.
+        {% endif %}
+    </section>
 
-            {% for memberships in memberships_list %}
-                <div style="border: 1px dashed blue">
-                    {{ memberships.grouper }}
-                <ul>
-                    {% for membership in memberships.list %}
-                        <li>{{ membership.scout.get_full_name }} </li>
-                    {% endfor %}
-                </ul>
+    <section>
+        {# All patrol memberships grouped by descending term. #}
+        {% regroup patrol.memberships.all by term as term_list %}
+        <h2>Other Term{{ term_list|pluralize }}</h2>
+        {% spaceless %}{% for term in term_list %}
+            {% if not term.grouper.is_current %}{# Ignore the current term - it's already displayed above. #}
+                <div class="patrol-term-list">
+                    <header class="bubble-header">
+                        <span class="title">
+                            <a href="{{ term.grouper.get_absolute_url }}">{{ term.grouper.period_str }}</a>
+                        </span>
+                        {{ term.list|length }} Members
+                    </header>
+                    {% include "trooporg/includes/patrol-members.html" with memberships=term.list %}
                 </div>
-            {% endfor %}
-        </div>
-    {% endfor %}
+            {% endif %}
+        {% endfor %}{% endspaceless %}
+    </section>
 {% endblock %}

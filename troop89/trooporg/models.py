@@ -4,6 +4,7 @@ from django.contrib import auth
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Q
+from django.shortcuts import reverse
 
 
 class Member(auth.get_user_model()):
@@ -43,13 +44,14 @@ class Term(models.Model):
         get_latest_by = ('start',)
 
     def __str__(self):
-        form = '{} - {}'.format(
-            self.start.strftime("%b %Y"),
-            self.end.strftime("%b %Y")
-        )
+        period = self.period_str()
         if self.nickname:
-            form += ' ("{}")'.format(self.nickname)
-        return form
+            period += ' ("{}")'.format(self.nickname)
+        return period
+
+    def get_absolute_url(self):
+        args = self.start.strftime('%Y %m %d').split()
+        return reverse('trooporg:term-detail', args=args)
 
     def clean(self):
         # Calling parent in case it is given a non-empty body in the future (currently it is empty).
@@ -67,6 +69,21 @@ class Term(models.Model):
             Q(start__lt=self.start, end__gt=self.end)
         ).exists():
             raise ValidationError('Term overlaps with an existing term.')
+
+    def period_str(self):
+        """
+        Return a string representation of the month period that this term
+        overlaps with.
+        """
+        return '{} - {}'.format(
+            self.start.strftime("%b %Y"),
+            self.end.strftime("%b %Y")
+        )
+
+    def is_current(self) -> bool:
+        """Return True if this term overlaps with today."""
+        today = datetime.date.today()
+        return self.start <= today < self.end
 
 
 class PatrolQuerySet(models.QuerySet):

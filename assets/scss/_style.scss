@@ -5,6 +5,7 @@
 // extend through the content wrapper. Possible solutions:
 //  a. Add additional padding to main element.
 //  b. Add an equivalent border radius to the sidebar div.
+//  For now, this has been mitigated with a 2% bottom margin.
 
 body {
   margin: 0;
@@ -61,7 +62,7 @@ main {
   padding: 0 2%;
 
   @include respond-above($break-small) {
-
+    margin-bottom: 2%;
     .content-binary & {
       box-sizing: border-box;
       float: left;
@@ -87,4 +88,8 @@ main {
 section {
   padding-bottom: 35px;
   border-bottom: 1px solid get_color(rule);
+  &:last-of-type {
+    padding-bottom: 0;
+    border-bottom: none;
+  }
 }

@@ -22,6 +22,19 @@ class PatrolDetailView(DetailView):
                 .prefetch_related('memberships__term')
         )
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data()
+        # All memberships will be looped over in the template so its OK to
+        # resolve the query set now.
+        # Normally, the below filtering SHOULD be performed at the database level.
+        # However, since all the memberships for this patrol have already been
+        # fetched - along with their related fields - filtering in python was
+        # assumed to be more efficient.
+        current_memberships = [m for m in self.object.memberships.all() if m.term.is_current()]
+        context['current_memberships'] = current_memberships
+        context['current_term'] = current_memberships[0].term if len(current_memberships) > 0 else None
+        return context
+
 
 class BaseTermDetailView(DetailView):
     model = Term
