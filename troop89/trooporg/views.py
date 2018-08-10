@@ -31,8 +31,9 @@ class PatrolDetailView(DetailView):
         # fetched - along with their related fields - filtering in python was
         # assumed to be more efficient.
         current_memberships = [m for m in self.object.memberships.all() if m.term.is_current()]
-        context['current_memberships'] = current_memberships
-        context['current_term'] = current_memberships[0].term if len(current_memberships) > 0 else None
+        if current_memberships:
+            context['current_memberships'] = current_memberships
+            context['current_term'] = current_memberships[0].term
         return context
 
 
