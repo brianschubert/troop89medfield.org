@@ -1,11 +1,12 @@
 import datetime
 from typing import Optional
 
+from django.db.models import Prefetch
 from django.shortcuts import Http404
 from django.views.generic import DetailView, ListView
 from django.views.generic.dates import DayMixin, MonthMixin, YearMixin
 
-from .models import Patrol, Term
+from .models import Patrol, PatrolMembership, Term
 
 
 class PatrolArchiveView(ListView):
@@ -16,8 +17,13 @@ class PatrolDetailView(DetailView):
     model = Patrol
 
     def get_queryset(self):
+        prefetch_memberships = Prefetch(
+            'memberships',
+            queryset=PatrolMembership.objects.order_by('-term__start', 'type').all()
+        )
         return (
             super().get_queryset()
+                .prefetch_related(prefetch_memberships)
                 .prefetch_related('memberships__scout')
                 .prefetch_related('memberships__term')
         )
@@ -46,8 +52,21 @@ class BaseTermDetailView(DetailView):
 
     def get_object(self, queryset=None) -> Optional[Term]:
         self.date = self.get_date()
+
+        if queryset is None:
+            queryset = self.get_queryset()
+
+        prefetch_memberships = Prefetch(
+            'patrol_memberships',
+            queryset=PatrolMembership.objects.order_by('patrol__name', 'type')
+        )
+        queryset = queryset \
+            .prefetch_related(prefetch_memberships) \
+            .prefetch_related('patrol_memberships__scout') \
+            .prefetch_related('patrol_memberships__patrol')
+
         try:
-            return Term.objects.for_date(self.date)
+            return queryset.get(start__lte=self.date, end__gt=self.date)
         except Term.DoesNotExist:
             return None
 

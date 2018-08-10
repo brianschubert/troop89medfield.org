@@ -1,8 +1,43 @@
-{% extends "trooporg/base.html" %}
+{% extends "base_unary.html" %}
+{% load staticfiles %}
+
+{% block title %}Members{% endblock %}
+
+{% block info_banner %}<h1>Members</h1>{% endblock %} info_banner %}
 
 {% block content_main %}
     {% if term %}
-        {{ term }}
+        <div class="members-header">
+            <h1 class="title">{{ term.period_str }}</h1>
+            {% if term.nickname %}
+                <span class="meta">&quot;{{ term.nickname }}&quot;</span>
+            {% endif %}
+        </div>
+        <section>
+            <h2>Youth Leadership</h2><img src="{% static "img/temp-position.png" %}" alt="position patch" width="80" height="80">
+            {% lorem 1 p %}
+            <h2>Youth Positions of Responsibility</h2>
+            {% lorem 1 p %}
+            <h2>Adult Advisers</h2>
+            {% lorem 1 p %}
+            <h2>Troop Coordination</h2>
+            {% lorem 1 p %}
+        </section>
+        <section>
+            <h2>Patrols</h2>
+                {% regroup term.patrol_memberships.all by patrol as patrol_map %}
+                {% spaceless %}{% for patrol in patrol_map %}
+                    <div class="patrol-bubble col-3">
+                        <header class="bubble-header">
+                        <span class="title">
+                            <a href="{{ patrol.grouper.get_absolute_url }}">{{ patrol.grouper.name }} Patrol</a>
+                        </span>
+                        {{ patrol.list|length }} Members
+                    </header>
+                    {% include "trooporg/includes/patrol-members.html" with memberships=patrol.list %}
+                    </div>
+                {% endfor %}{% endspaceless %}
+        </section>
     {% else %}
         {# Todo: revise to include link to term archive. #}
         <p> There are no records for {{ date|date:"M d Y" }}</p>

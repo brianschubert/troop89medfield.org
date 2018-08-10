@@ -109,6 +109,9 @@ class Patrol(models.Model):
     def __str__(self):
         return "{} Patrol".format(self.name)
 
+    def get_absolute_url(self):
+        return reverse('trooporg:patrol-detail', args=(self.slug,))
+
     def is_active(self) -> bool:
         """Return True if there exists an active membership for this patrol."""
         try:
@@ -165,12 +168,9 @@ class PatrolMembership(models.Model):
 
     objects = PatrolMembershipQuerySet.as_manager()
 
-    class Meta:
-        ordering = ('-term__start', 'type')
-
     def __str__(self):
         return '{name} ({patrol} {pos})'.format(
             name=self.scout.get_full_name(),
             patrol=self.patrol.name,
-            pos=self.type
+            pos=self.get_type_display()
         )

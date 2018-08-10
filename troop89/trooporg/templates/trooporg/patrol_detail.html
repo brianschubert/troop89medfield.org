@@ -35,7 +35,7 @@
         <h2>Other Term{{ term_map|pluralize }}</h2>
         {% spaceless %}{% for term in term_map %}
             {% if not term.grouper.is_current %}{# Ignore the current term - it's already displayed above. #}
-                <div class="patrol-term-bubble">
+                <div class="patrol-bubble col-2">
                     <header class="bubble-header">
                         <span class="title">
                             <a href="{{ term.grouper.get_absolute_url }}">{{ term.grouper.period_str }}</a>
