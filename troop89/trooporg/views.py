@@ -86,12 +86,7 @@ class TermDetailView(YearMixin, MonthMixin, DayMixin, BaseTermDetailView):
         try:
             return datetime.date(year, month, day)
         except ValueError as e:
-            raise Http404('No such date: {year}-{month}-{day} ({reason})'.format(
-                year=year,
-                month=month,
-                day=day,
-                reason=str(e),
-            ))
+            raise Http404(f'No such date: {year}-{month}-{day} ({str(e)})')
 
 
 class CurrentTermDetailView(BaseTermDetailView):

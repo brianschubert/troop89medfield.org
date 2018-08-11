@@ -46,7 +46,7 @@ class Term(models.Model):
     def __str__(self):
         period = self.period_str()
         if self.nickname:
-            period += ' ("{}")'.format(self.nickname)
+            period += f' ("{self.nickname}")'
         return period
 
     def get_absolute_url(self):
@@ -70,15 +70,14 @@ class Term(models.Model):
         ).exists():
             raise ValidationError('Term overlaps with an existing term.')
 
-    def period_str(self):
+    def period_str(self) -> str:
         """
         Return a string representation of the month period that this term
         overlaps with.
         """
-        return '{} - {}'.format(
-            self.start.strftime("%b %Y"),
-            self.end.strftime("%b %Y")
-        )
+        start = self.start.strftime("%b %Y")
+        end = self.end.strftime("%b %Y")
+        return f'{start} - {end}'
 
     def is_current(self) -> bool:
         """Return True if this term overlaps with today."""
@@ -107,7 +106,7 @@ class Patrol(models.Model):
     objects = PatrolQuerySet.as_manager()
 
     def __str__(self):
-        return "{} Patrol".format(self.name)
+        return f'{self.name} Patrol'
 
     def get_absolute_url(self):
         return reverse('trooporg:patrol-detail', args=(self.slug,))
@@ -169,8 +168,7 @@ class PatrolMembership(models.Model):
     objects = PatrolMembershipQuerySet.as_manager()
 
     def __str__(self):
-        return '{name} ({patrol} {pos})'.format(
-            name=self.scout.get_full_name(),
-            patrol=self.patrol.name,
-            pos=self.get_type_display()
-        )
+        name = self.scout.get_full_name(),
+        patrol = self.patrol.name,
+        pos = self.get_type_display()
+        return f'{name} ({patrol} {pos})'
