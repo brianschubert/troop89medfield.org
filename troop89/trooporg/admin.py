@@ -26,6 +26,8 @@ class TermAdmin(admin.ModelAdmin):
 
     date_hierarchy = 'start'
 
+    empty_value_display = '(none)'
+
 
 @admin.register(Patrol)
 class PatrolAdmin(admin.ModelAdmin):
