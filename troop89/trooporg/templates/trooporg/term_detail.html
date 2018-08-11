@@ -3,6 +3,8 @@
 
 {% block title %}Members{% endblock %}
 
+{% block description %}{% if term %}Troop 89 Member {{ term.period_str }}{% else %}No records for this term.{% endif %}{% endblock %}
+
 {% block info_banner %}<h1>Members</h1>{% endblock %} info_banner %}
 
 {% block content_main %}

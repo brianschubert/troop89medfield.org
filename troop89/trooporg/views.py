@@ -68,7 +68,7 @@ class BaseTermDetailView(DetailView):
         try:
             return queryset.get(start__lte=self.date, end__gt=self.date)
         except Term.DoesNotExist:
-            return None
+            return None  # todo: consider whether raising an Http404 would be more appreciate
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
