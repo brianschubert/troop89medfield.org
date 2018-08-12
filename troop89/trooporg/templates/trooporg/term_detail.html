@@ -16,14 +16,19 @@
             {% endif %}
         </div>
         <section>
-            <h2>Youth Leadership</h2><img src="{% static "img/temp-position.png" %}" alt="position patch" width="80" height="80">
-            {% lorem 1 p %}
-            <h2>Youth Positions of Responsibility</h2>
-            {% lorem 1 p %}
-            <h2>Adult Advisers</h2>
-            {% lorem 1 p %}
-            <h2>Troop Coordination</h2>
-            {% lorem 1 p %}
+        {% if term.position_instances.all %}
+            {% regroup term.position_instances.all by grouping_name as position_groups %}
+            {% for group in position_groups %}
+                <h2>{{ group.grouper }}</h2>
+                <ul>
+                {% for position in group.list %}
+                    <li>{{ position.type.title }} - {{ position.incumbent }}</li>
+                {% endfor %}
+                </ul>
+            {% endfor %}
+        {% else %}
+            No positions for this term.
+        {% endif %}
         </section>
         <section>
             <h2>Patrols</h2>

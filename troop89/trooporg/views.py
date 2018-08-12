@@ -6,7 +6,7 @@ from django.shortcuts import Http404
 from django.views.generic import DetailView, ListView
 from django.views.generic.dates import DayMixin, MonthMixin, YearMixin
 
-from .models import Patrol, PatrolMembership, Term
+from .models import Patrol, PatrolMembership, PositionInstance, Term
 
 
 class PatrolArchiveView(ListView):
@@ -56,19 +56,31 @@ class BaseTermDetailView(DetailView):
         if queryset is None:
             queryset = self.get_queryset()
 
+        # A plethora of prefetches to prevent a plethora of queries
+        prefetch_positions = Prefetch(
+            'position_instances',
+            # List youth positions first
+            queryset=PositionInstance.objects
+                .add_grouping_name()
+                .select_related('incumbent')
+                .order_by('type__is_adult', '-type__is_leader')
+        )
         prefetch_memberships = Prefetch(
             'patrol_memberships',
-            queryset=PatrolMembership.objects.order_by('patrol__name', 'type')
+            # Sort memberships by (patrol,type) for regroup tags
+            queryset=PatrolMembership
+                .objects
+                .select_related('scout', 'patrol')
+                .order_by('patrol__name', 'type')
         )
         queryset = queryset \
+            .prefetch_related(prefetch_positions) \
             .prefetch_related(prefetch_memberships) \
-            .prefetch_related('patrol_memberships__scout') \
-            .prefetch_related('patrol_memberships__patrol')
 
         try:
             return queryset.get(start__lte=self.date, end__gt=self.date)
         except Term.DoesNotExist:
-            return None  # todo: consider whether raising an Http404 would be more appreciate
+            return None  # todo: consider whether raising an Http404 would be more appropriate
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -3,7 +3,7 @@ import datetime
 from django.contrib import auth
 from django.core.exceptions import ValidationError
 from django.db import models
-from django.db.models import Q
+from django.db.models import Case, Q, Value, When
 from django.shortcuts import reverse
 
 
@@ -156,14 +156,32 @@ class PositionType(models.Model):
     def __str__(self):
         return self.title
 
+    def grouping_name(self) -> str:
+        """Return the grouping name for this position type."""
+        return self._POSITION_GROUPING_LOOKUP[self.is_adult, self.is_leader]
+
+    _POSITION_GROUPING_LOOKUP = {
+        (True, True): 'Adult Advisers',
+        (True, False): 'Troop Organization',
+        (False, True): 'Youth Leadership',
+        (False, False): 'Youth Positions of Responsibility'
+    }
+
 
 class PositionInstanceQuerySet(AbstractByTermQuerySet):
     """
     Query set for position instances.
-
-    Provided to ease future expansion.
     """
-    pass
+    def add_grouping_name(self):
+        """Annotate each position type with its grouping name."""
+        position_lookup = PositionType._POSITION_GROUPING_LOOKUP.items()
+        cases = (
+            When(
+                Q(type__is_adult=is_adult, type__is_leader=is_leader),
+                then=Value(grouping, output_field=models.CharField())
+            ) for (is_adult, is_leader), grouping in position_lookup
+        )
+        return self.select_related('type').annotate(grouping_name=Case(*cases))
 
 
 class PositionInstance(models.Model):
@@ -180,6 +198,7 @@ class PositionInstance(models.Model):
 
     term = models.ForeignKey(
         Term,
+        related_name='position_instances',
         on_delete=models.PROTECT,
     )
 
