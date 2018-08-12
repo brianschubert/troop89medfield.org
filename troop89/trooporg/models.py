@@ -299,7 +299,7 @@ class PatrolMembership(models.Model):
     objects = PatrolMembershipQuerySet.as_manager()
 
     def __str__(self):
-        name = self.scout.get_full_name(),
-        patrol = self.patrol.name,
+        name = self.scout.get_full_name()
+        patrol = self.patrol.name
         pos = self.get_type_display()
         return f'{name} ({patrol} {pos})'
