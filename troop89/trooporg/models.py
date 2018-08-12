@@ -85,8 +85,14 @@ class Term(models.Model):
         return self.start <= today < self.end
 
 
-class PatrolQuerySet(models.QuerySet):
-    pass
+class AbstractByTermQuerySet(models.QuerySet):
+    """Query set that may be filtered by a related term."""
+    term_field = 'term'
+
+    def current(self):
+        """Filter by the current term."""
+        current = Term.objects.current()
+        return self.filter(**{self.term_field: current})
 
 
 class Patrol(models.Model):
@@ -102,8 +108,6 @@ class Patrol(models.Model):
     date_created = models.DateField(default=datetime.date.today)
 
     members = models.ManyToManyField(Member, through='PatrolMembership')
-
-    objects = PatrolQuerySet.as_manager()
 
     def __str__(self):
         return f'{self.name} Patrol'
@@ -121,11 +125,8 @@ class Patrol(models.Model):
     is_active.boolean = True
 
 
-class PatrolMembershipQuerySet(models.QuerySet):
-    def active(self):
-        """Exclude memberships not associated with the current term."""
-        current_term = Term.objects.current()
-        return self.filter(term=current_term)
+class PatrolMembershipQuerySet(AbstractByTermQuerySet):
+    pass
 
 
 class PatrolMembership(models.Model):
