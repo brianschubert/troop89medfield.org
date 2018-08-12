@@ -19,14 +19,11 @@ class PatrolDetailView(DetailView):
     def get_queryset(self):
         prefetch_memberships = Prefetch(
             'memberships',
-            queryset=PatrolMembership.objects.order_by('-term__start', 'type').all()
+            queryset=PatrolMembership.objects
+                .select_related('scout', 'term')
+                .order_by('-term__start', 'type')
         )
-        return (
-            super().get_queryset()
-                .prefetch_related(prefetch_memberships)
-                .prefetch_related('memberships__scout')
-                .prefetch_related('memberships__term')
-        )
+        return super().get_queryset().prefetch_related(prefetch_memberships)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
