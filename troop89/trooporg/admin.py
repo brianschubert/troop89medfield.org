@@ -17,6 +17,24 @@ class MemberAdmin(admin.ModelAdmin):
 
     fields = ('first_name', 'last_name')
 
+    list_display = ('first_name', 'last_name', 'is_adult_view', 'is_active_member_view')
+
+    list_display_links = ('first_name', 'last_name')
+
+    def is_adult_view(self, obj: Member) -> bool:
+        return obj.is_adult()
+
+    is_adult_view.boolean = True
+
+    is_adult_view.short_description = 'Adult'
+
+    def is_active_member_view(self, obj: Member) -> bool:
+        return obj.is_active_member()
+
+    is_active_member_view.boolean = True
+
+    is_active_member_view.short_description = 'Active Member'
+
 
 @admin.register(Term)
 class TermAdmin(admin.ModelAdmin):

@@ -16,7 +16,33 @@ class Member(auth.get_user_model()):
         proxy = True
 
     def __str__(self):
-        return self.username
+        # NOTICE: Printing out user objects should *NEVER* occur on the live
+        # site as doing so bypasses information safeguards for youth members.
+        return self.get_full_name()
+
+    def get_safe_display(self) -> str:
+        """
+        Return the proper display name for this member based on their
+        youth/adult status.
+        """
+        if self.is_adult():
+            return self.get_full_name()
+        first = self.get_first_name()
+        last = self.get_last_name()[:1]
+        return f'{first} {last}.'
+
+    def is_adult(self) -> bool:
+        """
+        Return True if this member is an adult.
+
+        A member is considered to be an adult if they have held an adult
+        position in the troop.
+        """
+        return self.position_types.filter(is_adult=True).exists()
+
+    def is_active_member(self) -> bool:
+        """Return True if this member is an active member of the troop."""
+        return self.position_instances.current().exists() or self.patrol_memberships.current().exists()
 
 
 class TermManager(models.Manager):
@@ -95,6 +121,86 @@ class AbstractByTermQuerySet(models.QuerySet):
         return self.filter(**{self.term_field: current})
 
 
+class PositionType(models.Model):
+    """A position that a troop member can hold."""
+
+    title = models.CharField(max_length=40, unique=True)
+
+    precedence = models.PositiveSmallIntegerField(
+        help_text='Used to help define the order in which similar positions '
+                  'should be displayed. Positions with greater precedence will '
+                  'generally be displayed first.',
+        default=0,
+    )
+
+    members = models.ManyToManyField(
+        Member,
+        related_name='position_types',
+        through='PositionInstance',
+    )
+
+    is_adult = models.BooleanField(
+        help_text='Whether or not this position signifies that a member is an'
+                  'adult. This criteria is used for display purposes only.',
+    )
+
+    is_leader = models.BooleanField(
+        help_text="Whether or not this position is primarily a leadership role."
+                  "This criteria is used for partitioning positions for display "
+                  "in some cases."
+    )
+
+    class Meta:
+        ordering = ('precedence',)
+
+    def __str__(self):
+        return self.title
+
+
+class PositionInstanceQuerySet(AbstractByTermQuerySet):
+    """
+    Query set for position instances.
+
+    Provided to ease future expansion.
+    """
+    pass
+
+
+class PositionInstance(models.Model):
+    """
+    Connects a member to a position type and to the term during which they
+    fulfilled that position.
+    """
+
+    incumbent = models.ForeignKey(
+        Member,
+        related_name='position_instances',
+        on_delete=models.CASCADE,
+    )
+
+    term = models.ForeignKey(
+        Term,
+        on_delete=models.PROTECT,
+    )
+
+    type = models.ForeignKey(
+        PositionType,
+        related_name='instances',
+        on_delete=models.PROTECT
+    )
+
+    objects = PositionInstanceQuerySet.as_manager()
+
+    class Meta:
+        unique_together = ('incumbent', 'term', 'type')
+
+    def __str__(self):
+        name = self.incumbent.get_full_name()
+        title = self.type.title
+        period = self.term.period_str()
+        return f'{name} ({title} for {period})'
+
+
 class Patrol(models.Model):
     """A scout patrol."""
     name = models.CharField(max_length=32, unique=True)
@@ -126,6 +232,11 @@ class Patrol(models.Model):
 
 
 class PatrolMembershipQuerySet(AbstractByTermQuerySet):
+    """
+    Query set for patrol memberships.
+
+    Provided to ease future expansion.
+    """
     pass
 
 
