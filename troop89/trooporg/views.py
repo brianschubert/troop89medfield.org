@@ -60,7 +60,7 @@ class BaseTermDetailView(DetailView):
             queryset=PositionInstance.objects
                 .add_grouping_name()
                 .select_related('incumbent')
-                .order_by('type__is_adult', '-type__is_leader')
+                .order_by('type__is_adult', '-type__is_leader', '-type__precedence')
         )
         prefetch_memberships = Prefetch(
             'patrol_memberships',
