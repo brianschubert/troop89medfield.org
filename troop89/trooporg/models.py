@@ -151,7 +151,7 @@ class PositionType(models.Model):
     )
 
     class Meta:
-        ordering = ('precedence',)
+        ordering = ('-precedence',)
 
     def __str__(self):
         return self.title
