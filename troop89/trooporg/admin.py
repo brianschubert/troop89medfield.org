@@ -1,6 +1,11 @@
 from django.contrib import admin
 
-from .models import Member, Patrol, Term
+from .models import Member, Patrol, PositionInstance, PositionType, Term
+
+
+class PositionInstanceInline(admin.TabularInline):
+    model = PositionInstance
+    extra = 0
 
 
 class PatrolMembershipInline(admin.TabularInline):
@@ -13,7 +18,7 @@ class MemberAdmin(admin.ModelAdmin):
     # Note: if editing user fields from the member admin is desired, simply
     # swap out the base class with the standard UserAdmin or derivative and
     # add the relevant fields/fieldsets.
-    inlines = (PatrolMembershipInline,)
+    inlines = (PositionInstanceInline, PatrolMembershipInline)
 
     fields = ('first_name', 'last_name')
 
@@ -38,13 +43,20 @@ class MemberAdmin(admin.ModelAdmin):
 
 @admin.register(Term)
 class TermAdmin(admin.ModelAdmin):
-    inlines = (PatrolMembershipInline,)
+    inlines = (PositionInstanceInline, PatrolMembershipInline)
 
     list_display = ('nickname', 'start', 'end')
 
     date_hierarchy = 'start'
 
     empty_value_display = '(none)'
+
+
+@admin.register(PositionType)
+class PositionTypeAdmin(admin.ModelAdmin):
+    inlines = (PositionInstanceInline,)
+
+    list_display = ('title', 'is_adult', 'is_leader', 'precedence')
 
 
 @admin.register(Patrol)

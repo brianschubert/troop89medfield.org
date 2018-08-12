@@ -224,7 +224,7 @@ class Patrol(models.Model):
     def is_active(self) -> bool:
         """Return True if there exists an active membership for this patrol."""
         try:
-            return self.memberships.active().exists()
+            return self.memberships.current().exists()
         except Term.DoesNotExist:
             return False
 
