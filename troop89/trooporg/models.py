@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import Case, Q, Value, When
 from django.shortcuts import reverse
+from django.utils.functional import cached_property
 
 
 class Member(auth.get_user_model()):
@@ -25,12 +26,13 @@ class Member(auth.get_user_model()):
         Return the proper display name for this member based on their
         youth/adult status.
         """
-        if self.is_adult():
+        if self.is_adult:
             return self.get_full_name()
         first = self.get_first_name()
         last = self.get_last_name()[:1]
         return f'{first} {last}.'
 
+    @cached_property
     def is_adult(self) -> bool:
         """
         Return True if this member is an adult.
@@ -40,6 +42,7 @@ class Member(auth.get_user_model()):
         """
         return self.position_types.filter(is_adult=True).exists()
 
+    @cached_property
     def is_active_member(self) -> bool:
         """Return True if this member is an active member of the troop."""
         return self.position_instances.current().exists() or self.patrol_memberships.current().exists()
@@ -172,6 +175,7 @@ class PositionInstanceQuerySet(AbstractByTermQuerySet):
     """
     Query set for position instances.
     """
+
     def add_grouping_name(self):
         """Annotate each position type with its grouping name."""
         position_lookup = PositionType._POSITION_GROUPING_LOOKUP.items()
