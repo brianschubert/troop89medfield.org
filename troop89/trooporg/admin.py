@@ -58,6 +58,8 @@ class PositionTypeAdmin(admin.ModelAdmin):
 
     list_display = ('title', 'is_adult', 'is_leader', 'precedence')
 
+    ordering = ('is_adult', '-is_leader', '-precedence')
+
 
 @admin.register(Patrol)
 class PatrolAdmin(admin.ModelAdmin):
