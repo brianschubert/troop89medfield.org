@@ -10,7 +10,7 @@
             {% for membership in member_type.list %}
                 {# Wrap every pair of member entries with a div to enable even/odd row coloration. #}
                 {% if forloop.counter0|divisibleby:2 %}<div class="row">{% endif %}
-                <li class="{{ member_type.list|pluralize:"full-width," }}">{{ membership.scout.get_full_name }} </li>
+                <li class="{{ member_type.list|pluralize:"full-width," }}">{{ membership.scout.get_short_name }} </li>
                 {% if forloop.counter|divisibleby:2 %}</div>{% endif %}
             {% endfor %}
         {% endspaceless %}</ul>

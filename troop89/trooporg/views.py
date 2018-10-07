@@ -1,5 +1,5 @@
 import datetime
-from typing import Optional
+from typing import List, Optional, Tuple
 
 from django.db.models import Prefetch
 from django.shortcuts import Http404
@@ -60,7 +60,7 @@ class BaseTermDetailView(DetailView):
             queryset=PositionInstance.objects
                 .add_grouping_name()
                 .select_related('incumbent')
-                .order_by('type__is_adult', '-type__is_leader')
+                .order_by('type__is_adult', '-type__is_leader', '-type__precedence')
         )
         prefetch_memberships = Prefetch(
             'patrol_memberships',
@@ -72,7 +72,7 @@ class BaseTermDetailView(DetailView):
         )
         queryset = queryset \
             .prefetch_related(prefetch_positions) \
-            .prefetch_related(prefetch_memberships) \
+            .prefetch_related(prefetch_memberships)
 
         try:
             return queryset.get(start__lte=self.date, end__gt=self.date)
@@ -81,8 +81,24 @@ class BaseTermDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        top, bottom = self._partitioned_position_instances()
+        context['top_positions'] = top
+        context['bottom_positions'] = bottom
         context['date'] = self.date
+
         return context
+
+    def _partitioned_position_instances(self) -> Tuple[List[PositionInstance], List[PositionInstance]]:
+        """Split this term's positions into two logical groups."""
+        top_positions, bottom_positions = [], []
+        if self.object:
+            for position in self.object.position_instances.all():
+                # Assume that type has been pre-selected
+                if not position.type.is_adult and position.type.is_leader:
+                    top_positions.append(position)
+                else:
+                    bottom_positions.append(position)
+        return top_positions, bottom_positions
 
 
 class TermDetailView(YearMixin, MonthMixin, DayMixin, BaseTermDetailView):
@@ -103,3 +119,8 @@ class CurrentTermDetailView(BaseTermDetailView):
 
     def get_date(self) -> datetime.date:
         return datetime.date.today()
+
+
+class TermListView(ListView):
+    model = Term
+

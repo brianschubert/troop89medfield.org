@@ -15,6 +15,7 @@
 }
 
 .patrol-member-type {
+  // todo: consider migrating to flex box
   .title {
     display: block;
     font-weight: bold;
@@ -71,7 +72,6 @@
 
 .bubble-header {
   text-align: center;
-  padding-left: 10px;
   .title {
     a {
       color: white;
@@ -88,5 +88,59 @@
   background-color: lighten(get_color(banner), 5%);
   color: white;
 }
+
+.position-flex {
+  @include respond-above($break-small) {
+
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: stretch;
+    align-items: stretch;
+    align-content: stretch;
+  }
+}
+
+.position-bubble {
+  flex: 1;
+  &.multi {
+    flex-grow: 2;
+  }
+
+  @include respond-below($break-small) {
+    margin-bottom: 40px;
+  }
+
+  background-color: get_color(sidebar);
+
+  @include respond-above($break-small) {
+    margin-right: 20px;
+  }
+
+  .bubble-header {
+    box-sizing: border-box;
+    padding: 8px;
+
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+
+  ul {
+    display: flex;
+    flex-flow: wrap row;
+
+    margin: 0;
+    padding-left: 0;
+
+    li {
+      flex-grow: 1;
+      text-align: center;
+      background-color: get_color(sidebar);
+      list-style: none;
+      min-width: 150px;
+    }
+
+  }
+}
+
 
 
