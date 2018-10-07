@@ -1,53 +1,6 @@
 // Rough style sheet for events/calendar layout. To be revised.
 
 main {
-  div.notice {
-    margin-top: 10px;
-    padding: 0 10px;
-    background-color: get_color(sidebar);
-    border-radius: 10px;
-
-    ul.nav {
-      padding-left: 0;
-      margin: 5px 0;
-
-      li {
-        margin: 0;
-        box-sizing: border-box;
-        display: inline-block;
-        width: (100% * 1/ 3);
-
-        a {
-          display: block;
-          text-decoration: none;
-          @include font-size(20);
-        }
-
-        &.prev a {
-          text-align: left;
-          &::before {
-            content: "\276E";
-            margin-right: 10px;
-          }
-        }
-
-        &.current a {
-
-          text-align: center;
-        }
-
-        &.next a {
-          text-align: right;
-          &::after {
-            content: "\276F";
-            margin-left: 10px;
-          }
-        }
-
-      }
-    }
-  }
-
   div.event-detail {
     // Styling for event archive lists and event detail pages
     // todo: tweak layout
