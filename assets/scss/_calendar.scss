@@ -5,27 +5,6 @@ main {
     // Styling for event archive lists and event detail pages
     // todo: tweak layout
   }
-
-  ul.event-archive {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-
-    li {
-      &:first-child {
-        margin-top: 0;
-        padding-top: 0;
-        border-top: none;
-      }
-
-      margin-top: 15px;
-      margin-bottom: 50px;
-      padding-top: 20px;
-      border-top: 1px solid get_color(rule);
-
-    }
-  }
-
   .calendar {
     margin-top: 1%;
 

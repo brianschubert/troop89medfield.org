@@ -85,6 +85,7 @@ class BaseTermDetailView(DetailView):
         context['top_positions'] = top
         context['bottom_positions'] = bottom
         context['date'] = self.date
+
         return context
 
     def _partitioned_position_instances(self) -> Tuple[List[PositionInstance], List[PositionInstance]]:
@@ -118,3 +119,8 @@ class CurrentTermDetailView(BaseTermDetailView):
 
     def get_date(self) -> datetime.date:
         return datetime.date.today()
+
+
+class TermListView(ListView):
+    model = Term
+

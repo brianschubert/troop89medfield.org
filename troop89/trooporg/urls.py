@@ -18,6 +18,11 @@ urlpatterns = [
         name='term-detail',
     ),
     path(
+        'terms/',
+        views.TermListView.as_view(),
+        name='term-list'
+    ),
+    path(
         'patrols/<slug:slug>/',
         views.PatrolDetailView.as_view(),
         name='patrol-detail',

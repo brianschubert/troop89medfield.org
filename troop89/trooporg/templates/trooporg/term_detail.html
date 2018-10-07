@@ -9,6 +9,11 @@
 {% block info_banner %}<h1>Members</h1>{% endblock %} info_banner %}
 
 {% block content_main %}
+    <div class="notice">
+        <ul class="nav">
+            <li><a href="{% url "trooporg:term-list" %}"> See all terms</a></li>
+        </ul>
+    </div>
     {% if term %}
         <div class="members-header">
             <h1 class="title">{{ term.period_str }}</h1>

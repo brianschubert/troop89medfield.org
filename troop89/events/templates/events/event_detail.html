@@ -4,12 +4,14 @@
 {% block title %}{{ event.title }}{% endblock %}
 
 {% block info_banner %}
-<h1>Event Details</h1>
+    <h1>Event Details</h1>
 {% endblock %}
 
 {% block content_main %}
     <div class="notice">
-        <a href="{% url "events:calendar-month" event.start.year event.start.month %}"> See calendar</a>
+        <ul class="nav">
+            <li><a href="{% url "events:calendar-month" event.start.year event.start.month %}"> See calendar</a></li>
+        </ul>
     </div>
     <div class="event-detail">
         <h2>{{ event.title }}</h2>
