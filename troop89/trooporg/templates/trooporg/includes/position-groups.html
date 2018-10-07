@@ -1,0 +1,37 @@
+{% load staticfiles %}
+
+{% if positions %}
+    {% regroup positions by grouping_name as position_groups %}
+    {% for group in position_groups %}
+        <h2>{{ group.grouper }}</h2>
+        {% regroup group.list by type as position_by_type %}
+        {% spaceless %}
+            <div class="position-flex">
+                {% for position_type in position_by_type %}
+                    <div class="position-bubble{% if position_type.list|length > 1 %} multi{% endif %}">
+                        <header class="bubble-header">
+                            {# <img src="{% static "img/temp-position.png" %}" width="80" height="80">#}
+                            {# Position images to be finished in the future #}
+                            <span class="title">{{ position_type.grouper.title }}</span>
+                        </header>
+                        <ul>
+                            {% for instance in position_type.list %}
+                                <li>
+                                    {# Mirror Member.get_safe_display logic without performing additional queries. #}
+                                    {% if instance.type.is_adult %}
+                                        {{ instance.incumbent.get_full_name }}
+                                    {% else %}
+                                        {{ instance.incumbent.get_short_name }}
+                                    {% endif %}
+                                </li>
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endspaceless %}
+    {% endfor %}
+{% else %}
+    No positions for this term.
+{% endif %}

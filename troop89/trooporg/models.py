@@ -28,8 +28,12 @@ class Member(auth.get_user_model()):
         """
         if self.is_adult:
             return self.get_full_name()
-        first = self.get_first_name()
-        last = self.get_last_name()[:1]
+        return self.get_short_name()
+
+    def get_short_name(self):
+        """Return this members name in first name - last initial form."""
+        first = self.first_name
+        last = self.last_name[:1]
         return f'{first} {last}.'
 
     @cached_property
