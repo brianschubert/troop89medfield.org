@@ -1,2 +1,69 @@
 {% extends "base_binary.html" %}
 
+{% block info_banner %}<h1>Recent Updates</h1>{% endblock %}
+
+{% block content_main %}
+    <h1>Welcome to Troop 89's Transitional Website!</h1>
+    <span class="meta"> Posted on October 7th 2018 by Brian Schubert.</span>
+
+    <h2>Welcome scouts, parents, and members of the Medfield community! </h2>
+
+    <p> Troop 89's website is currently being updated to provide a more rich platform for communicating with the
+        Medfield community.</p>
+    <p> Over the course of this upcoming year, our website will be evolving dramatically to include many long-desired
+        features. For details on the current state of our website, please read further. If you have any questions or
+        concerns regarding our website, please do not hesitate <a href="mailto:webmaster@troop89medfield.org"> to reach
+            out to our webmaster</a>.</p>
+
+    <h2> A Word on the State of this Website</h2>
+
+    <p> The Troop 89 website is actively being designed and constructed by youth members of Troop 89. Every feature,
+        from our public calendar to our internal mailing lists, was developed by a Troop 89 scout.
+    <p> Currently, our website is running with only a small subset of the features that have been developed for it.
+        Writing scalable applications is not an easy task, especially when they require extensive database interaction
+        with minimal server resources. To ensure that no significant errors make their way to production, every feature
+        being developed for our website first undergoes an lengthy period of internal testing on a separate server. This
+        gradual development process has the unfortunate effect of hiding progress from the public eye for elongated
+        periods of time.</p>
+    <p> For the moment, our public facing website is intentionally left feature barren while the core components of our
+        website are being developed in the background. While we have high hopes for making this website a powerful tool
+        in the near future, it is likely these ambitions will not be realized until 2019. The fall is a busy time for
+        our High School members, who are responsible for all the progress on ur website. As such, it is to be expected
+        that our website will remain in a similar state for the next few months. Come early 2019, however, a significant
+        amount of time will be dedicated to releasing the remaining features promised for our website.
+    </p>
+
+    <h2>To Scouts interested in Web Development</h2>
+
+    <p>In the near future, the time will come when this website will be entrusted to the care of a new youth
+        Webmaster.</p>
+    <p> In the spring, our current Webmaster will be giving a series of presentations to our troop on how to
+        contribute to our website. If you think that you will be interested in helping out with the design and
+        maintenance of our website, it is highly recommended that you get a taste of web technologies before these
+        talks.</p>
+    <p> What follows is a terse summary of the technologies that our website is being built on, along with comments on
+        the relative desirability of familiarity with each of them.</p>
+    <ul>
+        <li>For any non-trivial contribution, a strong understanding of web basics will be expected. A good goal would
+            be being able to answer the question, "what happens when I request a web page?"
+        </li>
+        <li>For those seeking to contribute to our website's backend, familiarity with Python is a must. Our site is
+            powered by the Django web framework and all of its core components are written in Python 3.6+.
+        </li>
+        <li>Linux administration skills are a huge plus. Our site is hosted on GNU/Linux server, so developing on linux
+            is ideal.
+        </li>
+        <li> Some experience with database administration (preferably PostgreSQL) is a "nice to have." Most database
+            interactions are abstracted behind an object relational mapper, but an understanding of what goes on
+            "under the hood" can be instrumental when designing new relations.
+        </li>
+        <li>Knowledge of more domain-specific technologies, including SCSS and the Django template language, is
+            optional, but would be helpful if one intends to build new features from scratch.
+        </li>
+    </ul>
+    <p> If you already have some familiarty with a few of the above noted technologies and would like to get copy of
+        our website's source and infrastructure documentation before the spring, you may reach out to our webmaster over
+        email to begin making arrangements.</p>
+
+{% endblock %}
+
