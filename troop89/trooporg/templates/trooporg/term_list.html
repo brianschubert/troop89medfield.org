@@ -1,0 +1,19 @@
+{% extends "trooporg/base.html" %}
+
+{% block title %} Term Archive {% endblock %}
+
+{% block content_main %}
+    <h1> Term Archive </h1>
+    <ul class="object-archive">
+        {% for term in term_list %}
+            <li>
+                <h2><a href="{{ term.get_absolute_url }}">{{ term.period_str }}</a></h2>
+                {% if term.nickname %}
+                    <span class="meta"> "{{ term.nickname }}"</span>
+                {% endif %}
+                {# Todo: add term description detail member count, positions, etc. #}
+            </li>
+        {% endfor %}
+
+    </ul>
+{% endblock %}

@@ -1,14 +1,14 @@
 {% extends "events/base.html" %}
 
 {% block info_banner %}
-    <h1>Events</h1>
+    <h1>Events Archive</h1>
 {% endblock %}
 
 {% block content_main %}
     {% block notice %}{% endblock %}
 
     {% if events %}
-        <ul class="event-archive">
+        <ul class="object-archive">
             {% for event in events %}
                 <li>
                     <div class="event-detail">

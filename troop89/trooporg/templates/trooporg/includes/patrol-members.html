@@ -1,0 +1,18 @@
+{# Group this term's memberships by their type. #}
+{# This ordering is specified by the type's integral value in the database. Changes to the schema may #}
+{# change the display order. #}
+{% regroup memberships by get_type_display as memberships_types %}
+
+{% for member_type in memberships_types %}
+    <div class="patrol-member-type">
+        <span class="title">{{ member_type.grouper }}{{ member_type.list|pluralize }}</span>
+        <ul>{% spaceless %}
+            {% for membership in member_type.list %}
+                {# Wrap every pair of member entries with a div to enable even/odd row coloration. #}
+                {% if forloop.counter0|divisibleby:2 %}<div class="row">{% endif %}
+                <li class="{{ member_type.list|pluralize:"full-width," }}">{{ membership.scout.get_short_name }} </li>
+                {% if forloop.counter|divisibleby:2 %}</div>{% endif %}
+            {% endfor %}
+        {% endspaceless %}</ul>
+    </div>
+{% endfor %}

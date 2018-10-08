@@ -1,0 +1,50 @@
+{% extends "base_unary.html" %}
+
+
+{% block title %}Members{% endblock %}
+
+{% block description %}{% if term %}Troop 89 Member {{ term.period_str }}{% else %}No records for this term.
+{% endif %}{% endblock %}
+
+{% block info_banner %}<h1>Members</h1>{% endblock %} info_banner %}
+
+{% block content_main %}
+    <div class="notice">
+        <ul class="nav">
+            <li><a href="{% url "trooporg:term-list" %}"> See all terms</a></li>
+        </ul>
+    </div>
+    {% if term %}
+        <div class="members-header">
+            <h1 class="title">{{ term.period_str }}</h1>
+            {% if term.nickname %}
+                <span class="meta">&quot;{{ term.nickname }}&quot;</span>
+            {% endif %}
+        </div>
+        <section>
+            {% include "trooporg/includes/position-groups.html" with positions=top_positions %}
+        </section>
+        <section>
+            <h2>Patrols</h2>
+            {% regroup term.patrol_memberships.all by patrol as patrol_map %}
+            {% spaceless %}{% for patrol in patrol_map %}
+                <div class="patrol-bubble col-3">
+                    <header class="bubble-header">
+                        <span class="title">
+                            <a href="{{ patrol.grouper.get_absolute_url }}">{{ patrol.grouper.name }} Patrol</a>
+                        </span>
+                        {{ patrol.list|length }} Members
+                    </header>
+                    {% include "trooporg/includes/patrol-members.html" with memberships=patrol.list %}
+                </div>
+            {% endfor %}{% endspaceless %}
+        </section>
+        <section>
+            {% include "trooporg/includes/position-groups.html" with positions=bottom_positions %}
+        </section>
+    {% else %}
+        {# Todo: revise to include link to term archive. #}
+        {# Todo: add splash to notify staff to register term if a term was expected #}
+        <p> There are no records for {{ date|date:"M d Y" }}</p>
+    {% endif %}
+{% endblock %}

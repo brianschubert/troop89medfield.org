@@ -1,14 +1,14 @@
 {% extends "events/event_archive_base.html" %}
 {% load event_format %}
 
+{% block title %}{{ month|date:"F Y" }} Events{% endblock %}
+
 {% block notice %}
     <div class="notice">
         <ul class="nav">{% spaceless %}
-            <li class="prev"><a href="{% url "events:event-archive-month" previous_month.year previous_month.month %}">Previous
-                month</a></li>
-            <li class="current"><a href="{% url "events:calendar-month" month.year month.month %}">See calendar</a></li>
-            <li class="next"><a href="{% url "events:event-archive-month" next_month.year next_month.month %}">Next
-                month</a></li>
+            <li><a href="{% url "events:event-archive-month" previous_month.year previous_month.month %}">Previous month</a></li>
+            <li><a href="{% url "events:calendar-month" month.year month.month %}">See calendar</a></li>
+            <li><a href="{% url "events:event-archive-month" next_month.year next_month.month %}">Next month</a></li>
         {% endspaceless %}</ul>
     </div>
     <h1>{{ month|date:"F Y" }} Events</h1>
