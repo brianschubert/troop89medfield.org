@@ -13,7 +13,7 @@ TIME_FORMAT = '%I:%M %p'
 
 @register.filter
 def is_today(day: Union[datetime, date]) -> bool:
-    today = now().date()
+    today = localtime(now()).date()
     try:
         return day.date() == today
     except AttributeError:

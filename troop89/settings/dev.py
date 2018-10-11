@@ -3,7 +3,7 @@ from .base import *
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "troop89.testing"
+    "troop89.localhost"
 ] + SECRETS.get('ALLOWED_HOSTS', [])
 
 INSTALLED_APPS += [
