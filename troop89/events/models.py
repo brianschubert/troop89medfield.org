@@ -4,7 +4,6 @@ from django.db import models
 from django.shortcuts import reverse
 from django.utils import timezone
 
-
 class EventType(models.Model):
     label = models.CharField(max_length=28, blank=False)
 
@@ -37,7 +36,11 @@ class Event(models.Model):
         return '{} ({} - {})'.format(self.title, self.start.ctime(), self.end.ctime())
 
     def get_absolute_url(self):
-        day = self.start
+        # Note: we localize the date for display here in order to simplify
+        # detail view logic (Django localizes by default). A formal
+        # decision regarding EST vs UTC times in urls will need to be
+        # made in the future.
+        day = timezone.localdate(self.start)
         return reverse('events:event-detail', args=(day.year, day.month, day.day, self.slug))
 
     def single_day(self) -> bool:

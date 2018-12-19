@@ -18,7 +18,7 @@ urlpatterns = [
         name='event-archive-day'
     ),
     path(
-        '<int:year>/<int:month>/<int:day>/<slug:slug>',
+        '<int:year>/<int:month>/<int:day>/<slug:slug>/',
         views.EventDetailView.as_view(month_format=MONTH_FORMAT),
         name='event-detail'
     ),
@@ -28,7 +28,7 @@ urlpatterns = [
         name='current-month'
     ),
     path(
-        '<int:year>/<int:month>/events',
+        '<int:year>/<int:month>/events/',
         views.EventMonthView.as_view(month_format=MONTH_FORMAT),
         name='event-archive-month'
     ),
