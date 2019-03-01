@@ -15,17 +15,15 @@
 {% endblock %}
 
 {% block event_meta %}
-    {% with start_date=event.start.date end_date=event.end.date %}
-        {% if start_date == end_date %}
-            <a href="{% url "events:event-archive-day" start_date.year start_date.month start_date.day %}">
-                {{ start_date }} {{ event.start|time }} - {{ event.end|time }}
-            </a>
-        {% else %}
-            <a href="{% url "events:event-archive-day" start_date.year start_date.month start_date.day %}">{{ event.start }}</a>
-            -
-            <a href="{% url "events:event-archive-day" end_date.year end_date.month end_date.day %}">{{ event.end }}</a>
-        {% endif %}
-    {% endwith %}
+    {% if event.start == event.end %}
+        <a href="{% url "events:event-archive-day" event.start|date:"Y" event.start|date:"m" event.start|date:"d" %}">
+            {{ event.start }} {{ event.start|time }} - {{ event.end|time }}
+        </a>
+    {% else %}
+        <a href="{% url "events:event-archive-day" event.start|date:"Y" event.start|date:"m" event.start|date:"d"%}">{{ event.start }}</a>
+        -
+        <a href="{% url "events:event-archive-day" event.end|date:"Y" event.end|date:"m" event.end|date:"d" %}">{{ event.end }}</a>
+    {% endif %}
 {% endblock %}
 
 {% block no_event %}
