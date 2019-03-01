@@ -18,7 +18,7 @@
     {% with start_date=event.start.date end_date=event.end.date %}
         {% if start_date == end_date %}
             <a href="{% url "events:event-archive-day" start_date.year start_date.month start_date.day %}">
-                {{ start_date }} {{ event.start.time }} - {{ event.end.time }}
+                {{ start_date }} {{ event.start|time }} - {{ event.end|time }}
             </a>
         {% else %}
             <a href="{% url "events:event-archive-day" start_date.year start_date.month start_date.day %}">{{ event.start }}</a>
