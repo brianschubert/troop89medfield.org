@@ -4,6 +4,9 @@ from django.db import models
 from django.shortcuts import reverse
 from django.utils import timezone
 
+from markdownx.models import MarkdownxField
+from markdownx.utils import markdownify
+
 class EventType(models.Model):
     label = models.CharField(max_length=28, blank=False)
 
@@ -20,7 +23,7 @@ class Event(models.Model):
                   "Changing this will invalidate existing urls pointing to this event."
     )
 
-    description = models.TextField()
+    description = MarkdownxField()
 
     type = models.ForeignKey(EventType, on_delete=models.CASCADE)
 
@@ -42,6 +45,11 @@ class Event(models.Model):
         # made in the future.
         day = timezone.localdate(self.start)
         return reverse('events:event-detail', args=(day.year, day.month, day.day, self.slug))
+
+    @property
+    def formatted_description(self):
+        """Render this event's markdown description into HTML."""
+        return markdownify(self.description)
 
     def single_day(self) -> bool:
         return self.start.date() == self.end.date()

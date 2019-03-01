@@ -142,7 +142,7 @@ ul.object-archive {
   padding: 0;
   margin: 0;
 
-  li {
+  &>li {
     &:first-child {
       margin-top: 0;
       padding-top: 0;

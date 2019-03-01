@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'troop89.trooporg.apps.TroopOrgConfig',
 
     # Third party apps
-    # *crickets*
+    'markdownx',
 
     # Django apps
     'django.contrib.admin',
@@ -135,3 +135,12 @@ STATICFILES_DIRS = (
 
 # User auth model
 AUTH_USER_MODEL = 'troop89_auth.User'
+
+# Markdownx config
+# Documentation available at https://neutronx.github.io/django-markdownx/
+# See https://python-markdown.github.io/extensions/ for available Markdown extensions
+MARKDOWNX_MARKDOWN_EXTENSIONS = [
+    'tables',
+    'fenced_code',
+    'sane_lists',
+]
