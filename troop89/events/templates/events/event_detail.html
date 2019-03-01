@@ -31,7 +31,7 @@
                 {% endif %}
             {% endwith %}
         </span>
-        <p> {{ event.description }}</p>
+        <p> {{ event.formatted_description|safe}}</p>
     </div>
 {% endblock %}
 

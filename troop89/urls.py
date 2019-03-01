@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 from django.conf import settings
+
 urlpatterns = [
     path('', TemplateView.as_view(template_name='maintenance.html'), name='home'),
     path('base/', TemplateView.as_view(template_name='base.html'), name='base'),
@@ -25,6 +26,7 @@ urlpatterns = [
     path('calendar/', include('troop89.events.urls', namespace='events')),
     path('members/', include('troop89.trooporg.urls', namespace='trooporg')),
     path('admin/', admin.site.urls),
+    path('markdownx/', include('markdownx.urls')),
 ]
 
 if settings.DEBUG:

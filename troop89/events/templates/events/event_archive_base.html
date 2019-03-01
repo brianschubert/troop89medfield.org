@@ -14,7 +14,7 @@
                     <div class="event-detail">
                         <h2><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h2>
                         <span class="meta"> {% block event_meta %}{% endblock %}</span>
-                        <p> {{ event.description|truncatewords:80 }}</p>
+                        <p> {{ event.formatted_description|safe|truncatewords_html:80 }}</p>
                     </div>
                 </li>
             {% endfor %}
