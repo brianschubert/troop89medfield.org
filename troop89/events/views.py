@@ -1,4 +1,4 @@
-from django.utils.timezone import now
+from django.utils.timezone import now, localtime
 from django.views import generic
 
 from troop89.date_range.views import DayDateRangeView, MonthDateRangeView
@@ -51,5 +51,5 @@ class RedirectCurrentMonth(generic.RedirectView):
     pattern_name = "events:calendar-month"
 
     def get_redirect_url(self, *args, **kwargs):
-        today = now().date()
+        today = localtime(now()).date()
         return super().get_redirect_url(year=today.year, month=today.month)
