@@ -1,1 +1,131 @@
-[{"model": "events.eventtype", "pk": 1, "fields": {"label": "Summer Camp"}}, {"model": "events.eventtype", "pk": 2, "fields": {"label": "Weekly Meeting"}}, {"model": "events.eventtype", "pk": 3, "fields": {"label": "Trip"}}, {"model": "events.event", "pk": 1, "fields": {"title": "Camp Squanto", "slug": "camp-squanto", "description": "A one-week stay in paradise", "type": 1, "start": "2018-07-29T10:00:00Z", "end": "2018-08-04T22:00:00Z"}}, {"model": "events.event", "pk": 2, "fields": {"title": "Meeting", "slug": "meeting", "description": "A weekly meeting", "type": 2, "start": "2018-07-12T23:00:00Z", "end": "2018-07-13T00:00:00Z"}}, {"model": "events.event", "pk": 3, "fields": {"title": "Meeting", "slug": "meeting", "description": "A weekly meeting", "type": 2, "start": "2018-07-19T23:00:00Z", "end": "2018-07-20T00:00:00Z"}}, {"model": "events.event", "pk": 5, "fields": {"title": "Meeting", "slug": "meeting-morning", "description": "A weekly meeting (in the morning)", "type": 2, "start": "2018-07-12T10:00:00Z", "end": "2018-07-12T11:00:00Z"}}, {"model": "events.event", "pk": 6, "fields": {"title": "Meeting", "slug": "meeting", "description": "An August Meeting", "type": 2, "start": "2018-08-02T22:00:00Z", "end": "2018-08-02T23:00:00Z"}}, {"model": "events.event", "pk": 7, "fields": {"title": "Meeting", "slug": "meeting", "description": "A June meeting.", "type": 2, "start": "2018-06-21T22:00:00Z", "end": "2018-06-21T23:00:00Z"}}, {"model": "events.event", "pk": 8, "fields": {"title": "A Trip", "slug": "trip", "description": "A triip", "type": 3, "start": "2018-07-07T10:00:00Z", "end": "2018-07-08T22:00:00Z"}}, {"model": "events.event", "pk": 9, "fields": {"title": "Midnight Thing", "slug": "midnight-thing", "description": "A midnight is thing", "type": 2, "start": "2018-07-18T02:00:00Z", "end": "2018-07-18T05:00:00Z"}}, {"model": "events.event", "pk": 10, "fields": {"title": "Two Day Thing", "slug": "two-day-thing", "description": "A two day trip", "type": 3, "start": "2018-08-13T10:00:00Z", "end": "2018-08-14T22:00:00Z"}}]
+[
+  {
+    "model": "events.eventtype",
+    "pk": 1,
+    "fields": {
+      "label": "Summer Camp"
+    }
+  },
+  {
+    "model": "events.eventtype",
+    "pk": 2,
+    "fields": {
+      "label": "Weekly Meeting"
+    }
+  },
+  {
+    "model": "events.eventtype",
+    "pk": 3,
+    "fields": {
+      "label": "Trip"
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 1,
+    "fields": {
+      "title": "Camp Squanto",
+      "slug": "camp-squanto",
+      "description": "A one-week stay in paradise",
+      "type": 1,
+      "start": "2018-07-29T10:00:00Z",
+      "end": "2018-08-04T22:00:00Z"
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 2,
+    "fields": {
+      "title": "Meeting",
+      "slug": "meeting",
+      "description": "A weekly meeting",
+      "type": 2,
+      "start": "2018-07-12T23:00:00Z",
+      "end": "2018-07-13T00:00:00Z"
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 3,
+    "fields": {
+      "title": "Meeting",
+      "slug": "meeting",
+      "description": "A weekly meeting",
+      "type": 2,
+      "start": "2018-07-19T23:00:00Z",
+      "end": "2018-07-20T00:00:00Z"
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 5,
+    "fields": {
+      "title": "Meeting",
+      "slug": "meeting-morning",
+      "description": "A weekly meeting (in the morning)",
+      "type": 2,
+      "start": "2018-07-12T10:00:00Z",
+      "end": "2018-07-12T11:00:00Z"
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 6,
+    "fields": {
+      "title": "Meeting",
+      "slug": "meeting",
+      "description": "An August Meeting",
+      "type": 2,
+      "start": "2018-08-02T22:00:00Z",
+      "end": "2018-08-02T23:00:00Z"
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 7,
+    "fields": {
+      "title": "Meeting",
+      "slug": "meeting",
+      "description": "A June meeting.",
+      "type": 2,
+      "start": "2018-06-21T22:00:00Z",
+      "end": "2018-06-21T23:00:00Z"
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 8,
+    "fields": {
+      "title": "A Trip",
+      "slug": "trip",
+      "description": "A triip",
+      "type": 3,
+      "start": "2018-07-07T10:00:00Z",
+      "end": "2018-07-08T22:00:00Z"
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 9,
+    "fields": {
+      "title": "Midnight Thing",
+      "slug": "midnight-thing",
+      "description": "A midnight is thing",
+      "type": 2,
+      "start": "2018-07-18T02:00:00Z",
+      "end": "2018-07-18T05:00:00Z"
+    }
+  },
+  {
+    "model": "events.event",
+    "pk": 10,
+    "fields": {
+      "title": "Two Day Thing",
+      "slug": "two-day-thing",
+      "description": "A two day trip",
+      "type": 3,
+      "start": "2018-08-13T10:00:00Z",
+      "end": "2018-08-14T22:00:00Z"
+    }
+  }
+]

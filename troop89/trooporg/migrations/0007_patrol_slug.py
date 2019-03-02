@@ -4,7 +4,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('trooporg', '0006_auto_20180804_1529'),
     ]
@@ -13,6 +12,8 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='patrol',
             name='slug',
-            field=models.SlugField(help_text='URL Slug that identifies this patrol. Changing this will invalidate any existing urls pointing to this patrol.', null=True, unique=True),
+            field=models.SlugField(
+                help_text='URL Slug that identifies this patrol. Changing this will invalidate any existing urls pointing to this patrol.',
+                null=True, unique=True),
         ),
     ]

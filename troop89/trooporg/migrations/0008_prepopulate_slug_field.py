@@ -16,7 +16,6 @@ def populate_slugs(apps, schema_editor):
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('trooporg', '0007_patrol_slug'),
     ]
@@ -26,6 +25,8 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='patrol',
             name='slug',
-            field=models.SlugField(help_text='URL Slug that identifies this patrol. Changing this will invalidate any existing urls pointing to this patrol.', unique=True),
+            field=models.SlugField(
+                help_text='URL Slug that identifies this patrol. Changing this will invalidate any existing urls pointing to this patrol.',
+                unique=True),
         ),
     ]
