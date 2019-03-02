@@ -1,11 +1,17 @@
+#  Copyright (c) 2018, 2019 Brian Schubert
+#
+#  This Source Code Form is subject to the terms of the Mozilla Public
+#  License, v. 2.0. If a copy of the MPL was not distributed with this
+#  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 from datetime import tzinfo
 
 from django.db import models
 from django.shortcuts import reverse
 from django.utils import timezone
-
 from markdownx.models import MarkdownxField
 from markdownx.utils import markdownify
+
 
 class EventType(models.Model):
     label = models.CharField(max_length=28, blank=False)

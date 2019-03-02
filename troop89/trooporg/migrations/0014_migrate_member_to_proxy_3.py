@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('trooporg', '0013_migrate_member_to_proxy_2'),
     ]

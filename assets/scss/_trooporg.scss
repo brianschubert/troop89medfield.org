@@ -30,6 +30,7 @@
 
     div {
       background-color: get_color(sidebar);
+
       &:nth-child(2n) {
         background-color: darken(get_color(sidebar), 3%);
       }
@@ -72,6 +73,7 @@
 
 .bubble-header {
   text-align: center;
+
   .title {
     a {
       color: white;
@@ -81,10 +83,12 @@
         color: lighten(get_color(banner), 60%);
       }
     }
+
     @include font-size(20);
     font-weight: bold;
     display: block;
   }
+
   background-color: lighten(get_color(banner), 5%);
   color: white;
 }
@@ -102,6 +106,7 @@
 
 .position-bubble {
   flex: 1;
+
   &.multi {
     flex-grow: 2;
   }

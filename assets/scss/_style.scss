@@ -88,6 +88,7 @@ main {
 section {
   padding-bottom: 35px;
   border-bottom: 1px solid get_color(rule);
+
   &:last-of-type {
     padding-bottom: 0;
     border-bottom: none;
@@ -119,6 +120,7 @@ div.notice {
 
       &:first-child a {
         text-align: left;
+
         &::before {
           content: "\276E";
           margin-right: 10px;
@@ -127,6 +129,7 @@ div.notice {
 
       &:last-child:not(:first-child) a {
         text-align: right;
+
         &::after {
           content: "\276F";
           margin-left: 10px;
@@ -142,7 +145,7 @@ ul.object-archive {
   padding: 0;
   margin: 0;
 
-  &>li {
+  & > li {
     &:first-child {
       margin-top: 0;
       padding-top: 0;
