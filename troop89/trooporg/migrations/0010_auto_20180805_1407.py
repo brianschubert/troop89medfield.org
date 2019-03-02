@@ -2,11 +2,10 @@
 
 # Part 2: schema migration
 
-from django.db import migrations, models
+from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('trooporg', '0009_migrate_type_to_integer'),
     ]

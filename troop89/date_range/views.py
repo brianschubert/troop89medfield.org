@@ -1,3 +1,9 @@
+#  Copyright (c) 2018 Brian Schubert
+#
+#  This Source Code Form is subject to the terms of the Mozilla Public
+#  License, v. 2.0. If a copy of the MPL was not distributed with this
+#  file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 """
 Class based views for items that span between two dates.
 
@@ -12,6 +18,7 @@ date-spanning items. Currently, only the following cases are supported:
  - list of date-spanning items by month
  - list of date-spanning items by day
 """
+
 import datetime
 import functools
 
@@ -24,7 +31,7 @@ from django.utils.functional import cached_property
 from django.views.generic.base import View
 from django.views.generic.dates import (
     BaseDayArchiveView, DateMixin, DayMixin, MonthMixin,
-    YearMixin, _date_from_string, timezone_today
+    YearMixin, _date_from_string, timezone_today,
 )
 from django.views.generic.list import MultipleObjectMixin, MultipleObjectTemplateResponseMixin
 

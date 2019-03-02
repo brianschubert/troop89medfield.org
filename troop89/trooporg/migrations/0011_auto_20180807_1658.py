@@ -4,7 +4,6 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
         ('trooporg', '0010_auto_20180805_1407'),
     ]
