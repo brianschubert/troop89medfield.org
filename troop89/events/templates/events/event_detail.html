@@ -28,6 +28,9 @@
                 -
                 <a href="{% url "events:event-archive-day" event.end|date:"Y" event.end|date:"m" event.end|date:"d" %}">{{ event.end }}</a>
             {% endif %}
+            {% if request.user.is_staff and perms.events.change_event %}
+                (<a href="{% url "admin:events_event_change" event.id%}">edit</a>)
+            {% endif %}
         </span>
         <p> {{ event.formatted_description|safe}}</p>
     </div>

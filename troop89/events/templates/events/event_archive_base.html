@@ -13,7 +13,12 @@
                 <li>
                     <div class="event-detail">
                         <h2><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h2>
-                        <span class="meta"> {% block event_meta %}{% endblock %}</span>
+                        <span class="meta">
+                            {% block event_meta %}{% endblock %}
+                            {% if request.user.is_staff and perms.events.change_event %}
+                                (<a href="{% url "admin:events_event_change" event.id%}">edit</a>)
+                            {% endif %}
+                        </span>
                         <p> {{ event.formatted_description|safe|truncatewords_html:80 }}</p>
                     </div>
                 </li>
