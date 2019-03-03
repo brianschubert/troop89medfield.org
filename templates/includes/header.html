@@ -15,7 +15,7 @@
                 <li><a href="{% url "trooporg:current-term" %}"> Members</a></li>
                 <li><a href="https://www.scoutbook.com/"> Scoutbook.com</a></li>
                 {% if request.user.is_staff %}
-                    <li><a href="/admin"> Admin</a></li>
+                    <li><a href="{% url "admin:index" %}"> Admin</a></li>
                 {% endif %}
 {#                <li><a class="nav" href="#"> Information </a></li>#}
 {#                <li><a class="nav" href="#"> About </a></li>#}
