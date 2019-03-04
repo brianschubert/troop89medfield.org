@@ -5,3 +5,5 @@ psycopg2-binary==2.7.5
 pytz==2018.5
 six==1.11.0
 django-markdownx==2.0.28
+django-csp==3.5
+django-csp-reports==1.2
