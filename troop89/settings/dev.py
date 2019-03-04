@@ -23,3 +23,6 @@ MIDDLEWARE += [
 INTERNAL_IPS = [
     '127.0.0.1'
 ]
+
+# For django debug toolbar
+CSP_SCRIPT_SRC = ("'self'", 'ajax.googleapis.com')

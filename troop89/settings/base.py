@@ -19,6 +19,8 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import json
 import os
 
+from django.urls import reverse_lazy
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -52,6 +54,7 @@ INSTALLED_APPS = [
 
     # Third party apps
     'markdownx',
+    'cspreports',
 
     # Django apps
     'django.contrib.admin',
@@ -70,6 +73,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'csp.middleware.CSPMiddleware',
 ]
 
 ROOT_URLCONF = 'troop89.urls'
@@ -150,3 +154,36 @@ MARKDOWNX_MARKDOWN_EXTENSIONS = [
     'fenced_code',
     'sane_lists',
 ]
+
+# Configuration for site Content Security Policy
+# Content security policy reference: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
+# django-csp repo: https://github.com/mozilla/django-csp
+#
+# Note: We use the Mozzila's middleware from the django-csp package to send
+# csp headers. We use a third-party package (django-csp-reports) to handle
+# csp policy violation reports.
+#
+# Current CSP is equivalent to:
+# Content-Security-Policu: default-src 'self'; img-src *; report-uri https://{{HOST}}/csp/report/
+
+# Uncomment to have CSP violations reports but not enforced.
+# CSP_REPORT_ONLY = True
+
+CSP_DEFAULT_SRC = ("'self'",)
+
+# Allow arbitrary host to serve images (for user convenience)
+CSP_IMG_SRC = ('*',)
+
+# URI that CSP violations are to be sent to
+# reverse url for view provided by django-csp-reports
+CSP_REPORT_URI = reverse_lazy('report_csp')
+
+# django-csp-reports config
+
+CSP_REPORTS_EMAIL_ADMINS = False
+
+CSP_REPORTS_LOG = True
+
+CSP_REPORTS_LOG_LEVEL = 'warning'
+
+CSP_REPORTS_SAVE = True
