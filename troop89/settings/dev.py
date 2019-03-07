@@ -24,5 +24,7 @@ INTERNAL_IPS = [
     '127.0.0.1'
 ]
 
+CSP_REPORT_ONLY = True
+
 # For django debug toolbar
 CSP_SCRIPT_SRC = ("'self'", 'ajax.googleapis.com')
