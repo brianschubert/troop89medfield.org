@@ -1,0 +1,161 @@
+@import "util";
+
+body {
+  background-color: get_color(background);
+}
+
+body #content {
+  // Default formatting for anchors
+  a {
+    color: lighten(get_color(text), 8%);
+
+    &:hover, &:active, &:focus {
+      color: get_color(text);
+      outline: none;
+    }
+  }
+}
+
+#header {
+  background-color: lighten(get_color(banner), 5%);
+
+  div#user-tools {
+    color: white !important;
+
+    a {
+      color: white !important;
+
+    }
+  }
+
+}
+
+#branding {
+  h1 a {
+    color: white !important;
+  }
+}
+
+div.breadcrumbs {
+  color: get_color(text);
+  background-color: get_color(info_banner);
+
+  a {
+    color: get_color(text);
+
+    &:visited {
+      color: lighten(get_color(text), 10%);
+    }
+
+    &:hover, &:active, &:focus {
+      color: lighten(get_color(text), 20%);
+      outline: none;
+    }
+  }
+
+}
+
+.module {
+  background: get_color(background);
+
+  h2, caption {
+    a {
+      color: white !important;
+    }
+
+    background-color: lighten(get_color(banner), 15%);
+  }
+}
+
+.object-tools {
+  a {
+    background-color: lighten(get_color(banner), 15%) !important;
+    color: get_color(background) !important;
+
+  }
+}
+
+div#content-related, div#changelist-filter {
+  background-color: get_color(sidebar);
+
+  ul {
+    border-bottom: get_color(rule);
+
+    li.selected a {
+      color: lighten(get_color(text), 10%);
+    }
+  }
+}
+
+div#changelist {
+  .actions {
+    background-color: get_color(background);
+  }
+}
+
+form {
+  fieldset {
+    &.collapsed {
+      h2 {
+        background-color: get_color(sidebar) !important;
+      }
+
+      .collapse-toggle {
+        color: get_color(text) !important;
+      }
+    }
+
+    .form-row {
+      border-bottom-color: lighten(get_color(rule), 25%) !important;
+    }
+
+    background-color: get_color(background) !important;
+
+    span.date-icon {
+      color: get_color(text);
+    }
+  }
+
+  .submit-row {
+    background-color: get_color(sidebar) !important;
+
+    input {
+      background-color: lighten(get_color(banner), 25%) !important;
+      color: get_color(background) !important;
+
+      &.default {
+        background-color: lighten(get_color(banner), 15%) !important;
+      }
+    }
+
+    a.deletelink {
+      color: white !important;
+    }
+  }
+}
+
+fieldset, div.results {
+  table {
+    thead th {
+      background-color: lighten(get_color(info_banner), 3%);
+    }
+
+    tr {
+      td {
+        border-bottom-color: lighten(get_color(rule), 25%) !important;
+      }
+
+      &.row1 {
+        background-color: get_color(background) !important;
+      }
+
+      &.row2, &.add-row td {
+        background-color: get_color(sidebar) !important;
+      }
+    }
+  }
+}
+
+p.paginator {
+  background-color: get_color(background) !important;
+}
