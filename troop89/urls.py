@@ -25,6 +25,9 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import TemplateView
 
+admin.site.site_title = settings.ADMIN_SITE_TITLE
+admin.site.site_header = settings.ADMIN_SITE_HEADER
+
 urlpatterns = [
     path('', TemplateView.as_view(template_name='maintenance.html'), name='home'),
     path('base/', TemplateView.as_view(template_name='base.html'), name='base'),

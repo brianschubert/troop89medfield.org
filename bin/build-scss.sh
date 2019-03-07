@@ -19,4 +19,8 @@ STATIC_DIR="./assets"
 # Create the target directory for css files if it does not already exist.
 mkdir -p ${STATIC_DIR}/css
 
-sassc ${SASSC_ARGS} ${STATIC_DIR}/scss/output.scss ${STATIC_DIR}/css/output.css
+find ${STATIC_DIR}/scss -type f -name "*.scss" ! -name "_*" -print |
+while read filename; do
+    file=$(basename -s ".scss" -- "$filename")
+    sassc ${SASSC_ARGS} ${STATIC_DIR}/scss/$file.scss ${STATIC_DIR}/css/$file.css
+done
