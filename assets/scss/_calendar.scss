@@ -23,7 +23,11 @@ main {
         list-style-type: none;
 
         li {
-          @include font-size(32);
+          @include font-size(18);
+
+          @include respond-above($break-small) {
+            @include font-size(32);
+          }
           color: white;
 
           a {
@@ -49,7 +53,7 @@ main {
 
           &.title {
             @include sans-serif;
-            color: white;
+            color: red;
             text-align: center;
           }
         }
