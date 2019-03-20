@@ -1,0 +1,19 @@
+{% extends "admin/base.html" %}
+{% load staticfiles %}
+{# This template override the default admin/base_site.html template provided by Django. #}
+{# Add this point in time, the only difference between this file and the defualt is the #}
+{# addition of an override for the 'extrastyle' block, which inserts a stylesheet that #}
+{# adds troop89 branding to the admin site. #}
+
+{% block extrastyle %}
+    {{ block.super }}
+    <link href="{% static "css/admin-branding.css" %}" rel="stylesheet" type="text/css"/>
+{% endblock %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Troop89 site admin') }}{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Troop89 administration') }}</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

@@ -146,6 +146,10 @@ STATICFILES_DIRS = (
 # User auth model
 AUTH_USER_MODEL = 'troop89_auth.User'
 
+# Admin site branding
+ADMIN_SITE_TITLE = 'Troop89 site administration'
+ADMIN_SITE_HEADER = 'Troop89 administration'
+
 # Markdownx config
 # Documentation available at https://neutronx.github.io/django-markdownx/
 # See https://python-markdown.github.io/extensions/ for available Markdown extensions
