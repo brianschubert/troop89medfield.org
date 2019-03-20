@@ -11,7 +11,7 @@ html {
 body {
   // Body font, serif
   @include serif;
-  @include font-size(18);
+  @include font-size(16);
   line-height: 1.6;
   color: get_color(text);
 }

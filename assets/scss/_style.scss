@@ -20,7 +20,7 @@ body {
 .container {
   margin: 0 auto;
   max-width: 1400px;
-  padding: 0 4%;
+  padding: 0 4.2%;
 }
 
 .info-banner {
@@ -116,6 +116,13 @@ div.notice {
         text-decoration: none;
         @include font-size(20);
         text-align: center;
+      }
+
+      .extra {
+        display: none;
+        @include respond-above($break-small) {
+          display: inline;
+        }
       }
 
       &:first-child a {
