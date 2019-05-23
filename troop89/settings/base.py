@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'troop89.events.apps.EventsConfig',
     'troop89.date_range.apps.DateRangeConfig',
     'troop89.trooporg.apps.TroopOrgConfig',
+    'troop89.announcements.apps.AnnouncementsConfig',
 
     # Third party apps
     'markdownx',

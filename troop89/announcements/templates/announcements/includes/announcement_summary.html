@@ -1,0 +1,14 @@
+<li>
+    <h1><a href="{{ announcement.get_absolute_url }}">{{ announcement.title }}</a></h1>
+    <span class="meta">
+        Posted by {{ announcement.author.get_safe_display }} on <a href="{% url "events:event-archive-day" announcement.pub_date|date:"Y" announcement.pub_date|date:"m" announcement.pub_date|date:"d" %}">
+            {{ announcement.pub_date|date }}
+        </a>
+        {% if request.user.is_staff and perms.announcements.change_announcement %}
+            (<a href="{% url "admin:announcements_announcement_change" announcement.id %}">edit</a>)
+        {% endif %}
+    </span>
+    {{ announcement.formatted_content|safe|truncatewords_html:380 }}
+
+    <a class="full-object" href="{{ announcement.get_absolute_url }}">Read more</a>
+</li>

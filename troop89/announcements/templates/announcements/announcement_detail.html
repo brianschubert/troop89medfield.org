@@ -1,0 +1,29 @@
+{% extends "announcements/base.html" %}
+
+{% block title %}{{ announcement.title }}{% endblock %}
+
+{% block info_banner %}
+    <h1> Announcement Details </h1>
+{% endblock %}
+
+{% block content_main %}
+    <div class="notice">
+        <ul class="nav">{% spaceless %}
+            <li class="prev"><a href="{{ announcement.get_previous_by_pub_date.get_absolute_url }}">Previous<span class="extra"> announcement</span></a></li>
+            <li class="current"><a href="{% url "announcements:announcement-index" %}"> Index</a></li>
+            <li class="next"><a href="{{ announcement.get_next_by_pub_date.get_absolute_url }}">Next<span class="extra"> announcement</span></a></li>
+        {% endspaceless %}</ul>
+    </div>
+    <div>
+        <h1>{{ announcement.title }}</h1>
+        <span class="meta">
+        Posted by {{ announcement.author.get_safe_display }} on <a href="{% url "events:event-archive-day" announcement.pub_date|date:"Y" announcement.pub_date|date:"m" announcement.pub_date|date:"d" %}">
+            {{ announcement.pub_date|date }}
+        </a>
+            {% if request.user.is_staff and perms.announcements.change_announcement %}
+                (<a href="{% url "admin:announcements_announcement_change" announcement.id %}">edit</a>)
+            {% endif %}
+    </span>
+        {{ announcement.formatted_content|safe }}
+    </div>
+{% endblock %}
