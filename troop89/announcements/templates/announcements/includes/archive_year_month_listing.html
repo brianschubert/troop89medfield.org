@@ -1,0 +1,15 @@
+{% regroup announcement_dates by year as dates_by_year %}
+
+<ul class="listing">
+    {# Dates are already sorted by ascending, but we want to display the years descending. #}
+    {% for year in dates_by_year|dictsortreversed:"grouper" %}
+        <li>
+            <h2><a href="{% url "announcements:announcement-archive-year" year.grouper %}">{{ year.grouper }}</a></h2>
+            <ul class="flex-listing">
+                {% for month in year.list %}
+                    <li><a href="{% url "announcements:announcement-archive-month" month|date:"Y" month|date:"m" %}">{{ month|date:"F" }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endfor %}
+</ul>

@@ -1,0 +1,9 @@
+{% extends "announcements/base.html" %}
+
+{% block notice %}
+    <h1> {{ year|date:"Y" }} Announcements</h1>
+{% endblock %}
+
+{% block no_announcement %}
+    There are no announcements for this year.
+{% endblock %}
