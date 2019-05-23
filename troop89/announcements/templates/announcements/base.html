@@ -22,7 +22,6 @@
             <ul class="nav">{% spaceless %}
                 <li>
                     {% if page_obj.has_previous %}
-{#                        <a href="?page=1">&laquo;</a>#}
                         <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
                     {% endif %}
                 </li>
@@ -30,7 +29,6 @@
                 <li>
                     {% if page_obj.has_next %}
                         <a href="?page={{ page_obj.next_page_number }}">Next</a>
-{#                        <a href="?page={{ page_obj.paginator.num_pages }}"> &raquo;</a>#}
                     {% endif %}
                 </li>
             {% endspaceless %}</ul>
