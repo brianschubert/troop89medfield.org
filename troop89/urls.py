@@ -35,10 +35,10 @@ urlpatterns = [
     path('base-binary/', TemplateView.as_view(template_name='base_binary.html'), name='base_binary'),
     path('calendar/', include('troop89.events.urls', namespace='events')),
     path('members/', include('troop89.trooporg.urls', namespace='trooporg')),
+    path('announcements/', include('troop89.announcements.urls', namespace='announcements')),
     path('admin/', admin.site.urls),
     path('markdownx/', include('markdownx.urls')),
     path('csp/', include('cspreports.urls')),
-    path('announcements/', include('troop89.announcements.urls'))
 ]
 
 if settings.DEBUG:
