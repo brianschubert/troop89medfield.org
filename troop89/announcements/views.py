@@ -35,6 +35,7 @@ class AnnouncementIndexView(AnnouncementViewMixin, dates.ArchiveIndexView):
 
 
 class AnnouncementYearView(AnnouncementViewMixin, dates.YearArchiveView):
+    make_object_list = True
     paginate_by = 5
 
 
