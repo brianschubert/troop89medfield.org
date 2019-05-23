@@ -28,8 +28,19 @@ from django.views.generic import TemplateView
 admin.site.site_title = settings.ADMIN_SITE_TITLE
 admin.site.site_header = settings.ADMIN_SITE_HEADER
 
+
+def maintenance_page(request):
+    """Temporary view for rendering the maintenance page."""
+    from troop89.announcements.models import Announcement
+    from django.shortcuts import render
+
+    latest_announcements = Announcement.objects.published()[:5]
+    context = {'announcements': latest_announcements}
+    return render(request, 'maintenance.html', context)
+
+
 urlpatterns = [
-    path('', TemplateView.as_view(template_name='maintenance.html'), name='home'),
+    path('', maintenance_page, name='home'),
     path('base/', TemplateView.as_view(template_name='base.html'), name='base'),
     path('base-unary/', TemplateView.as_view(template_name='base_unary.html'), name='base_unary'),
     path('base-binary/', TemplateView.as_view(template_name='base_binary.html'), name='base_binary'),
