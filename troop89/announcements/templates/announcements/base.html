@@ -1,0 +1,49 @@
+{% extends "base_binary.html" %}
+{% load announcement_dates %}
+
+{% block info_banner %}
+    <h1><a href="{% url "announcements:announcement-index" %}">Announcements Archive</a></h1>
+{% endblock %}
+
+{% block content_main %}
+    {% block notice %}{% endblock %}
+
+    {% if announcements %}
+        <ul class="object-archive">
+            {% for announcement in announcements %}
+                {% include "announcements/includes/announcement_summary.html" with announcement=announcement %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        {% block no_announcement %}{% endblock %}
+    {% endif %}
+    {% block pagination %}
+        <div class="notice">
+            <ul class="nav">{% spaceless %}
+                <li>
+                    {% if page_obj.has_previous %}
+{#                        <a href="?page=1">&laquo;</a>#}
+                        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    {% endif %}
+                </li>
+                <li><p>Page {{ page_obj.number }} of <a href="?last">{{ page_obj.paginator.num_pages }}</a></p></li>
+                <li>
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+{#                        <a href="?page={{ page_obj.paginator.num_pages }}"> &raquo;</a>#}
+                    {% endif %}
+                </li>
+            {% endspaceless %}</ul>
+        </div>
+    {% endblock %}
+
+{% endblock %}
+
+{% block content_sidebar %}
+    {{ block.super }}
+
+    <h2>Archives</h2>
+
+    {% render_month_links %}
+
+{% endblock %}

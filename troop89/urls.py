@@ -38,6 +38,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('markdownx/', include('markdownx.urls')),
     path('csp/', include('cspreports.urls')),
+    path('announcements/', include('troop89.announcements.urls'))
 ]
 
 if settings.DEBUG:
