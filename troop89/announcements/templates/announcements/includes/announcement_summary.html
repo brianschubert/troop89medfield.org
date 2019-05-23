@@ -9,4 +9,6 @@
         {% endif %}
     </span>
     {{ announcement.formatted_content|safe|truncatewords_html:380 }}
+
+    <a class="full-object" href="{{ announcement.get_absolute_url }}">Read more</a>
 </li>

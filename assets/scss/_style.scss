@@ -197,4 +197,17 @@ ul.object-archive {
     border-top: 1px solid get_color(rule);
 
   }
+
+  a.full-object {
+    @include sans-serif;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+
+    &::after {
+      @include font-size(18);
+      margin-left: 8px;
+      content: "\000BB";
+    }
+  }
 }
