@@ -5,3 +5,4 @@ __pycache__/
 /static/
 /assets/css/*.css
 *.css.map
+/docs/_build
