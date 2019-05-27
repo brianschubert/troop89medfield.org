@@ -11,6 +11,10 @@ Troop 89 Medfield Website
     :target: https://troop89medfieldorg.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
+.. image:: https://img.shields.io/github/license/blueschu/troop89medfield.org.svg
+    :target: ./LICENSE
+    :alt: GitHub
+
 The official website of the `Boy Scouts of America`_'s Troop 89 Medfield, a member of the `Mayflower Council`_.
 
 The Troop 89  website is powered by `Django`_, a `Python`_ web framework.
