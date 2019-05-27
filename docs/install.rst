@@ -8,8 +8,8 @@
 
     This guide assumes that you already have Python installed. At the time of this writing, the troop 89 website requires Python3.6 or greater.
 
-Installing
-==========
+Installing the Troop 89 Website
+===============================
 
 Getting a local copy of the troop 89 website running is a fairly simple process, though there are several steps. This guide is intended to be especially so that it may serve as a partial reference for future webmasters in training.
 
