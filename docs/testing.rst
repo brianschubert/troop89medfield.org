@@ -2,8 +2,8 @@
 .. License, v. 2.0. If a copy of the MPL was not distributed with this
 .. file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-Testing
-=======
+Running the Tests
+=================
 
 The unit tests for the troop 89 website are pretty sparse at the moment. Contributions are always welcome!
 
