@@ -160,6 +160,13 @@ MARKDOWNX_MARKDOWN_EXTENSIONS = [
     'sane_lists',
 ]
 
+# SecurityMiddleware settings
+# See production profile for further HSTS settings and redirection.
+
+SECURE_BROWSER_XSS_FILTER = True
+
+SECURE_CONTENT_TYPE_NOSNIFF = True
+
 # Configuration for site Content Security Policy
 # Content security policy reference: https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP
 # django-csp repo: https://github.com/mozilla/django-csp
