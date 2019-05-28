@@ -4,6 +4,9 @@ Troop 89 Medfield Website
 .. image:: https://img.shields.io/website/https/www.troop89medfield.org.svg
     :target: https://www.troop89medfield.org
 
+.. image:: https://img.shields.io/uptimerobot/ratio/m782767776-61ebaadedcec63347e9f5459.svg
+    :target: https://www.troop89medfield.org
+
 .. image:: https://img.shields.io/mozilla-observatory/grade/troop89medfield.org.svg
     :target: https://observatory.mozilla.org/analyze/troop89medfield.org
 
