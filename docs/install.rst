@@ -4,12 +4,12 @@
 
 .. _install:
 
+Installing the Troop 89 Website
+===============================
+
 .. note::
 
     This guide assumes that you already have Python installed. At the time of this writing, the troop 89 website requires Python3.6 or greater.
-
-Installing the Troop 89 Website
-===============================
 
 Getting a local copy of the troop 89 website running is a fairly simple process, though there are several steps. This guide is intended to be especially so that it may serve as a partial reference for future webmasters in training.
 
@@ -36,7 +36,7 @@ If you are planning on submitting contributions to the website via a `pull reque
 Installing the Dependencies
 ---------------------------
 
-You will need to create a virtual environment for Python libraries. If you are using Python3.6+ (which you should be), the tools needed to create virtual environments ship with the interpret as the `venv`_ module.
+You will need to create a virtual environment for Python libraries. If you are using Python3.6+ (which you should be), the tools needed to create virtual environments ship with the interpreter as the `venv`_ module.
 
 .. note::
 
