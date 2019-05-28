@@ -16,7 +16,7 @@ Getting a local copy of the troop 89 website running is a fairly simple process,
 Fetching the Source
 -------------------
 
-The easiest way to get a copy of the troop 89 website source is by cloning the `public github repository`_. This has the added benefit of integrating `git`_ into your development environment, which will necessary if you intend on making changes to the website's source.
+The easiest way to get a copy of the troop 89 website source is by cloning the `public github repository`_. This has the added benefit of integrating `git`_ into your development environment, which will be necessary if you intend on making changes to the website's source.
 
 .. code-block:: console
 
@@ -131,7 +131,6 @@ Updating Local Hostnames (Optional)
 If you would like to use a host name (e.g. troop89.localhost) in place of a numeric IP (e.g. 127.0.0.1) when accessing the development site, you will want to update your machines hostname configuration. For Unix system (MacOS, Linux, etc), add the following entry to your ``/etc/hosts`` file
 
 .. code-block::
-    :caption: /etc/hosts
 
     127.0.0.1 troop89.localhost
 
