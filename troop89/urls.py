@@ -31,10 +31,17 @@ admin.site.site_header = settings.ADMIN_SITE_HEADER
 
 def maintenance_page(request):
     """Temporary view for rendering the maintenance page."""
-    from troop89.announcements.models import Announcement
+    from django.db.models import Prefetch
     from django.shortcuts import render
+    from troop89.announcements.models import Announcement
+    from troop89.trooporg.models import Member
 
-    latest_announcements = Announcement.objects.published()[:5]
+    prefetch_author = Prefetch(
+        'author',
+        queryset=Member.objects.all(),
+    )
+
+    latest_announcements = Announcement.objects.published().prefetch_related(prefetch_author)[:5]
     context = {'announcements': latest_announcements}
     return render(request, 'maintenance.html', context)
 
