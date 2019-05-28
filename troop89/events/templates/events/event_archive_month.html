@@ -15,9 +15,9 @@
 {% endblock %}
 
 {% block event_meta %}
-    {% if event.start == event.end %}
+    {% if event.start.date == event.end.date %}
         <a href="{% url "events:event-archive-day" event.start|date:"Y" event.start|date:"m" event.start|date:"d" %}">
-            {{ event.start }} {{ event.start|time }} - {{ event.end|time }}
+            {{ event.start|date:"N d, Y" }} {{ event.start|time }} - {{ event.end|time }}
         </a>
     {% else %}
         <a href="{% url "events:event-archive-day" event.start|date:"Y" event.start|date:"m" event.start|date:"d"%}">{{ event.start }}</a>
