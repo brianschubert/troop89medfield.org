@@ -11,3 +11,15 @@ DEBUG = False
 
 ALLOWED_HOSTS = [
 ] + SECRETS.get('ALLOWED_HOSTS', [])
+
+# SecurityMiddleware settings
+
+SECURE_SSL_REDIRECT = True
+
+# 31536000 seconds = one year minimum for preload lists
+# 3600 seconds = 1 hour for stability verification
+SECURE_HSTS_SECONDS = 3600
+
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+SECURE_HSTS_PRELOAD = False  # For temporary stability verification
