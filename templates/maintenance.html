@@ -1,4 +1,5 @@
 {% extends "base_binary.html" %}
+{% load event_includes %}
 
 {% block info_banner %}<h1>Recent Updates</h1>{% endblock %}
 
@@ -21,6 +22,8 @@
 {% endblock %}
 
 {% block content_sidebar %}
+    <h1><a href="{% url "announcements:announcement-index" %}">Upcoming Events</a></h1>
+    {% render_upcoming_events 5 days=14 %}
     {{ block.super }}
     <h2><a href="{% url "announcements:announcement-index" %}">See all announcements &raquo;</a></h2>
 {% endblock %}

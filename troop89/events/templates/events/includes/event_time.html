@@ -1,0 +1,9 @@
+{% if event.start|date == event.end|date %}
+    <a href="{% url "events:event-archive-day" event.start|date:"Y" event.start|date:"m" event.start|date:"d" %}">
+        {{ event.start|date:"N d, Y" }} {{ event.start|time }} - {{ event.end|time }}
+    </a>
+{% else %}
+    <a href="{% url "events:event-archive-day" event.start|date:"Y" event.start|date:"m" event.start|date:"d" %}">{{ event.start }}</a>
+    -
+    <a href="{% url "events:event-archive-day" event.end|date:"Y" event.end|date:"m" event.end|date:"d" %}">{{ event.end }}</a>
+{% endif %}

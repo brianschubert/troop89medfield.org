@@ -15,15 +15,8 @@
 {% endblock %}
 
 {% block event_meta %}
-    {% if event.start == event.end %}
-        <a href="{% url "events:event-archive-day" event.start|date:"Y" event.start|date:"m" event.start|date:"d" %}">
-            {{ event.start }} {{ event.start|time }} - {{ event.end|time }}
-        </a>
-    {% else %}
-        <a href="{% url "events:event-archive-day" event.start|date:"Y" event.start|date:"m" event.start|date:"d"%}">{{ event.start }}</a>
-        -
-        <a href="{% url "events:event-archive-day" event.end|date:"Y" event.end|date:"m" event.end|date:"d" %}">{{ event.end }}</a>
-    {% endif %}
+    {# 'event' available from the context of parent template #}
+    {% include "events/includes/event_time.html" %}
 {% endblock %}
 
 {% block no_event %}

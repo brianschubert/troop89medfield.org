@@ -7,7 +7,9 @@ Running the Tests
 
 The unit tests for the troop 89 website are pretty sparse at the moment. Contributions are always welcome!
 
-Unit tests can be run via Django's test runner::
+Unit tests can be run via Django's test runner
+
+.. code-block:: console
 
     $ ./manage.py test
 

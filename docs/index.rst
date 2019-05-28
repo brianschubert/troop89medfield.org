@@ -6,7 +6,7 @@
 Welcome to Troop 89 Medfield Website's documentation!
 =====================================================
 
-The `troop89medfield.org`_ is official website of the `Boy Scouts of America`_'s Troop 89 Medfield, a member of the `Mayflower Council`_.
+The `troop89medfield.org`_ is the official website of the `Boy Scouts of America`_'s Troop 89 Medfield, a member of the `Mayflower Council`_.
 
 The Troop 89 website is powered by `Django`_, a `Python`_ web framework.
 
