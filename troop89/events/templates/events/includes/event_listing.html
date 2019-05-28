@@ -1,0 +1,5 @@
+<ul class="listing">
+    {% for event in events %}
+        <li><a href="{{ event.get_absolute_url }}">{{ event.title }}</a><span>{% include "events/includes/event_time.html" %}</span></li>
+    {% endfor %}
+</ul>
