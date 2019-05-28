@@ -17,14 +17,21 @@ Troop 89 Medfield Website
 
 The official website of the `Boy Scouts of America`_'s Troop 89 Medfield, a member of the `Mayflower Council`_.
 
-The Troop 89  website is powered by `Django`_, a `Python`_ web framework.
-
 This website is intended to be designed and maintained by the youth members of Troop 89.
 
 .. _Django: https://www.djangoproject.com/
 .. _Python: https://www.python.org/
 .. _Mayflower Council: https://www.mayflowerbsa.org/
 .. _Boy Scouts of America: https://www.scouting.org/
+
+Documentation
+-------------
+
+The Troop 89  website is powered by `Django`_, a `Python`_ web framework. For a technical reference, see the magnificent `Django docs`_. Documentation specific to the Troop 89 website is available `here`_.
+
+.. _Django docs: https://docs.djangoproject.com/en/2.2/
+.. _here: https://troop89medfieldorg.readthedocs.io/en/latest/
+
 
 License
 -------
