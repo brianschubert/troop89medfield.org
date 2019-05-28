@@ -37,6 +37,9 @@ class Event(models.Model):
 
     end = models.DateTimeField()
 
+    class Meta:
+        ordering = ('start', 'title')
+
     # todo: revise formatting to be more user friendly
     def __str__(self):
         if self.single_day():
