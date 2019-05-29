@@ -11,7 +11,7 @@ Installing the Troop 89 Website
 
     This guide assumes that you already have Python installed. At the time of this writing, the troop 89 website requires Python3.6 or greater.
 
-Getting a local copy of the troop 89 website running is a fairly simple process, though there are several steps. This guide is intended to be especially so that it may serve as a partial reference for future webmasters in training.
+Getting a local copy of the troop 89 website running is a fairly simple process, though there are several steps. This guide is intended to be especially detailed so that it may serve as a partial reference for future webmasters in training.
 
 Fetching the Source
 -------------------
@@ -59,7 +59,7 @@ On Windows, run ``venv\Scripts\activate.bat`` in place of ``source troop89_venv/
 Compiling the Stylesheets
 -------------------------
 
-The stylesheets for our website are written in `sass`_, an extension language to `css`_. You can either install sass system wide, use a feature in your IDE (if one is offered), or you can use the Python `libsass`_ package. Regardless of what method you use, you want to compile all the files in `assets/scss/*.scss` that don’t begin with an underscore to `assets/css/`.
+The stylesheets for our website are written in `sass`_, an extension language to `css`_. You can either install sass system wide, use a feature in your IDE (if one is offered), or you can use the Python `libsass`_ package. Regardless of what method you use, you want to compile all the files in ``assets/scss/*.scss`` that don’t begin with an underscore to ``assets/css/``.
 
 If you have already installed the site dependencies (:ref:`install-dep`), you will have the `libsass`_ package in your virtual environment, which provides the ``sassc`` utility. With this program on your path (which will be the case if you have activated the virtual environment), you can run the following script to compile the stylesheets.
 
@@ -119,7 +119,7 @@ Simply run
 
 .. code-block:: console
 
-    $ ./manage.py collectstatic`.
+    $ ./manage.py collectstatic
 
 This will collect the static files and media from across the project into a single directory (``./static/``) so that they can be served by the web server. See the `django staticfiles`_ docs for more information
 
@@ -148,7 +148,7 @@ To run the testing server, simple run
 .. code-block:: console
 
     $ export DJANGO_SETTINGS_MODULE=troop89.settings.dev  # Use the development settings. Run once per session.
-    $ ./mange.py runserver`.
+    $ ./mange.py runserver
 
 If you updated your hosts files to include a local hostname, you can run the following instead
 
@@ -156,4 +156,4 @@ If you updated your hosts files to include a local hostname, you can run the fol
 
     $ ./manage.py runserver troop89.localhost
 
-Do note that by default, the production setting will be used (as defined in ``troop89/wsgi.py``). To run the development flavor, set the environment variables ``DJANGO_SETTINGS_MODULE`` to ``troop89.settings.dev``. This can be done by modifying your ``~/bashrc`` file (to set it every time you begin a new bash session), by running ``export DJANGO_SETTINGS_MODULE=troop89.settings.dev`` in your terminal (as in the commands above), or by preceding the run server command itself with ``DJANGO_SETTINGS_MODULE=troop89.settings.dev``.
+Do note that by default, the production setting will be used (as defined in ``troop89/wsgi.py``). To run the development flavor, set the environment variables ``DJANGO_SETTINGS_MODULE`` to ``troop89.settings.dev``. This can be done by modifying your ``~/.bashrc`` file (to set it every time you begin a new bash session), by running ``export DJANGO_SETTINGS_MODULE=troop89.settings.dev`` in your terminal (as in the commands above), or by preceding the run server command itself with ``DJANGO_SETTINGS_MODULE=troop89.settings.dev``.
