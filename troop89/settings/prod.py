@@ -17,9 +17,7 @@ ALLOWED_HOSTS = [
 SECURE_SSL_REDIRECT = True
 
 # 31536000 seconds = one year minimum for preload lists
-# 3600 seconds = 1 hour for stability verification
-# 2592000 seconds = 1 month for stability verification
-SECURE_HSTS_SECONDS = 2592000
+SECURE_HSTS_SECONDS = 31536000
 
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
