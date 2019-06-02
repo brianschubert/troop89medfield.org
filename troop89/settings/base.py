@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     # Third party apps
     'markdownx',
     'cspreports',
+    'django_referrer_policy',
 
     # Django apps
     'django.contrib.admin',
@@ -75,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'csp.middleware.CSPMiddleware',
+    'django_referrer_policy.middleware.ReferrerPolicyMiddleware',
 ]
 
 ROOT_URLCONF = 'troop89.urls'
@@ -199,3 +201,7 @@ CSP_REPORTS_LOG = True
 CSP_REPORTS_LOG_LEVEL = 'warning'
 
 CSP_REPORTS_SAVE = True
+
+# ReferrerPolicyMiddleware settings
+
+REFERRER_POLICY = 'no-referrer-when-downgrade'
