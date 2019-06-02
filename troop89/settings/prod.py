@@ -23,3 +23,7 @@ SECURE_HSTS_SECONDS = 3600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 SECURE_HSTS_PRELOAD = False  # For temporary stability verification
+
+# CommonMiddleware settings
+
+PREPEND_WWW = True
