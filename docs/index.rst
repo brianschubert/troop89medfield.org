@@ -24,3 +24,4 @@ This site intended to be designed and maintained by the youth members of Troop 8
 
    install
    testing
+   contributing
