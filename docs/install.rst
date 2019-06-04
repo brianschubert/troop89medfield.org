@@ -99,6 +99,19 @@ Assuming all configurations are good, you should only need to run
 
 This will create the necessary tables and relations, but will not populate the database with data.
 
+Populating the Database
+-----------------------
+
+The Troop 89 website ships with some default data to populate the database. This data is provided using Django `fixtures`_, which are contained in the ``fixtures`` directory.
+
+To load the default hostnames for the ``django.contrib.sites`` app, run
+
+.. code-block:: console
+
+    $ ./mange.py loaddata ./fixtures/sites.json
+
+
+.. _fixtures: https://docs.djangoproject.com/en/2.2/howto/initial-data/#providing-data-with-fixtures
 
 Creating the Django Superuser
 -----------------------------
