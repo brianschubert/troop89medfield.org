@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
 ]
 
 MIDDLEWARE = [
@@ -148,6 +149,10 @@ STATICFILES_DIRS = (
 
 # User auth model
 AUTH_USER_MODEL = 'troop89_auth.User'
+
+# Django sites config
+
+SITE_ID = 1
 
 # Admin site branding
 ADMIN_SITE_TITLE = 'Troop89 site administration'
