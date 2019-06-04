@@ -21,10 +21,18 @@ body > footer {
     .ramble {
       vertical-align: top;
 
-      p, img {
+      p, .badges {
         margin: 10px 0;
         @include respond-above($break-small) {
           margin: 10px 8px;
+        }
+      }
+
+      .badges {
+        a {
+          display: inline-block;
+          margin-right: 5px;
+          vertical-align: middle;
         }
       }
 

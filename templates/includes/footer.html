@@ -5,11 +5,20 @@
     <div class="sock">
         <div class="container">
             <div class="ramble">
-                <p>Troop 89 strongly believes in enabling youth to learn through experience. For this reason, our website is designed and maintained by our youth members.</p>
-                <a class="badge" href="https://github.com/blueschu/troop89medfield.org">
-                    <img alt="GitHub last commit"
-                         src="https://img.shields.io/github/last-commit/blueschu/troop89medfield.org.svg">
-                </a>
+                <p>Troop 89 strongly believes in enabling youth to learn through experience. For this reason, our
+                    website is designed and maintained by our youth members.</p>
+                {% with badge_style="plastic" %}
+                    <span class="badges">
+                        <a href="https://github.com/blueschu/troop89medfield.org">
+                            <img alt="GitHub last commit"
+                                 src="https://img.shields.io/github/last-commit/blueschu/troop89medfield.org.svg?style={{ badge_style }}">
+                        </a>
+                        <a href="https://github.com/blueschu/troop89medfield.org/releases/latest">
+                            <img alt="GitHub tag (latest SemVer)"
+                                 src="https://img.shields.io/github/tag/blueschu/troop89medfield.org.svg?style={{ badge_style }}">
+                        </a>
+                    </span>
+                {% endwith %}
             </div>
             <div class="map">
                 <div class="column">
@@ -29,8 +38,10 @@
                     <ul>
                         {# These links are temporary and serve mostly a a space filler. This section will be populated by site-relevant content in the future #}
                         <li><a href="http://meritbadge.org/wiki/index.php/Merit_Badges">Merit Badges</a></li>
-                        <li><a href="http://meritbadge.org/wiki/index.php/Positions_of_Responsibility">Positions of Responsibility</a></li>
-                        <li><a href="http://meritbadge.org/wiki/index.php/Order_of_the_Arrow">Order of the Arrow</a></li>
+                        <li><a href="http://meritbadge.org/wiki/index.php/Positions_of_Responsibility">Positions of
+                            Responsibility</a></li>
+                        <li><a href="http://meritbadge.org/wiki/index.php/Order_of_the_Arrow">Order of the Arrow</a>
+                        </li>
                         {#                        <li><a href="#">Joining</a></li>#}
                         {#                        <li><a href="#">About the Troop</a></li>#}
                         {#                        <li><a href="#">About this Site</a></li>#}
@@ -77,7 +88,8 @@
 
                 </li>
             </ul>
-            <p class="copyright">Boy Scouts of America's Troop 89 Medfield, Mayflower Council. Copyright &copy; 2018, 2019 Brian Schubert.</p>
+            <p class="copyright">Boy Scouts of America's Troop 89 Medfield, Mayflower Council. Copyright &copy; 2018,
+                2019 Brian Schubert.</p>
         </div>
     </div>
 {% endspaceless %}</footer>
