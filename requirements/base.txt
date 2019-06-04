@@ -7,3 +7,4 @@ six~=1.11.0
 django-markdownx~=2.0.28
 django-csp~=3.5
 django-csp-reports~=1.2
+django-referrer-policy~=1.0

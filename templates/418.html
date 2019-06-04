@@ -1,0 +1,14 @@
+{% extends "base_error.html" %}
+
+{% block title %}I'm a teapot{% endblock %}
+
+{% block info_banner %}
+    <h1>418 I'm a teapot</h1>
+{% endblock %}
+
+{% block content_main %}
+    <h2>HTCPCP/1.0 418 I'm a teapot</h2>
+    <p>You're request code not be processed since the server is a teapot. This entity body MAY be short and stout.</p>
+
+    <p> See <a href="https://tools.ietf.org/html/rfc2324">RFC 2324</a> for further details.</p>
+{% endblock %}
