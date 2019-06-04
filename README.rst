@@ -30,10 +30,10 @@ This website is intended to be designed and maintained by the youth members of T
 Documentation
 -------------
 
-The Troop 89  website is powered by `Django`_, a `Python`_ web framework. For a technical reference, see the magnificent `Django docs`_. Documentation specific to the Troop 89 website is available `here`_.
+The Troop 89  website is powered by `Django`_, a `Python`_ web framework. For a technical reference, see the magnificent `Django docs`_. Documentation specific to the Troop 89 website is available on `Read the Docs`_.
 
 .. _Django docs: https://docs.djangoproject.com/en/2.2/
-.. _here: https://troop89medfieldorg.readthedocs.io/en/latest/
+.. _Read The Docs: https://troop89medfieldorg.readthedocs.io/en/latest/
 
 
 License
