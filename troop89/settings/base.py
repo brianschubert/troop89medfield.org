@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'markdownx',
     'cspreports',
     'django_referrer_policy',
+    'ckeditor',
 
     # Django apps
     'django.contrib.admin',
