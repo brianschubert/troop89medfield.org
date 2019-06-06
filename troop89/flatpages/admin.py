@@ -29,16 +29,10 @@ class FlatPageAdminForm(forms.ModelForm):
         fields = '__all__'
 
 
+@method_decorator(_CSP_UPDATE_DECORATOR, name='add_view')
+@method_decorator(_CSP_UPDATE_DECORATOR, name='change_view')
 class FlatPageAdmin(flatpage_admin.FlatPageAdmin):
     form = FlatPageAdminForm
-
-    @method_decorator(_CSP_UPDATE_DECORATOR)
-    def add_view(self, *args, **kwargs):
-        return super().add_view(*args, **kwargs)
-
-    @method_decorator(_CSP_UPDATE_DECORATOR)
-    def change_view(self, *args, **kwargs):
-        return super().change_view(*args, **kwargs)
 
 
 # Re-register FlatPageAdmin
