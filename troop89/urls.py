@@ -1,4 +1,4 @@
-#  Copyright (c) 2018 Brian Schubert
+#  Copyright (c) 2018, 2019 Brian Schubert
 #
 #  This Source Code Form is subject to the terms of the Mozilla Public
 #  License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -22,7 +22,12 @@ Including another URLconf
 
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.sitemaps import views as sitemap_views
 from django.urls import include, path
+
+from troop89.announcements.sitemaps import AnnouncementSitemap
+from troop89.events.sitemaps import EventSitemap
+from troop89.trooporg.sitemaps import PatrolSitemap, TermSitemap
 
 admin.site.site_title = settings.ADMIN_SITE_TITLE
 admin.site.site_header = settings.ADMIN_SITE_HEADER
@@ -45,6 +50,13 @@ def maintenance_page(request):
     return render(request, 'maintenance.html', context)
 
 
+sitemaps = {
+    'events': EventSitemap,
+    'announcements': AnnouncementSitemap,
+    'terms': TermSitemap,
+    'patrols': PatrolSitemap,
+}
+
 urlpatterns = [
     path('', maintenance_page, name='home'),
     path('calendar/', include('troop89.events.urls', namespace='events')),
@@ -53,6 +65,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('markdownx/', include('markdownx.urls')),
     path('csp/', include('cspreports.urls')),
+    path('sitemap.xml', sitemap_views.sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
 ]
 
 if settings.DEBUG:
