@@ -81,7 +81,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'csp.middleware.CSPMiddleware',
     'django_referrer_policy.middleware.ReferrerPolicyMiddleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
+    'troop89.flatpages.middleware.FlatpageFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'troop89.urls'
