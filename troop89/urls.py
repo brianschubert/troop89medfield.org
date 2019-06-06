@@ -22,6 +22,7 @@ Including another URLconf
 
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.flatpages.sitemaps import FlatPageSitemap
 from django.contrib.sitemaps import views as sitemap_views
 from django.urls import include, path
 
@@ -55,6 +56,7 @@ sitemaps = {
     'announcements': AnnouncementSitemap,
     'terms': TermSitemap,
     'patrols': PatrolSitemap,
+    'flatpages': FlatPageSitemap,
 }
 
 urlpatterns = [
