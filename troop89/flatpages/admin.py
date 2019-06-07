@@ -35,6 +35,34 @@ class HierarchicalFlatPageAdminForm(flatpage_forms.FlatpageForm):
 class HierarchicalFlatPageAdmin(flatpage_admin.FlatPageAdmin):
     form = HierarchicalFlatPageAdminForm
 
+    def has_add_permission(self, request):
+        # HierarchicalFlatPage is a proxy to a model that is defined in an
+        # external application. As such, Django does not generate a migration
+        # to create a permission set for the proxy model as it would for proxies
+        # to models defined in the same app. Rather than manually creating a
+        # migration to add the required permissions, we piggy-back on the
+        # existing permissions for the standard flatpage model.
+        #
+        # This issue is outlined further in
+        # https://code.djangoproject.com/ticket/11154
+        return request.user.has_perm('flatpages.add_flatpage')
+
+    def has_view_permission(self, request, obj=None):
+        # Same comment as has_add_permission
+        return request.user.has_perm('flatpages.view_flatpage')
+
+    def has_change_permission(self, request, obj=None):
+        # Same comment as has_add_permission
+        return request.user.has_perm('flatpages.add_flatpage')
+
+    def has_delete_permission(self, request, obj=None):
+        # Same comment as has_add_permission
+        return request.user.has_perm('flatpages.delete_flatpage')
+
+    def has_module_permission(self, request):
+        # Same comment as has_add_permission
+        return request.user.has_module_perms('flatpages')
+
 
 # Re-register FlatPageAdmin
 admin.site.unregister(FlatPage)
