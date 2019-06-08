@@ -28,6 +28,7 @@ from django.urls import include, path
 
 from troop89.announcements.sitemaps import AnnouncementSitemap
 from troop89.events.sitemaps import EventSitemap
+from troop89.flatpages import views as flatpage_views
 from troop89.trooporg.sitemaps import PatrolSitemap, TermSitemap
 
 admin.site.site_title = settings.ADMIN_SITE_TITLE
@@ -67,7 +68,18 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('markdownx/', include('markdownx.urls')),
     path('csp/', include('cspreports.urls')),
-    path('sitemap.xml', sitemap_views.sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap')
+    path(
+        'about/',
+        flatpage_views.hierarchical_flatpage,
+        {'url': '/about/'},
+        name='about',
+    ),
+    path(
+        'sitemap.xml',
+        sitemap_views.sitemap,
+        {'sitemaps': sitemaps},
+        name='django.contrib.sitemaps.views.sitemap',
+    ),
 ]
 
 if settings.DEBUG:
