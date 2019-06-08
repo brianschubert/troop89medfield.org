@@ -45,7 +45,7 @@ class HierarchicalFlatPage(FlatPage):
         return PurePath(self.url).parent
 
     @property
-    def _url_with_slash(self):
+    def _url_with_slash(self) -> str:
         """Return this page's url with a trailing if one is missing"""
         if self.url.endswith('/'):
             return self.url

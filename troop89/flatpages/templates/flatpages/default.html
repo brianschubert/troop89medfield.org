@@ -4,4 +4,24 @@
 
 {% block info_banner %}<h1>{{ flatpage.title }}</h1>{% endblock %}
 
-{% block content_main %}{{ flatpage.content }}{% endblock %}
+{% block content_main %}
+    <div class="notice">
+        <ul class="breadcrumbs">
+            <li><a href="{% url "home" %}">Troop 89</a></li>
+            {% for parent in flatpage.parent_pages reversed %}
+                <li><a href="{{ parent.url }}">{{ parent.title }}</a></li>
+            {% endfor %}
+            <li>
+                {{ flatpage.title }}
+                {% if request.user.is_staff and perms.flatpages.change_flatpage %}
+                    (<a class="edit" href="{% url "admin:troop89_flatpages_hierarchicalflatpage_change" flatpage.id %}">edit</a>)
+                {% endif %}
+            </li>
+        </ul>
+
+    </div>
+
+    {{ flatpage.content }}
+
+
+{% endblock %}
