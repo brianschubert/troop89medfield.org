@@ -12,6 +12,23 @@ from django.db.models.functions import Length
 from django.db.utils import cached_property
 
 
+class BaseHierarchicalFlatPageManager(models.Manager):
+
+    def children_for_url(self, url, depth: int = 1, include_parents: bool = True):
+        """
+        Return the flatpages which are the logical children of the given url.
+
+        The provided url *does not* have to be a valid flatpage.
+        """
+        url = _ensure_trailing_slash(url)
+        if include_parents:
+            # allow anywhere between 1 and `depth` subdirectories
+            depth = f"1,{depth}"
+
+        filter_pattern = rf"^{url}([^/]+/){{{depth}}}$"
+        return self.get_queryset().filter(url__regex=filter_pattern)
+
+
 class HierarchicalFlatPageQuerySet(models.QuerySet):
 
     def related_to(self, page: 'HierarchicalFlatPage'):
@@ -26,8 +43,11 @@ class HierarchicalFlatPageQuerySet(models.QuerySet):
         return self.filter(url__regex=rf"^{related_stem}/[^/]+/$")
 
 
+HierarchicalFlatPageManager = BaseHierarchicalFlatPageManager.from_queryset(HierarchicalFlatPageQuerySet)
+
+
 class HierarchicalFlatPage(FlatPage):
-    objects = HierarchicalFlatPageQuerySet.as_manager()
+    objects = HierarchicalFlatPageManager()
 
     class Meta:
         proxy = True
@@ -45,16 +65,14 @@ class HierarchicalFlatPage(FlatPage):
         return PurePath(self.url).parent
 
     @property
-    def _url_with_slash(self) -> str:
+    def url_with_slash(self) -> str:
         """Return this page's url with a trailing if one is missing"""
-        if self.url.endswith('/'):
-            return self.url
-        return f'{self.url}/'
+        return _ensure_trailing_slash(self.url)
 
     @cached_property
     def parent_pages(self):
         """
-        Return the flatpages which are the logical parents of this page.
+        Return the flatpages which are the logical parents of this page, deepest first.
         """
         # Make a list of the urls that precede this page, excluding the root '/'
         parents = [f'{uri}/' for uri in PurePath(self.url).parents][:-1]
@@ -62,8 +80,14 @@ class HierarchicalFlatPage(FlatPage):
         return HierarchicalFlatPage.objects.filter(url__in=parents).order_by(Length('url').desc())
 
     def children_pages(self, depth: int = 1, include_parents: bool = True):
-        if include_parents:
-            # allow anywhere between 1 and `depth` subdirectories
-            depth = f"1,{depth}"
-        filter_pattern = rf"^{self._url_with_slash}([^/]+/){{{depth}}}$"
-        return HierarchicalFlatPage.objects.filter(url__regex=filter_pattern)
+        """
+        Return the flatpages which are the logical children of this page.
+        """
+        return HierarchicalFlatPage.objects.children_for_url(self.url, depth, include_parents)
+
+
+def _ensure_trailing_slash(url: str) -> str:
+    """Return the given url with a trailing if one is missing"""
+    if url.endswith('/'):
+        return url
+    return f'{url}/'
