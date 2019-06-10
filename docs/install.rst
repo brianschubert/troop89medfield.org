@@ -110,6 +110,11 @@ To load the default hostnames for the ``django.contrib.sites`` app, run
 
     $ ./mange.py loaddata ./fixtures/sites.json
 
+To load the demo flatpages, run
+
+.. code-block:: console
+
+    $ ./mange.py loaddata ./fixtures/demo_flatpages.json
 
 .. _fixtures: https://docs.djangoproject.com/en/2.2/howto/initial-data/#providing-data-with-fixtures
 
