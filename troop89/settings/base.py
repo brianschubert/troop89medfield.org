@@ -52,11 +52,13 @@ INSTALLED_APPS = [
     'troop89.date_range.apps.DateRangeConfig',
     'troop89.trooporg.apps.TroopOrgConfig',
     'troop89.announcements.apps.AnnouncementsConfig',
+    'troop89.flatpages.apps.FlatpagesConfig',
 
     # Third party apps
     'markdownx',
     'cspreports',
     'django_referrer_policy',
+    'ckeditor',
 
     # Django apps
     'django.contrib.admin',
@@ -67,6 +69,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django.contrib.sitemaps',
+    'django.contrib.flatpages',
 ]
 
 MIDDLEWARE = [
@@ -79,6 +82,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'csp.middleware.CSPMiddleware',
     'django_referrer_policy.middleware.ReferrerPolicyMiddleware',
+    'troop89.flatpages.middleware.HierarchicalFlatpageFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'troop89.urls'

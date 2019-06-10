@@ -1,0 +1,13 @@
+{% load flatpage_hierarchy %}
+
+{% if related_pages %}
+    <h2>Related Pages</h2>
+    <ul class="listing">
+        {% for page in related_pages %}
+            <li><h3><a href="{{ page.url }}">{{ page.title }}</a></h3></li>
+        {% endfor %}
+    </ul>
+{% elif current_page.parent_pages %} {# parent_pages is cached, so repeated access does cause additional queries #}
+    {# If a page has no related pages, render its parent's related pages #}
+    {% render_related_pages current_page.parent_pages.0 %}
+{% endif %}
