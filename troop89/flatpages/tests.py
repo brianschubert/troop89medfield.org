@@ -11,7 +11,7 @@ from django.test import TestCase
 
 from troop89.auth.models import User
 from .models import HierarchicalFlatPage
-from .templatetags.flatpage_related import _make_page_hierarchy
+from .templatetags.flatpage_hierarchy import _make_page_hierarchy
 
 
 class HierarchicalFlatPageTests(TestCase):
@@ -160,7 +160,7 @@ class HierarchicalFlatPageTemplateTagTests(TestCase):
 
     def test_get_flatpage_hierarchy(self):
         out = Template(
-            "{% load flatpage_related %}"
+            "{% load flatpage_hierarchy %}"
             "{% get_flatpage_hierarchy as flatpage_tree %}"
             ""
             "{% for parent in flatpage_tree %}"
@@ -184,7 +184,7 @@ class HierarchicalFlatPageTemplateTagTests(TestCase):
 
     def test_get_flatpage_hierarchy_with_base_page(self):
         out = Template(
-            "{% load flatpage_related %}"
+            "{% load flatpage_hierarchy %}"
             "{% get_flatpage_hierarchy '/about/' as flatpage_tree %}"
             ""
             "{% for parent in flatpage_tree %}"
@@ -205,7 +205,7 @@ class HierarchicalFlatPageTemplateTagTests(TestCase):
     def test_get_flatpage_hierarchy_with_variable_base_page(self):
         about_page = self.flatpages[0]
         out = Template(
-            "{% load flatpage_related %}"
+            "{% load flatpage_hierarchy %}"
             "{% get_flatpage_hierarchy about_page as flatpage_tree %}"
             ""
             "{% for parent in flatpage_tree %}"
@@ -227,7 +227,7 @@ class HierarchicalFlatPageTemplateTagTests(TestCase):
 
     def test_get_flatpage_hierarchy_for_anon_user(self):
         out = Template(
-            "{% load flatpage_related %}"
+            "{% load flatpage_hierarchy %}"
             "{% get_flatpage_hierarchy for anon_user as flatpage_tree %}"
             ""
             "{% for parent in flatpage_tree %}"
@@ -254,7 +254,7 @@ class HierarchicalFlatPageTemplateTagTests(TestCase):
     def test_get_flatpage_hierarchy_for_user(self):
         some_user = User.objects.create_user('testuser', 'test@example.com', 'password')
         out = Template(
-            "{% load flatpage_related %}"
+            "{% load flatpage_hierarchy %}"
             "{% get_flatpage_hierarchy for some_user as flatpage_tree %}"
             ""
             "{% for parent in flatpage_tree %}"
@@ -281,7 +281,7 @@ class HierarchicalFlatPageTemplateTagTests(TestCase):
 
     def test_get_flatpage_hierarchy_with_base_page_for_anon_user(self):
         out = Template(
-            "{% load flatpage_related %}"
+            "{% load flatpage_hierarchy %}"
             "{% get_flatpage_hierarchy '/about/' for anon_user as flatpage_tree %}"
             ""
             "{% for parent in flatpage_tree %}"
@@ -307,7 +307,7 @@ class HierarchicalFlatPageTemplateTagTests(TestCase):
     def test_get_flatpage_hierarchy_with_base_page_for_user(self):
         some_user = User.objects.create_user('testuser', 'test@example.com', 'password')
         out = Template(
-            "{% load flatpage_related %}"
+            "{% load flatpage_hierarchy %}"
             "{% get_flatpage_hierarchy '/about/' for some_user as flatpage_tree %}"
             ""
             "{% for parent in flatpage_tree %}"
@@ -333,7 +333,7 @@ class HierarchicalFlatPageTemplateTagTests(TestCase):
 
     def test_get_flatpage_hierarchy_with_depth(self):
         out = Template(
-            "{% load flatpage_related %}"
+            "{% load flatpage_hierarchy %}"
             "{% get_flatpage_hierarchy as flatpage_tree depth=2 %}"
             ""
             "{% for parent in flatpage_tree %}"
@@ -350,7 +350,7 @@ class HierarchicalFlatPageTemplateTagTests(TestCase):
 
     def test_get_flatpage_hierarchy_with_variable_depth(self):
         out = Template(
-            "{% load flatpage_related %}"
+            "{% load flatpage_hierarchy %}"
             "{% get_flatpage_hierarchy as flatpage_tree depth=some_depth %}"
             ""
             "{% for parent in flatpage_tree %}"
@@ -370,7 +370,7 @@ class HierarchicalFlatPageTemplateTagTests(TestCase):
     def test_get_flatpage_hierarchy_with_base_page_and_depth_for_user(self):
         some_user = User.objects.create_user('testuser', 'test@example.com', 'password')
         out = Template(
-            "{% load flatpage_related %}"
+            "{% load flatpage_hierarchy %}"
             "{% get_flatpage_hierarchy '/about/' for some_user as flatpage_tree depth=1%}"
             ""
             "{% for parent in flatpage_tree %}"
@@ -392,7 +392,7 @@ class HierarchicalFlatPageTemplateTagTests(TestCase):
 
     def test_get_flatpage_hierarchy_with_base_page_and_depth_for_anon_user(self):
         out = Template(
-            "{% load flatpage_related %}"
+            "{% load flatpage_hierarchy %}"
             "{% get_flatpage_hierarchy '/about/' for anon_user as flatpage_tree depth=1 %}"
             ""
             "{% for parent in flatpage_tree %}"
