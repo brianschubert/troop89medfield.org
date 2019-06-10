@@ -25,12 +25,14 @@ class BaseHierarchicalFlatPageManager(models.Manager):
         if depth:
             if include_parents:
                 # Allow anywhere between 1 and `depth` subdirectories
-                depth = f"1,{depth}"
-
-            filter_pattern = rf"^{url}([^/]+/){{{depth}}}$"
-            return self.get_queryset().filter(url__regex=filter_pattern)
+                depth_quantifier = f"1,{depth}"
+            else:
+                depth_quantifier = depth
         else:
-            return self.get_queryset().filter(url__startswith=url)
+            depth_quantifier = '1,'
+
+        filter_pattern = rf"^{url}([^/]+/){{{depth_quantifier}}}$"
+        return self.get_queryset().filter(url__regex=filter_pattern)
 
 
 class HierarchicalFlatPageQuerySet(models.QuerySet):
