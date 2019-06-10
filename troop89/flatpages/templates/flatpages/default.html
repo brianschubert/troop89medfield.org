@@ -1,4 +1,5 @@
 {% extends "base_binary.html" %}
+{% load flatpage_hierarchy %}
 
 {% block title %}{{ flatpage.title }}{% endblock %}
 
@@ -20,8 +21,37 @@
         </ul>
 
     </div>
+    <section>
+        {{ flatpage.content }}
+    </section>
 
-    {{ flatpage.content }}
-
+    {% get_flatpage_hierarchy flatpage as flatpage_tree depth=2 %}
+    {% if flatpage_tree %}
+    <section>
+        <h3>Subtopics</h3>
+        <div class="link-bubble-flex">
+            {% for subpage in flatpage_tree %}
+            <div class="link-bubble">
+                <header>
+                    <h3 class="title">
+                        {% if subpage.page %}
+                            <a href="{{ subpage.page.url }}">{{ subpage.title }}</a>
+                        {% else %}
+                            {{ subpage.title }}
+                        {% endif %}
+                    </h3>
+                </header>
+                {% if subpage.children %}
+                    <ul>
+                    {% for child in subpage.children %}
+                        <li><a href="{{ child.page.url }}">{{ child.title }}</a></li>
+                    {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+    {% endif %}
 
 {% endblock %}

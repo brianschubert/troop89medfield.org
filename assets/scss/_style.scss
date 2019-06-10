@@ -274,3 +274,37 @@ blockquote {
     margin: 0 0 10px;
   }
 }
+
+.link-bubble-flex {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-around;
+
+  background-color: get_color(sidebar);
+  border-radius: 10px;
+  padding: 6px;
+}
+
+.link-bubble {
+  padding: 2px 10px 6px;
+  margin-right: auto;
+
+  header {
+    h3 {
+      @include font-size(18);
+      margin: 0;
+    }
+  }
+
+  ul {
+    margin-top: 0;
+    margin-bottom: 2px;
+    padding-left: 0;
+    list-style: none;
+
+    li a {
+      @include font-size(14);
+      text-decoration: none;
+    }
+  }
+}
