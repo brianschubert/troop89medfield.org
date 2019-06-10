@@ -2,9 +2,9 @@
 
 {% if related_pages %}
     <h2>Related Pages</h2>
-    <ul>
+    <ul class="listing">
         {% for page in related_pages %}
-            <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+            <li><h3><a href="{{ page.url }}">{{ page.title }}</a></h3></li>
         {% endfor %}
     </ul>
 {% elif current_page.parent_pages %} {# parent_pages is cached, so repeated access does cause additional queries #}
