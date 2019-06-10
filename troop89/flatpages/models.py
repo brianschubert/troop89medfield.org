@@ -14,19 +14,23 @@ from django.db.utils import cached_property
 
 class BaseHierarchicalFlatPageManager(models.Manager):
 
-    def children_for_url(self, url, depth: int = 1, include_parents: bool = True):
+    def children_for_url(self, url, depth: int = None, include_parents: bool = True):
         """
         Return the flatpages which are the logical children of the given url.
 
         The provided url *does not* have to be a valid flatpage.
         """
         url = _ensure_trailing_slash(url)
-        if include_parents:
-            # allow anywhere between 1 and `depth` subdirectories
-            depth = f"1,{depth}"
 
-        filter_pattern = rf"^{url}([^/]+/){{{depth}}}$"
-        return self.get_queryset().filter(url__regex=filter_pattern)
+        if depth:
+            if include_parents:
+                # Allow anywhere between 1 and `depth` subdirectories
+                depth = f"1,{depth}"
+
+            filter_pattern = rf"^{url}([^/]+/){{{depth}}}$"
+            return self.get_queryset().filter(url__regex=filter_pattern)
+        else:
+            return self.get_queryset().filter(url__startswith=url)
 
 
 class HierarchicalFlatPageQuerySet(models.QuerySet):
