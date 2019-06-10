@@ -27,7 +27,7 @@ class _PageHierarchyNode(NamedTuple):
     def title(self) -> str:
         if self.page:
             return self.page.title
-        return self.uri.replace('-', ' ').title()
+        return self.uri.replace('/', ' ').title()
 
 
 class HierarchicalFlatpageTemplateNode(template.Node):
