@@ -4,12 +4,17 @@
 #  License, v. 2.0. If a copy of the MPL was not distributed with this
 #  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+from django.contrib.auth.models import AnonymousUser
+from django.contrib.sites.models import Site
+from django.template import Context, Template
 from django.test import TestCase
 
+from troop89.auth.models import User
 from .models import HierarchicalFlatPage
+from .templatetags.flatpage_related import _make_page_hierarchy
 
 
-class HierarchicalFlatPageTestCase(TestCase):
+class HierarchicalFlatPageTests(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.flatpages = HierarchicalFlatPage.objects.bulk_create([
@@ -94,3 +99,314 @@ class HierarchicalFlatPageTestCase(TestCase):
             parents.get(),
             self.flatpages[0],
         )
+
+
+class HierarchicalFlatPageTemplateTagTests(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        cls.site = Site.objects.get(pk=1)
+        cls.flatpages = HierarchicalFlatPage.objects.bulk_create([
+            HierarchicalFlatPage(url='/about/', title='Has a Title'),
+            HierarchicalFlatPage(url='/about/contact/'),
+            HierarchicalFlatPage(url='/about/contact/scoutmaster/'),
+            HierarchicalFlatPage(url='/about/contact/webmaster/'),
+            HierarchicalFlatPage(url='/about/merit-badges/bird-study/'),
+            HierarchicalFlatPage(url='/about/merit-badges/cooking/'),
+            HierarchicalFlatPage(url='/about/private/', registration_required=True),
+        ])
+        for page in cls.flatpages:
+            page.sites.set([cls.site])
+            page.save()
+
+    def test_make_page_hierarchy_builds_correct_tree(self):
+        page_tree = list(_make_page_hierarchy(self.flatpages[1:], '/about/'))
+
+        self.assertEqual(
+            [node.uri for node in page_tree],
+            ['/about/contact/', '/about/merit-badges/', '/about/private/'],
+        )
+
+        contact_pages = page_tree[0].children
+        merit_badge_pages = page_tree[1].children
+
+        self.assertEqual(
+            [node.uri for node in contact_pages],
+            ['/about/contact/scoutmaster/', '/about/contact/webmaster/']
+        )
+        self.assertEqual(
+            [node.uri for node in merit_badge_pages],
+            ['/about/merit-badges/bird-study/', '/about/merit-badges/cooking/']
+        )
+
+    def test_make_page_hierarchy_handles_missing_middle_page(self):
+        page_tree = list(_make_page_hierarchy(self.flatpages[3:6], '/about/'))
+
+        self.assertEqual(
+            [(node.uri, node.page) for node in page_tree],
+            [('/about/contact/', None), ('/about/merit-badges/', None)],
+        )
+
+        contact_pages = page_tree[0].children
+        merit_badge_pages = page_tree[1].children
+
+        self.assertEqual(
+            [node.uri for node in contact_pages],
+            ['/about/contact/webmaster/'],
+        )
+        self.assertEqual(
+            [node.uri for node in merit_badge_pages],
+            ['/about/merit-badges/bird-study/', '/about/merit-badges/cooking/']
+        )
+
+    def test_get_flatpage_hierarchy(self):
+        out = Template(
+            "{% load flatpage_related %}"
+            "{% get_flatpage_hierarchy as flatpage_tree %}"
+            ""
+            "{% for parent in flatpage_tree %}"
+            "{{ parent.uri }}"
+            "{% for middle in parent.children %}"
+            "   {{ middle.uri }}"
+            "{% for child in middle.children %}"
+            "       {{ child.uri }}"
+            "{% endfor %}"
+            "{% endfor %}"
+            "{% endfor %}"
+        ).render(Context())
+        expected = ("/about/"
+                    "   /about/contact/"
+                    "       /about/contact/scoutmaster/"
+                    "       /about/contact/webmaster/"
+                    "   /about/merit-badges/"
+                    "       /about/merit-badges/bird-study/"
+                    "       /about/merit-badges/cooking/")
+        self.assertEqual(out, expected)
+
+    def test_get_flatpage_hierarchy_with_base_page(self):
+        out = Template(
+            "{% load flatpage_related %}"
+            "{% get_flatpage_hierarchy '/about/' as flatpage_tree %}"
+            ""
+            "{% for parent in flatpage_tree %}"
+            "{{ parent.uri }}"
+            "{% for child in parent.children %}"
+            "   {{ child.uri }}"
+            "{% endfor %}"
+            "{% endfor %}"
+        ).render(Context())
+        expected = ("/about/contact/"
+                    "   /about/contact/scoutmaster/"
+                    "   /about/contact/webmaster/"
+                    "/about/merit-badges/"
+                    "   /about/merit-badges/bird-study/"
+                    "   /about/merit-badges/cooking/")
+        self.assertEqual(out, expected)
+
+    def test_get_flatpage_hierarchy_with_variable_base_page(self):
+        about_page = self.flatpages[0]
+        out = Template(
+            "{% load flatpage_related %}"
+            "{% get_flatpage_hierarchy about_page as flatpage_tree %}"
+            ""
+            "{% for parent in flatpage_tree %}"
+            "{{ parent.uri }}"
+            "{% for child in parent.children %}"
+            "   {{ child.uri }}"
+            "{% endfor %}"
+            "{% endfor %}"
+        ).render(Context({
+            'about_page': about_page
+        }))
+        expected = ("/about/contact/"
+                    "   /about/contact/scoutmaster/"
+                    "   /about/contact/webmaster/"
+                    "/about/merit-badges/"
+                    "   /about/merit-badges/bird-study/"
+                    "   /about/merit-badges/cooking/")
+        self.assertEqual(out, expected)
+
+    def test_get_flatpage_hierarchy_for_anon_user(self):
+        out = Template(
+            "{% load flatpage_related %}"
+            "{% get_flatpage_hierarchy for anon_user as flatpage_tree %}"
+            ""
+            "{% for parent in flatpage_tree %}"
+            "{{ parent.uri }}"
+            "{% for middle in parent.children %}"
+            "   {{ middle.uri }}"
+            "{% for child in middle.children %}"
+            "       {{ child.uri }}"
+            "{% endfor %}"
+            "{% endfor %}"
+            "{% endfor %}"
+        ).render(Context({
+            'anon_user': AnonymousUser()
+        }))
+        expected = ("/about/"
+                    "   /about/contact/"
+                    "       /about/contact/scoutmaster/"
+                    "       /about/contact/webmaster/"
+                    "   /about/merit-badges/"
+                    "       /about/merit-badges/bird-study/"
+                    "       /about/merit-badges/cooking/")
+        self.assertEqual(out, expected)
+
+    def test_get_flatpage_hierarchy_for_user(self):
+        some_user = User.objects.create_user('testuser', 'test@example.com', 'password')
+        out = Template(
+            "{% load flatpage_related %}"
+            "{% get_flatpage_hierarchy for some_user as flatpage_tree %}"
+            ""
+            "{% for parent in flatpage_tree %}"
+            "{{ parent.uri }}"
+            "{% for middle in parent.children %}"
+            "   {{ middle.uri }}"
+            "{% for child in middle.children %}"
+            "       {{ child.uri }}"
+            "{% endfor %}"
+            "{% endfor %}"
+            "{% endfor %}"
+        ).render(Context({
+            'some_user': some_user
+        }))
+        expected = ("/about/"
+                    "   /about/contact/"
+                    "       /about/contact/scoutmaster/"
+                    "       /about/contact/webmaster/"
+                    "   /about/merit-badges/"
+                    "       /about/merit-badges/bird-study/"
+                    "       /about/merit-badges/cooking/"
+                    "   /about/private/")  # Note access to private page
+        self.assertEqual(out, expected)
+
+    def test_get_flatpage_hierarchy_with_base_page_for_anon_user(self):
+        out = Template(
+            "{% load flatpage_related %}"
+            "{% get_flatpage_hierarchy '/about/' for anon_user as flatpage_tree %}"
+            ""
+            "{% for parent in flatpage_tree %}"
+            "{{ parent.uri }}"
+            "{% for middle in parent.children %}"
+            "   {{ middle.uri }}"
+            "{% for child in middle.children %}"
+            "       {{ child.uri }}"
+            "{% endfor %}"
+            "{% endfor %}"
+            "{% endfor %}"
+        ).render(Context({
+            'anon_user': AnonymousUser()
+        }))
+        expected = ("/about/contact/"
+                    "   /about/contact/scoutmaster/"
+                    "   /about/contact/webmaster/"
+                    "/about/merit-badges/"
+                    "   /about/merit-badges/bird-study/"
+                    "   /about/merit-badges/cooking/")
+        self.assertEqual(out, expected)
+
+    def test_get_flatpage_hierarchy_with_base_page_for_user(self):
+        some_user = User.objects.create_user('testuser', 'test@example.com', 'password')
+        out = Template(
+            "{% load flatpage_related %}"
+            "{% get_flatpage_hierarchy '/about/' for some_user as flatpage_tree %}"
+            ""
+            "{% for parent in flatpage_tree %}"
+            "{{ parent.uri }}"
+            "{% for middle in parent.children %}"
+            "   {{ middle.uri }}"
+            "{% for child in middle.children %}"
+            "       {{ child.uri }}"
+            "{% endfor %}"
+            "{% endfor %}"
+            "{% endfor %}"
+        ).render(Context({
+            'some_user': some_user
+        }))
+        expected = ("/about/contact/"
+                    "   /about/contact/scoutmaster/"
+                    "   /about/contact/webmaster/"
+                    "/about/merit-badges/"
+                    "   /about/merit-badges/bird-study/"
+                    "   /about/merit-badges/cooking/"
+                    "/about/private/")  # Note access to private page
+        self.assertEqual(out, expected)
+
+    def test_get_flatpage_hierarchy_with_depth(self):
+        out = Template(
+            "{% load flatpage_related %}"
+            "{% get_flatpage_hierarchy as flatpage_tree depth=2 %}"
+            ""
+            "{% for parent in flatpage_tree %}"
+            "{{ parent.uri }}"
+            "{% for middle in parent.children %}"
+            "   {{ middle.uri }}"
+            "{% endfor %}"
+            "{% endfor %}"
+        ).render(Context())
+        # Note no entry for /merit-badges/ since no base page exists
+        expected = ("/about/"
+                    "   /about/contact/")
+        self.assertEqual(out, expected)
+
+    def test_get_flatpage_hierarchy_with_variable_depth(self):
+        out = Template(
+            "{% load flatpage_related %}"
+            "{% get_flatpage_hierarchy as flatpage_tree depth=some_depth %}"
+            ""
+            "{% for parent in flatpage_tree %}"
+            "{{ parent.uri }}"
+            "{% for middle in parent.children %}"
+            "   {{ middle.uri }}"
+            "{% endfor %}"
+            "{% endfor %}"
+        ).render(Context({
+            'some_depth': 2
+        }))
+        # Note no entry for /merit-badges/ since no base page exists
+        expected = ("/about/"
+                    "   /about/contact/")
+        self.assertEqual(out, expected)
+
+    def test_get_flatpage_hierarchy_with_base_page_and_depth_for_user(self):
+        some_user = User.objects.create_user('testuser', 'test@example.com', 'password')
+        out = Template(
+            "{% load flatpage_related %}"
+            "{% get_flatpage_hierarchy '/about/' for some_user as flatpage_tree depth=1%}"
+            ""
+            "{% for parent in flatpage_tree %}"
+            "{{ parent.uri }}"
+            "{% for middle in parent.children %}"
+            "   {{ middle.uri }}"
+            "{% for child in middle.children %}"
+            "       {{ child.uri }}"
+            "{% endfor %}"
+            "{% endfor %}"
+            "{% endfor %}"
+        ).render(Context({
+            'some_user': some_user
+        }))
+        # Note no entry for /merit-badges/ since no base page exists
+        expected = ("/about/contact/"
+                    "/about/private/")  # Note access to private page
+        self.assertEqual(out, expected)
+
+    def test_get_flatpage_hierarchy_with_base_page_and_depth_for_anon_user(self):
+        out = Template(
+            "{% load flatpage_related %}"
+            "{% get_flatpage_hierarchy '/about/' for anon_user as flatpage_tree depth=1 %}"
+            ""
+            "{% for parent in flatpage_tree %}"
+            "{{ parent.uri }}"
+            "{% for middle in parent.children %}"
+            "   {{ middle.uri }}"
+            "{% for child in middle.children %}"
+            "       {{ child.uri }}"
+            "{% endfor %}"
+            "{% endfor %}"
+            "{% endfor %}"
+        ).render(Context({
+            'anon_user': AnonymousUser()
+        }))
+        # Note no entry for /merit-badges/ since no base page exists
+        expected = "/about/contact/"
+        self.assertEqual(out, expected)
