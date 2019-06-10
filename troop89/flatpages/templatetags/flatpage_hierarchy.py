@@ -10,11 +10,42 @@ from typing import List, NamedTuple, Optional
 
 from django import template
 from django.conf import settings
+from django.contrib.sites.models import Site
 from django.contrib.sites.shortcuts import get_current_site
 
 from ..models import HierarchicalFlatPage
 
 register = template.Library()
+
+
+@register.inclusion_tag('flatpages/includes/related_pages.html')
+def render_related_pages(page: HierarchicalFlatPage, user=None):
+    """
+    Render a listing of pages with the same logical parent as the given page.
+
+    Examples
+    --------
+
+    * ``/about/color/blue/`` would be in the related pages of ``/about/color/red/``.
+    * ``/about/`` **would not** be in the related pages of ``/about/color/``.
+    * ``/about/color/red/`` **would not** be in the related pages of ``/about/color/``.
+    """
+    current_site = Site.objects.get_current()
+
+    flatpages = HierarchicalFlatPage.objects.filter(sites__id=current_site.pk)
+
+    # If the provided user is not authenticated, or no user
+    # was provided, filter the list to only public flatpages.
+    if user:
+        if not user.is_authenticated:
+            flatpages = flatpages.filter(registration_required=False)
+    else:
+        flatpages = flatpages.filter(registration_required=False)
+
+    return {
+        'related_pages': flatpages.related_to(page),
+        'current_page': page,
+    }
 
 
 class _PageHierarchyNode(NamedTuple):

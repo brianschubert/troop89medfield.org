@@ -55,3 +55,8 @@
     {% endif %}
 
 {% endblock %}
+
+{% block content_sidebar %}
+    {% render_related_pages flatpage %}
+    {{ block.super }}
+{% endblock %}
