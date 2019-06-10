@@ -46,7 +46,7 @@ class HierarchicalFlatPageQuerySet(models.QuerySet):
         if related_stem == '/':
             related_stem = ''
 
-        return self.filter(url__regex=rf"^{related_stem}/[^/]+/$")
+        return self.exclude(pk=page.pk).filter(url__regex=rf"^{related_stem}/[^/]+/$")
 
 
 HierarchicalFlatPageManager = BaseHierarchicalFlatPageManager.from_queryset(HierarchicalFlatPageQuerySet)
