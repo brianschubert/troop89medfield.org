@@ -1,4 +1,4 @@
-#  Copyright (c) 2018 Brian Schubert
+#  Copyright (c) 2018, 2019 Brian Schubert
 #
 #  This Source Code Form is subject to the terms of the Mozilla Public
 #  License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -22,8 +22,14 @@ Including another URLconf
 
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.flatpages.sitemaps import FlatPageSitemap
+from django.contrib.sitemaps import views as sitemap_views
 from django.urls import include, path
-from django.views.generic import TemplateView
+
+from troop89.announcements.sitemaps import AnnouncementSitemap
+from troop89.events.sitemaps import EventSitemap
+from troop89.flatpages import views as flatpage_views
+from troop89.trooporg.sitemaps import PatrolSitemap, TermSitemap
 
 admin.site.site_title = settings.ADMIN_SITE_TITLE
 admin.site.site_header = settings.ADMIN_SITE_HEADER
@@ -46,17 +52,34 @@ def maintenance_page(request):
     return render(request, 'maintenance.html', context)
 
 
+sitemaps = {
+    'events': EventSitemap,
+    'announcements': AnnouncementSitemap,
+    'terms': TermSitemap,
+    'patrols': PatrolSitemap,
+    'flatpages': FlatPageSitemap,
+}
+
 urlpatterns = [
     path('', maintenance_page, name='home'),
-    path('base/', TemplateView.as_view(template_name='base.html'), name='base'),
-    path('base-unary/', TemplateView.as_view(template_name='base_unary.html'), name='base_unary'),
-    path('base-binary/', TemplateView.as_view(template_name='base_binary.html'), name='base_binary'),
     path('calendar/', include('troop89.events.urls', namespace='events')),
     path('members/', include('troop89.trooporg.urls', namespace='trooporg')),
     path('announcements/', include('troop89.announcements.urls', namespace='announcements')),
     path('admin/', admin.site.urls),
     path('markdownx/', include('markdownx.urls')),
     path('csp/', include('cspreports.urls')),
+    path(
+        'about/',
+        flatpage_views.hierarchical_flatpage,
+        {'url': '/about/'},
+        name='about',
+    ),
+    path(
+        'sitemap.xml',
+        sitemap_views.sitemap,
+        {'sitemaps': sitemaps},
+        name='django.contrib.sitemaps.views.sitemap',
+    ),
 ]
 
 if settings.DEBUG:

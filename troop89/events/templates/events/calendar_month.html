@@ -51,6 +51,9 @@
             {% endspaceless %}
         </div>
     </div>
+    <div class="notice">
+        <h2><a href="{% url "events:event-archive-month" month.year month.month %}">See all {{ month|date:"F Y" }} Events</a></h2>
+    </div>
 {% endblock %}
 
 

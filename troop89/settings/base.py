@@ -1,4 +1,4 @@
-#  Copyright (c) 2018 Brian Schubert
+#  Copyright (c) 2018, 2019 Brian Schubert
 #
 #  This Source Code Form is subject to the terms of the Mozilla Public
 #  License, v. 2.0. If a copy of the MPL was not distributed with this
@@ -52,11 +52,13 @@ INSTALLED_APPS = [
     'troop89.date_range.apps.DateRangeConfig',
     'troop89.trooporg.apps.TroopOrgConfig',
     'troop89.announcements.apps.AnnouncementsConfig',
+    'troop89.flatpages.apps.FlatpagesConfig',
 
     # Third party apps
     'markdownx',
     'cspreports',
     'django_referrer_policy',
+    'ckeditor',
 
     # Django apps
     'django.contrib.admin',
@@ -65,6 +67,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+    'django.contrib.flatpages',
 ]
 
 MIDDLEWARE = [
@@ -77,6 +82,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'csp.middleware.CSPMiddleware',
     'django_referrer_policy.middleware.ReferrerPolicyMiddleware',
+    'troop89.flatpages.middleware.HierarchicalFlatpageFallbackMiddleware',
 ]
 
 ROOT_URLCONF = 'troop89.urls'
@@ -148,6 +154,10 @@ STATICFILES_DIRS = (
 
 # User auth model
 AUTH_USER_MODEL = 'troop89_auth.User'
+
+# Django sites config
+
+SITE_ID = 1
 
 # Admin site branding
 ADMIN_SITE_TITLE = 'Troop89 site administration'

@@ -9,7 +9,7 @@ import unittest
 
 import pytz
 from django.shortcuts import reverse
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from .util import local_date_range
 
@@ -51,6 +51,7 @@ class DateRangeTest(unittest.TestCase):
         self.assertEqual(local_date_range(d2, d1, self.TIMEZONE), [])
 
 
+@override_settings(SECURE_SSL_REDIRECT=False, PREPEND_WWW=False)
 class CalendarMonthViewTestCase(TestCase):
     fixtures = ("events.json",)
 
@@ -67,6 +68,7 @@ class CalendarMonthViewTestCase(TestCase):
             self.assertTrue(any(e.title == 'Camp Squanto' for e in response.context['object_list']))
 
 
+@override_settings(SECURE_SSL_REDIRECT=False, PREPEND_WWW=False)
 class EventDayViewTestCase(TestCase):
     fixtures = ("events.json",)
 
@@ -91,6 +93,7 @@ class EventDayViewTestCase(TestCase):
         self.assertListEqual(titles, ['Camp Squanto'])
 
 
+@override_settings(SECURE_SSL_REDIRECT=False, PREPEND_WWW=False)
 class RedirectCurrentMonthTestCase(TestCase):
 
     def test_redirect_current_month(self):

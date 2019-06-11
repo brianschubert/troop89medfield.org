@@ -35,7 +35,6 @@ h1, h2, h3, h4, h5, h6 {
   // Header font, sans-sherif
   @include sans-serif;
   font-weight: 400;
-  letter-spacing: -2px;
 
   &:first-letter {
     text-transform: capitalize;
@@ -54,6 +53,13 @@ h1, h2, h3, h4, h5, h6 {
       color: lighten(get_color(header_link), 10%);
     }
   }
+}
+
+h1, h2 {
+  letter-spacing: -2px;
+}
+h3 {
+  letter-spacing: -1px;
 }
 
 // Header 1-4 size definitions.
