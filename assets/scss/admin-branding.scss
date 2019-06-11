@@ -159,3 +159,12 @@ fieldset, div.results {
 p.paginator {
   background-color: get_color(background) !important;
 }
+
+#changelist-filter li.selected {
+
+  border-left: 5px solid lighten(get_color(banner), 15%) !important;
+}
+
+#toolbar {
+  background-color: get_color(sidebar) !important;
+}
