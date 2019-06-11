@@ -148,11 +148,13 @@ This will collect the static files and media from across the project into a sing
 Updating Local Hostnames (Optional)
 -----------------------------------
 
-If you would like to use a host name (e.g. troop89.localhost) in place of a numeric IP (e.g. 127.0.0.1) when accessing the development site, you will want to update your machines hostname configuration. For Unix system (MacOS, Linux, etc), add the following entry to your ``/etc/hosts`` file:
-
-.. code-block::
+If you would like to use a host name (e.g. troop89.localhost) in place of a numeric IP (e.g. 127.0.0.1) when accessing the development site, you will want to update your machines hostname configuration. For Unix system (MacOS, Linux, etc), add the following entry to your ``/etc/hosts`` file::
 
     127.0.0.1 troop89.localhost
+
+Note that the ``.localhost`` TLD is `reserved for loop back addresses`_ of this sort. In fact, some browsers will treat ``.localhost`` domains as loop back addresses even without a DNS configuration or modified ``/etc/hosts`` file.
+
+.. _reserved for loop back addresses: https://tools.ietf.org/html/rfc2606
 
 Running the Server
 ------------------
