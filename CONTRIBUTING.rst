@@ -66,14 +66,14 @@ Contributions to the Troop 89 website should be submitted as a `pull request`_ o
 
 This repository uses branching conventions that are adapted from `A successful Git branching model`_:
 
-- New features branches should be titled ``feature/your-feature-description`` and should be based off of the ``development`` branch
-- "Hot fixes" should be titled ``fix/your-fix-description`` and should be based off of the ``master`` branch.
+- New features branches should be named ``feature/your-feature-description`` and should be based off of the ``development`` branch
+- "Hot fixes" should be named ``hotfix/v{SEMVER}`` where ``{SEMVER}`` is the `semantic version`_ of the latest release with the patch version incremented. Hotfix branches should be based off of the ``master`` branch.
 
 Commit messages should adhere to `these general guidelines`_.
 
 All Python code should adhere to the `standard style guide for Python code (PEP 8)`_.
 
-
+.. _semantic version: https://semver.org/
 .. _standard style guide for Python code (PEP 8): https://www.python.org/dev/peps/pep-0008/
 .. _A successful Git branching model: https://nvie.com/posts/a-successful-git-branching-model/
 .. _these general guidelines: https://chris.beams.io/posts/git-commit/
