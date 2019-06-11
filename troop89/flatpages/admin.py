@@ -19,7 +19,7 @@ from .models import HierarchicalFlatPage
 # the editor widget.
 _CSP_UPDATE_DECORATOR = csp_update(
     SCRIPT_SRC="'unsafe-inline'",
-    STYLE_SRC=("'unsafe-inline'", "'self'")
+    STYLE_SRC="'unsafe-inline'",
 )
 
 
