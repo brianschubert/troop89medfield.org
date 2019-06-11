@@ -186,12 +186,6 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 # Note: We use the Mozzila's middleware from the django-csp package to send
 # csp headers. We use a third-party package (django-csp-reports) to handle
 # csp policy violation reports.
-#
-# Current CSP is equivalent to:
-# Content-Security-Policu: default-src 'self'; img-src *; report-uri https://{{HOST}}/csp/report/
-
-# Uncomment to have CSP violations reports but not enforced.
-# CSP_REPORT_ONLY = True
 
 CSP_DEFAULT_SRC = ("'self'",)
 
