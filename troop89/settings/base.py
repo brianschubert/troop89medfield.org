@@ -195,6 +195,10 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 
 CSP_DEFAULT_SRC = ("'self'",)
 
+CSP_SCRIPT_SRC = ("'self'",)
+
+CSP_STYLE_SRC = ("'self'",)
+
 # Allow arbitrary host to serve images (for user convenience)
 CSP_IMG_SRC = ('*',)
 
