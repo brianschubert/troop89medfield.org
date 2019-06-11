@@ -9,7 +9,7 @@ Installing the Troop 89 Website
 
 .. note::
 
-    This guide assumes that you already have Python installed. At the time of this writing, the troop 89 website requires Python3.6 or greater.
+    This guide assumes that you already have Python installed. At the time of this writing, the troop 89 website requires Python 3.6 or greater.
 
 Getting a local copy of the troop 89 website running is a fairly simple process, though there are several steps. This guide is intended to be especially detailed so that it may serve as a partial reference for future webmasters in training.
 
@@ -83,7 +83,7 @@ An example configuration is located in the ``demo.secrets.json`` file, which you
 
     $ cp demo.secrets.json .secrets.json
 
-This file includes the credentials for an `SQLite`_ database, which is a single-file based relational database that ships with Python. Before beginning significant development, you should install and configure a `PostreSQL`_ database (for which the site is designed) and substitute its credentials into ``.secrets.json``.
+This file includes the credentials for an `SQLite`_ database, which is a single-file based relational database that ships with Python. Before beginning significant development, you should install and configure a `PostreSQL`_ database (for which the site is designed) and substitute its credentials into ``.secrets.json``. See :ref:`deployment-database-config` for more details.
 
 .. _SQLite: https://docs.python.org/3/library/sqlite3.html
 .. _PostreSQL: https://www.postgresql.org/
@@ -98,6 +98,8 @@ Assuming all configurations are good, you should only need to run
     $ ./manage.py migrate
 
 This will create the necessary tables and relations, but will not populate the database with data.
+
+.. _install-populate-database:
 
 Populating the Database
 -----------------------
@@ -146,7 +148,7 @@ This will collect the static files and media from across the project into a sing
 Updating Local Hostnames (Optional)
 -----------------------------------
 
-If you would like to use a host name (e.g. troop89.localhost) in place of a numeric IP (e.g. 127.0.0.1) when accessing the development site, you will want to update your machines hostname configuration. For Unix system (MacOS, Linux, etc), add the following entry to your ``/etc/hosts`` file
+If you would like to use a host name (e.g. troop89.localhost) in place of a numeric IP (e.g. 127.0.0.1) when accessing the development site, you will want to update your machines hostname configuration. For Unix system (MacOS, Linux, etc), add the following entry to your ``/etc/hosts`` file:
 
 .. code-block::
 
@@ -157,7 +159,7 @@ Running the Server
 
 .. warning::
 
-    The following instructions are for development only. For production, a fully fledged HTTP server such as Apache or Nginx should be used in place of the lightweight serve that ships with Django. See the `Django runserver`_ docs for more information.
+    The following instructions are for development only. For production, a fully fledged HTTP server such as Apache or Nginx should be used in place of the lightweight server that ships with Django. See the `Django runserver`_ docs for more information.
 
 .. _Django runserver: https://docs.djangoproject.com/en/2.2/ref/django-admin/#django-admin-runserver
 
