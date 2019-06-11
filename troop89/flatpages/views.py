@@ -15,7 +15,7 @@ from .models import HierarchicalFlatPage
 
 
 # Rich text editor produces inline css for some features.
-@csp_update(STYLE_SRC=("'unsafe-inline'", "'self'"))
+@csp_update(STYLE_SRC=("'unsafe-inline'", "'self'"), FRAME_SRC="https://meritbadge.org/wiki/")
 def hierarchical_flatpage(request, url):
     """
     Copy of the standard public interface to the flat page view that integrates
