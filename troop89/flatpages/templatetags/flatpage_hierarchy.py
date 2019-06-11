@@ -5,6 +5,7 @@
 #  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import itertools
+import os.path
 import re
 from typing import List, NamedTuple, Optional
 
@@ -58,7 +59,8 @@ class _PageHierarchyNode(NamedTuple):
     def title(self) -> str:
         if self.page:
             return self.page.title
-        return self.uri.replace('/', ' ').title()
+        path = os.path.normpath(self.uri)
+        return os.path.basename(path).replace('-', ' ').title()
 
 
 class HierarchicalFlatpageTemplateNode(template.Node):
