@@ -219,3 +219,66 @@ CSP_REPORTS_SAVE = True
 # ReferrerPolicyMiddleware settings
 
 REFERRER_POLICY = 'no-referrer-when-downgrade'
+
+# django-ckeditor config
+#
+# See https://github.com/django-ckeditor/django-ckeditor#optional-customizing-ckeditor-editor
+# for further details on how to configure the ckeditor django app.
+#
+# See https://ckeditor.com/docs/ckeditor4/latest/guide/dev_toolbar.html for
+# details on how to customize the ckeditor toolbar.
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'toolbarGroups': [
+            {'name': 'document', 'groups': ['mode', 'document', 'doctools']},
+            {'name': 'clipboard', 'groups': ['clipboard', 'undo']},
+            {'name': 'editing', 'groups': ['find', 'selection', 'spellchecker', 'editing']},
+            {'name': 'forms', 'groups': ['forms']},
+            {'name': 'links', 'groups': ['links']},
+            {'name': 'insert', 'groups': ['insert']},
+            {'name': 'tools', 'groups': ['tools']},
+            {'name': 'about', 'groups': ['about']},
+            '/',
+            {'name': 'styles', 'groups': ['styles']},
+            {'name': 'colors', 'groups': ['colors']},
+            {'name': 'basicstyles', 'groups': ['basicstyles', 'cleanup']},
+            {'name': 'paragraph', 'groups': ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']},
+            '/',
+            {'name': 'others', 'groups': ['others']},
+        ],
+
+        'removeButtons': ','.join([
+            # Remove document tools
+            'Save',
+            'NewPage',
+            'Preview',
+            'Print',
+            'Cut',
+            'PasteFromWord',
+            'PasteText',
+            'Paste',
+            'Copy',
+            # Remove language support tools
+            'BidiLtr',
+            'BidiRtl',
+            'Language',
+            # Remove Flash plugin insert
+            'Flash',
+            'PageBreak',
+            # Remove font face and size customization tools
+            'Font',
+            'FontSize',
+            # Remove html form insert tools
+            'Form',
+            'TextField',
+            'Textarea',
+            'Select',
+            'Button',
+            'ImageButton',
+            'HiddenField',
+            'Radio'
+        ])
+    }
+}
