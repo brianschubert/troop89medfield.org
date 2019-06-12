@@ -10,60 +10,48 @@ from django.urls import reverse
 from django.utils import timezone
 from django.utils.timezone import localtime, now
 from django.views import generic
-from django_json_ld.views import JsonLdContextMixin
 
 from troop89.date_range.views import DayDateRangeView, MonthDateRangeView
+from troop89.json_ld.views import BreadcrumbJsonLdMixin
 from .models import Event
 from .util import EventCalendar
 
 
-class EventBreadcrumbJsonLdContextMixin(JsonLdContextMixin):
+class EventBreadcrumbMixin(BreadcrumbJsonLdMixin):
     """
-    Mixin for Event views to set structured data in a view's context.
-
-    The ``JsonLdContextMixin`` can not be used to handle the Event views'
-    structured data since it's ``__init__`` method does not expect any kwargs,
-    but we need to set ``self.month_format`` via a kwarg.
-
-    This mixin resolves this issue by explicitly calling ``View.__init__()``
-    before ``super().__init__()``, which presumptively converts all kwargs into
-    attributes, removing the need to pass the kwargs to parent ``__init__()``s.
-
-    See `google's page on breadcrumb structured data`_ for more information
-    regarding json-ld structured data.
-
-    .. _google's page on breadcrumb structured data: https://developers.google.com/search/docs/data-types/breadcrumb
+    Mixin for Event views to set breadcrumb structured data the view's context.
     """
-    structured_data = {
-        "@type": 'BreadcrumbList',
-    }
 
     def __init__(self, **kwargs):
+        """
+        Most of the event views rely on kwargs to set instance attributes such
+        as ``self.month_format``. However, ``JsonLdContextMixin``, which
+        BreadcrumbJsonLdMixin inherits from, does not accept any kwargs and
+        therefore prevents these arguments from propagating to ``View``'s
+        ``__init__`` method.
+
+        This this issue is mitigated by explicitly calling ``View.__init__()``
+        before ``super().__init__()``, which presumptively converts all kwargs into
+        attributes, removing the need to pass the kwargs to parent ``__init__()``s.
+        """
         generic.View.__init__(self, **kwargs)
         super().__init__()
 
-    def _make_breadcrumbs_for_date(self, date: datetime):
+    @staticmethod
+    def make_common_breadcrumbs(date: datetime):
         return [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Calendar",
-                "item": self.request.build_absolute_uri(
-                    reverse('events:calendar-month', args=(date.year, date.month))
-                )
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": date.strftime("%B %Y Events"),
-                "item": self.request.build_absolute_uri(
-                    reverse('events:event-archive-month', args=(date.year, date.month))
-                )
-            },
+            (
+                "Calendar",
+                reverse('events:calendar-month', args=(date.year, date.month)),
+            ),
+            (
+                date.strftime("%B %Y Events"),
+                reverse('events:event-archive-month', args=(date.year, date.month)),
+            ),
         ]
 
 
-class EventMonthView(EventBreadcrumbJsonLdContextMixin, MonthDateRangeView):
+class EventMonthView(EventBreadcrumbMixin, MonthDateRangeView):
     model = Event
     allow_empty = True
     allow_future = True
@@ -71,14 +59,11 @@ class EventMonthView(EventBreadcrumbJsonLdContextMixin, MonthDateRangeView):
     date_field_end = 'end'
     context_object_name = 'events'
 
-    def get_structured_data(self):
-        """Return this month's structured data for search engine indexing."""
-        structured_data = super().get_structured_data()
-
+    def get_breadcrumbs(self):
+        breadcrumbs = super().get_breadcrumbs()
         date = datetime(self.get_year(), self.get_month(), 1)
-
-        structured_data['itemListElement'] = self._make_breadcrumbs_for_date(date)
-        return structured_data
+        breadcrumbs += self.make_common_breadcrumbs(date)
+        return breadcrumbs
 
 
 class CalendarMonthView(EventMonthView):
@@ -96,23 +81,18 @@ class CalendarMonthView(EventMonthView):
 
         return context
 
-    def get_structured_data(self):
-        """Return this calendar's structured data for search engine indexing."""
-        structured_data = super().get_structured_data()
+    def get_breadcrumbs(self):
+        breadcrumbs = super().get_breadcrumbs()
 
         date = datetime(self.get_year(), self.get_month(), 1)
-        structured_data['itemListElement'][-1] = {
-            "@type": "ListItem",
-            "position": 2,
-            "name": date.strftime("%B %Y Calendar"),
-            "item": self.request.build_absolute_uri(
-                reverse('events:calendar-month', args=(date.year, date.month))
-            )
-        }
-        return structured_data
+        breadcrumbs[-1] = (
+            date.strftime("%B %Y Calendar"),
+            reverse('events:calendar-month', args=(date.year, date.month)),
+        )
+        return breadcrumbs
 
 
-class EventDayView(EventBreadcrumbJsonLdContextMixin, DayDateRangeView):
+class EventDayView(EventBreadcrumbMixin, DayDateRangeView):
     model = Event
     allow_empty = True
     allow_future = True
@@ -120,57 +100,39 @@ class EventDayView(EventBreadcrumbJsonLdContextMixin, DayDateRangeView):
     date_field_end = 'end'
     context_object_name = 'events'
 
-    def get_structured_data(self):
-        """Return this day's structured data for search engine indexing."""
-        structured_data = super().get_structured_data()
-
+    def get_breadcrumbs(self):
+        breadcrumbs = super().get_breadcrumbs()
         date = datetime(self.get_year(), self.get_month(), self.get_day())
-
-        item_list = self._make_breadcrumbs_for_date(date)
-        item_list.append({
-            "@type": "ListItem",
-            "position": 3,
-            "name": date.strftime("%a %B %d"),
-            "item": self.request.build_absolute_uri(
-                reverse('events:event-archive-day', args=(date.year, date.month, date.day))
-            )
-        })
-        structured_data['itemListElement'] = item_list
-        return structured_data
+        breadcrumbs += self.make_common_breadcrumbs(date)
+        breadcrumbs.append((
+            date.strftime("%a. %B %d"),
+            reverse('events:event-archive-day', args=(date.year, date.month, date.day)),
+        ))
+        return breadcrumbs
 
 
-class EventDetailView(EventBreadcrumbJsonLdContextMixin, generic.DetailView, generic.dates.BaseDateDetailView):
+class EventDetailView(EventBreadcrumbMixin, generic.DetailView, generic.dates.BaseDateDetailView):
     model = Event
     date_field = 'start'
     allow_future = True
 
-    def get_structured_data(self):
-        """Return this event's structured data for search engine indexing."""
-        structured_data = super().get_structured_data()
+    def get_breadcrumbs(self):
+        breadcrumbs = super().get_breadcrumbs()
 
         date = timezone.localdate(self.object.start)
 
-        item_list = self._make_breadcrumbs_for_date(date)
-        item_list.extend([
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": date.strftime("%a %B %d"),
-                "item": self.request.build_absolute_uri(
-                    reverse('events:event-archive-day', args=(date.year, date.month, date.day))
-                )
-            },
-            {
-                "@type": "ListItem",
-                "position": 4,
-                "name": self.object.title,
-                "item": self.request.build_absolute_uri(
-                    reverse('events:event-detail', args=(date.year, date.month, date.day, self.object.slug))
-                )
-            },
-        ])
-        structured_data['itemListElement'] = item_list
-        return structured_data
+        breadcrumbs += self.make_common_breadcrumbs(date)
+        breadcrumbs += [
+            (
+                date.strftime("%a. %B %d"),
+                reverse('events:event-archive-day', args=(date.year, date.month, date.day)),
+            ),
+            (
+                self.object.title,
+                reverse('events:event-detail', args=(date.year, date.month, date.day, self.object.slug)),
+            ),
+        ]
+        return breadcrumbs
 
 
 class RedirectCurrentMonth(generic.RedirectView):
