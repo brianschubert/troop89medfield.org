@@ -10,7 +10,9 @@ from django import forms
 from django.contrib import admin
 from django.contrib.flatpages import admin as flatpage_admin, forms as flatpage_forms
 from django.contrib.flatpages.models import FlatPage
+from django.utils import html
 from django.utils.decorators import method_decorator
+from django.utils.text import Truncator
 
 from .models import HierarchicalFlatPage
 
@@ -23,8 +25,38 @@ _CSP_UPDATE_DECORATOR = csp_update(
 )
 
 
+class ParentPageListFilter(admin.SimpleListFilter):
+    title = "parent page"
+
+    parameter_name = 'parent'
+
+    def lookups(self, request, model_admin):
+        pages = HierarchicalFlatPage.objects.children_for_url('/', depth=3)
+        return [(p.url, p.url) for p in pages]
+
+    def queryset(self, request, queryset):
+        if self.value():
+            return queryset.filter(url__startswith=self.value())
+
+
 class HierarchicalFlatPageAdminForm(flatpage_forms.FlatpageForm):
-    content = forms.CharField(widget=CKEditorWidget())
+    content = forms.CharField(
+        widget=CKEditorWidget(),
+        help_text='Tip: use the "Source" button the view the pages HTML source.',
+    )
+    # Copy of FlatPageForm.url, but with overridden widget
+    url = forms.RegexField(
+        label="URL",
+        max_length=100,
+        regex=r'^[-\w/\.~]+$',
+        help_text="Example: '/about/contact/'. Make sure to have leading and trailing slashes.",
+        error_messages={
+            "invalid":
+                "This value must contain only letters, numbers, dots, "
+                "underscores, dashes, slashes or tildes.",
+        },
+        widget=forms.TextInput(attrs={'size': 50}),
+    )
 
     class Meta(flatpage_forms.FlatpageForm.Meta):
         model = HierarchicalFlatPage
@@ -34,6 +66,19 @@ class HierarchicalFlatPageAdminForm(flatpage_forms.FlatpageForm):
 @method_decorator(_CSP_UPDATE_DECORATOR, name='change_view')
 class HierarchicalFlatPageAdmin(flatpage_admin.FlatPageAdmin):
     form = HierarchicalFlatPageAdminForm
+
+    search_fields = ['title', 'url']
+
+    list_display = flatpage_admin.FlatPageAdmin.list_display + ('content_preview',)
+
+    list_display_links = ('url', 'title')
+
+    list_filter = (ParentPageListFilter,)
+
+    @staticmethod
+    def content_preview(obj: HierarchicalFlatPage) -> str:
+        content = html.strip_tags(obj.content)
+        return Truncator(content).chars(90, html=True)
 
 
 # Re-register FlatPageAdmin

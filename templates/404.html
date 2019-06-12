@@ -1,14 +1,26 @@
 {% extends "base_error.html" %}
+{% load static %}
 
 {% block title %}Page Not Found{% endblock %}
 
 {% block info_banner %}
-<h1>404 Not Found</h1>
+    <h1>404 Not Found</h1>
 {% endblock %}
 
 {% block content_main %}
-    <h2>Looks like we're lost.</h2>
+
+    <h1>Looks like we're lost.</h1>
+    <figure>
+        <img src="{% static "img/contrib/aschubert_404.png" %}" alt="lost-scout"/>
+        <footer>
+            <small class="meta">Copyright &copy; 2019 Amy Schubert. All rights reserved.</small>
+        </footer>
+    </figure>
+
     <p>The server can not find requested resource. </p>
 
-    <p>If you were following a link from our site, please <a href="https://troop89medfieldorg.readthedocs.io/en/latest/contributing.html#reporting-a-bug">file a bug report</a> so that our webmaster can look into this issue. Otherwise, try navigating from our <a href="{% url "home" %}">homepage</a></p>
+    <p>If you were following a link from our site, please <a
+            href="https://troop89medfieldorg.readthedocs.io/en/latest/contributing.html#reporting-a-bug">file a bug
+        report</a> so that our webmaster can look into this issue. Otherwise, try navigating from our <a
+            href="{% url "home" %}">homepage</a></p>
 {% endblock %}

@@ -308,3 +308,18 @@ blockquote {
     }
   }
 }
+
+figure {
+  margin: auto;
+  display: block;
+
+  img {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+  }
+
+  footer {
+    text-align: center;
+  }
+}
