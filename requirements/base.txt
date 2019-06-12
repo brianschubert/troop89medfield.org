@@ -9,3 +9,4 @@ django-csp~=3.5
 django-csp-reports~=1.2
 django-referrer-policy~=1.0
 django-ckeditor~=5.7.1
+django-json-ld~=0.0.4
