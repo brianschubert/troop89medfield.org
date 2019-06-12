@@ -91,6 +91,29 @@ class HierarchicalFlatPage(FlatPage):
         """
         return HierarchicalFlatPage.objects.children_for_url(self.url, depth, include_parents)
 
+    @property
+    def sd_breadcrumb(self) -> dict:
+        """Return this page's breadcrumb trail as a structured data dict."""
+        item_list = []
+        for position, page in enumerate(reversed(self.parent_pages), start=1):
+            item_list.append({
+                "@type": "ListItem",
+                "position": position,
+                "name": page.title,
+                "item": page.url
+            })
+        item_list.append({
+                "@type": "ListItem",
+                "position": len(self.parent_pages) + 1,
+                "name": self.title,
+                "item": self.url
+            })
+        return {
+            "@context": "https://schema.org",
+            "@type": 'BreadcrumbList',
+            "itemListElement": item_list,
+        }
+
 
 def _ensure_trailing_slash(url: str) -> str:
     """Return the given url with a trailing if one is missing"""
