@@ -22,6 +22,7 @@ from .models import HierarchicalFlatPage
 _CSP_UPDATE_DECORATOR = csp_update(
     SCRIPT_SRC="'unsafe-inline'",
     STYLE_SRC="'unsafe-inline'",
+    IMG_SRC='data:',  # used by the iframe tools
 )
 
 
