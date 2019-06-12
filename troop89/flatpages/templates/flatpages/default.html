@@ -14,7 +14,7 @@
             {% endfor %}
             <li>
                 {{ flatpage.title }}
-                {% if request.user.is_staff and perms.flatpages.change_flatpage %}
+                {% if request.user.is_staff and perms.troop89_flatpages.change_hierarchicalflatpage %}
                     (<a class="edit" href="{% url "admin:troop89_flatpages_hierarchicalflatpage_change" flatpage.id %}">edit</a>)
                 {% endif %}
             </li>
