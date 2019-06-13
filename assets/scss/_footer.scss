@@ -68,6 +68,11 @@ body > footer {
 
         a {
           text-decoration: none;
+          color: get_color(text);
+
+          &:hover, &:focus {
+            color: lighten(get_color(header_link), 20%);
+          }
         }
       }
 
