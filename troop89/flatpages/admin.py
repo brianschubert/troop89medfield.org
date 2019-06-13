@@ -20,9 +20,13 @@ from .models import HierarchicalFlatPage
 # site-wide CSP. This decorator loosens the CSP on the admin pages that load
 # the editor widget.
 _CSP_UPDATE_DECORATOR = csp_update(
-    SCRIPT_SRC="'unsafe-inline'",
+    SCRIPT_SRC=("'unsafe-inline'", 'www.webspellchecker.net/spellcheck31/'),
     STYLE_SRC="'unsafe-inline'",
     IMG_SRC='data:',  # used by the iframe tools
+    FRAME_SRC=( # used by ckeditor spell checker
+        'https://svc.webspellchecker.net/spellcheck/lf/23/banner/banner.html',
+        'www.webspellchecker.net/spellcheck/script/ssrv.cgi'
+    ),
 )
 
 
