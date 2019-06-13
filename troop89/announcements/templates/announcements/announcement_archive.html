@@ -1,1 +1,5 @@
 {% extends "announcements/base.html" %}
+
+{% block title %}Announcements Index{% endblock %}
+
+{% block description %}Browse all of the announcements posted by Boys Scout Troop 89 Medfield. Latest: {{ announcements.0.formatted_content|striptags|truncatechars:70 }}{% endblock %}

@@ -3,6 +3,8 @@
 
 {% block title %}{{ event.title }}{% endblock %}
 
+{% block description %}{{ event.formatted_description|striptags|truncatechars:150 }}{% endblock %}
+
 {% block info_banner %}
     <h1>Event Details</h1>
 {% endblock %}
