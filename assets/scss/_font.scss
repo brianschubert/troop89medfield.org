@@ -18,12 +18,8 @@ body {
 
 // Default formatting for anchors
 a {
-  color: get_color(text);
+  color: lighten(get_color(text), 10%);
   text-decoration: underline;
-
-  &:visited {
-    color: lighten(get_color(text), 10%);
-  }
 
   &:hover, &:active, &:focus {
     color: lighten(get_color(text), 20%);
