@@ -9,9 +9,9 @@
 {% block content_main %}
     <div class="notice">
         <ul class="nav">{% spaceless %}
-            <li class="prev"><a href="{{ announcement.get_previous_by_pub_date.get_absolute_url }}">Previous<span class="extra"> announcement</span></a></li>
+            <li class="prev"><a rel="prev" href="{{ announcement.get_previous_by_pub_date.get_absolute_url }}">Previous<span class="extra"> announcement</span></a></li>
             <li class="current"><a href="{% url "announcements:announcement-index" %}"> Index</a></li>
-            <li class="next"><a href="{{ announcement.get_next_by_pub_date.get_absolute_url }}">Next<span class="extra"> announcement</span></a></li>
+            <li class="next"><a rel="next" href="{{ announcement.get_next_by_pub_date.get_absolute_url }}">Next<span class="extra"> announcement</span></a></li>
         {% endspaceless %}</ul>
     </div>
     <div>
