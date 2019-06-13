@@ -4,6 +4,8 @@
 #  License, v. 2.0. If a copy of the MPL was not distributed with this
 #  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import calendar
+
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
@@ -53,3 +55,27 @@ class Announcement(models.Model):
     def formatted_content(self):
         """Render this announcement markdown content into HTML."""
         return markdownify(self.content)
+
+    @property
+    def breadcrumbs(self):
+        """Return this announcement's breadcrumb trail."""
+        local_date = timezone.localdate(self.pub_date)
+        return [
+            (
+                "Announcements",
+                reverse('announcements:announcement-index')
+            ),
+            (
+                str(local_date.year),
+
+                reverse('announcements:announcement-archive-year', args=(local_date.year,)),
+            ),
+            (
+                calendar.month_name[local_date.month],
+                reverse('announcements:announcement-archive-month', args=(local_date.year, local_date.month), ),
+            ),
+            (
+                self.title,
+                reverse('announcements:announcement-detail',args=(local_date.year, local_date.month, local_date.day, self.slug),)
+            ),
+        ]
