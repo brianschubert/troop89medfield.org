@@ -1,6 +1,14 @@
 {% extends "base_binary.html" %}
+{% load render_json_ld from json_ld %}
 
-{% block title %} Calendar {% endblock %}
+{% block title %}Calendar{% endblock %}
+
+{% block structured_data %}
+    {# All event views include breadcrumb structured data under the #}
+    {# under the context variable sd #}
+    {{ block.super }}
+    {% render_json_ld sd %}
+{% endblock %}
 
 {% block info_banner %}
     <h1>Calendar</h1>

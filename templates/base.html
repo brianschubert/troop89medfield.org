@@ -11,11 +11,17 @@
     <meta name="description"
           content="{% block description %}Boy Scouts of America Troop 89 - Medfield, Massachusetts{% endblock %}"/>
 
-    <title>{% block title %}Medfield Scouting{% endblock %} | Troop 89</title>
+    <title>{% block title %}Medfield Scouting{% endblock %} | Troop 89 Medfield</title>
 
     <link rel="stylesheet" type="text/css" href="{% static "css/output.css" %}">
-    {% block stylesheets %}{% endblock %}{# Incase subtemples need to add their own specicialized style sheets e.g. holiday theme #}
 
+    {# Incase subtemplates need to add their own specicialized style sheets e.g. holiday theme #}
+    {% block stylesheets %}{% endblock %}
+
+    {# Generic location to place json-ld formatted structured data elements #}
+    {# See https://developers.google.com/search/docs/guides/intro-structured-data #}
+    {# for further details. #}
+    {% block structured_data %}{% endblock %}
 </head>
 
 <body id="{% block body_id %}{% endblock %}" class="{% block body_class %}default{% endblock %}">

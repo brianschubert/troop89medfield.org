@@ -3,6 +3,8 @@
 
 {% block title %}{{ event.title }}{% endblock %}
 
+{% block description %}{{ event.formatted_description|striptags|truncatechars:150 }}{% endblock %}
+
 {% block info_banner %}
     <h1>Event Details</h1>
 {% endblock %}
@@ -10,9 +12,9 @@
 {% block content_main %}
     <div class="notice">
         <ul class="nav">{% spaceless %}
-            <li class="prev"><a href="{{ event.get_previous_by_start.get_absolute_url }}">Previous<span class="extra"> event</span></a></li>
+            <li class="prev"><a rel="prev" href="{{ event.get_previous_by_start.get_absolute_url }}">Previous<span class="extra"> event</span></a></li>
             <li class="current"><a href="{% url "events:calendar-month" event.start.year event.start.month %}"> See calendar</a></li>
-            <li class="next"><a href="{{ event.get_next_by_start.get_absolute_url }}">Next<span class="extra"> event</span></a></li>
+            <li class="next"><a rel="next" href="{{ event.get_next_by_start.get_absolute_url }}">Next<span class="extra"> event</span></a></li>
         {% endspaceless %}</ul>
     </div>
 

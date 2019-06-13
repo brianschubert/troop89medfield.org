@@ -3,12 +3,14 @@
 
 {% block title %}{{ day|date:"F d Y" }} Events{% endblock %}
 
+{% block description %}Browse meetings, trips, activity nights and more for {{ day|date:"F d Y" }}. Boy Scout Troop 89 Medfield.{% endblock %}
+
 {% block notice %}
     <div class="notice">
         <ul class="nav">{% spaceless %}
-            <li><a href="{% url "events:event-archive-day" previous_day.year previous_day.month previous_day.day %}">Previous <span class="extra">day</span></a></li>
+            <li><a rel="prev" href="{% url "events:event-archive-day" previous_day.year previous_day.month previous_day.day %}">Previous <span class="extra">day</span></a></li>
             <li><a href="{% url "events:calendar-month" day.year day.month %}">See calendar</a></li>
-            <li><a href="{% url "events:event-archive-day" next_day.year next_day.month next_day.day %}">Next <span class="extra">day</span></a></li>
+            <li><a rel="next" href="{% url "events:event-archive-day" next_day.year next_day.month next_day.day %}">Next <span class="extra">day</span></a></li>
         {% endspaceless %}</ul>
     </div>
     <h1>{{ day|date:"F d Y" }} events</h1>

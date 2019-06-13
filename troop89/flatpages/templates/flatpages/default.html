@@ -1,9 +1,27 @@
 {% extends "base_binary.html" %}
 {% load flatpage_hierarchy %}
+{% load render_json_ld from json_ld %}
 
 {% block title %}{{ flatpage.title }}{% endblock %}
 
+{% block description %}{% spaceless %}
+    {% with trimmed_content=flatpage.content|striptags|truncatechars:150 %}
+        {% if trimmed_content %}
+            {{ trimmed_content }}
+        {% elif flatpage.parent_pages %} {# Parent pages are cached, to repeated access does not cause additional queries #}
+            Read about {{ flatpage.parent_pages.0.title }} - {{ flatpage.title }}. Boy Scout Troop 89 Medfield.
+        {% else %}
+            Read about {{ flatpage.title }}. Boy Scout Troop 89 Medfield.
+        {% endif %}
+    {% endwith %}
+{% endspaceless %}{% endblock %}
+
 {% block info_banner %}<h1>{{ flatpage.title }}</h1>{% endblock %}
+
+{% block structured_data %}
+    {{ block.super }}
+    {% render_json_ld flatpage.sd_breadcrumb %}
+{% endblock %}
 
 {% block content_main %}
     <div class="notice">

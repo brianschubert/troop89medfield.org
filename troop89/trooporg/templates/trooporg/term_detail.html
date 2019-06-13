@@ -3,8 +3,7 @@
 
 {% block title %}Members{% endblock %}
 
-{% block description %}{% if term %}Troop 89 Member {{ term.period_str }}{% else %}No records for this term.
-{% endif %}{% endblock %}
+{% block description %}{% if term %}Browse the Troop 89 members for {{ term.period_str }}{% else %}No memberships records for {{ date|date:"F d Y" }}{% endif %}. Boy Scout Troop 89 Medfield.{% endblock %}
 
 {% block info_banner %}<h1>Members</h1>{% endblock %} info_banner %}
 

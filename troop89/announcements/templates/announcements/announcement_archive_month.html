@@ -1,5 +1,10 @@
 {% extends "announcements/base.html" %}
 
+{% block title %}{{ month|date:"F Y" }} Announcements{% endblock %}
+
+{# Will be at most 148 characters #}
+{% block description %}Browse all of the announcements posted in {{ month|date:"F Y" }} by Boys Scout Troop 89 Medfield. Latest: {{ announcements.0.formatted_content|striptags|truncatechars:50 }}{% endblock %}
+
 {% block notice %}
     <h1> {{ month|date:"F Y" }} Announcements</h1>
 {% endblock %}

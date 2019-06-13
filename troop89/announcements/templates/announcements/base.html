@@ -1,8 +1,16 @@
 {% extends "base_binary.html" %}
 {% load announcement_dates %}
+{% load render_json_ld from json_ld %}
 
 {% block info_banner %}
     <h1><a href="{% url "announcements:announcement-index" %}">Announcements Archive</a></h1>
+{% endblock %}
+
+{% block structured_data %}
+    {# All announcement views include breadcrumb structured data under #}
+    {# the context variable sd #}
+    {{ block.super }}
+    {% render_json_ld sd %}
 {% endblock %}
 
 {% block content_main %}
@@ -22,13 +30,13 @@
             <ul class="nav">{% spaceless %}
                 <li>
                     {% if page_obj.has_previous %}
-                        <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                        <a rel="prev" href="?page={{ page_obj.previous_page_number }}">Previous</a>
                     {% endif %}
                 </li>
                 <li><p>Page {{ page_obj.number }} of <a href="?last">{{ page_obj.paginator.num_pages }}</a></p></li>
                 <li>
                     {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}">Next</a>
+                        <a rel="next" href="?page={{ page_obj.next_page_number }}">Next</a>
                     {% endif %}
                 </li>
             {% endspaceless %}</ul>

@@ -3,12 +3,14 @@
 
 {% block title %}{{ month|date:"F Y" }} Events{% endblock %}
 
+{% block description %}Browse meetings, trips, activity nights and more for {{ month|date:"F Y" }}. Boy Scout Troop 89 Medfield.{% endblock %}
+
 {% block notice %}
     <div class="notice">
         <ul class="nav">{% spaceless %}
-            <li><a href="{% url "events:event-archive-month" previous_month.year previous_month.month %}">Previous<span class="extra"> month</span></a></li>
+            <li><a rel="prev" href="{% url "events:event-archive-month" previous_month.year previous_month.month %}">Previous<span class="extra"> month</span></a></li>
             <li><a href="{% url "events:calendar-month" month.year month.month %}">See calendar</a></li>
-            <li><a href="{% url "events:event-archive-month" next_month.year next_month.month %}">Next<span class="extra"> month</span></a></li>
+            <li><a rel="next" href="{% url "events:event-archive-month" next_month.year next_month.month %}">Next<span class="extra"> month</span></a></li>
         {% endspaceless %}</ul>
     </div>
     <h1>{{ month|date:"F Y" }} Events</h1>

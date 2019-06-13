@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'cspreports',
     'django_referrer_policy',
     'ckeditor',
+    'django_json_ld',
 
     # Django apps
     'django.contrib.admin',
