@@ -75,6 +75,12 @@ urlpatterns = [
         name='about',
     ),
     path(
+        'records/',
+        flatpage_views.hierarchical_flatpage,
+        {'url': '/records/'},
+        name='records',
+    ),
+    path(
         'sitemap.xml',
         sitemap_views.sitemap,
         {'sitemaps': sitemaps},

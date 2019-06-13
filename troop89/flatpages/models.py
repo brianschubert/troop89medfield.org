@@ -45,7 +45,7 @@ class HierarchicalFlatPageQuerySet(models.QuerySet):
         # If the page has no parent (e.g /about/), do not include
         # a related stem in the url regex so that all other pages
         # with no parent are matched.
-        if related_stem == '/':
+        if str(related_stem) == '/':
             related_stem = ''
 
         return self.exclude(pk=page.pk).filter(url__regex=rf"^{related_stem}/[^/]+/$")

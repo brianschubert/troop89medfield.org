@@ -16,6 +16,7 @@
                 {% if request.user.is_staff %}
                     <li><a href="{% url "admin:index" %}"> Admin</a></li>
                 {% endif %}
+                <li><a href="{% url "records" %}"> Records </a></li>
                 <li><a href="{% url "about" %}"> About </a></li>
             {% endspaceless %}</ul>
         </nav>
