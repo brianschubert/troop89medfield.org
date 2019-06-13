@@ -2,7 +2,7 @@
 
 {% block title %}{{ patrol.name }} Patrol{% endblock %}
 
-{% block description %}The {{ patrol.name }} Patrol, founded {{ patrol.date_created }}.{% endblock %}
+{% block description %}Meet the {{ patrol.name }} Patrol, founded {{ patrol.date_created }}, with {{ current_memberships|length|default:"no" }} current member{{ current_memberships|length|pluralize }}.{% endblock %}
 
 {% block content_main %}
     {# Tempoary layout - to be formated #}
