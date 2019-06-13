@@ -2,6 +2,8 @@
 
 {% block title %}{{ announcement.title }}{% endblock %}
 
+{% block description %}{{ announcement.formatted_content|striptags|truncatechars:150 }}{% endblock %}
+
 {% block info_banner %}
     <h1> Announcement Details </h1>
 {% endblock %}
