@@ -1,9 +1,15 @@
 {% extends "base_binary.html" %}
 {% load flatpage_hierarchy %}
+{% load render_json_ld from json_ld %}
 
 {% block title %}{{ flatpage.title }}{% endblock %}
 
 {% block info_banner %}<h1>{{ flatpage.title }}</h1>{% endblock %}
+
+{% block structured_data %}
+    {{ block.super }}
+    {% render_json_ld flatpage.sd_breadcrumb %}
+{% endblock %}
 
 {% block content_main %}
     <div class="notice">

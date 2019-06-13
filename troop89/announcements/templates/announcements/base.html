@@ -1,8 +1,16 @@
 {% extends "base_binary.html" %}
 {% load announcement_dates %}
+{% load render_json_ld from json_ld %}
 
 {% block info_banner %}
     <h1><a href="{% url "announcements:announcement-index" %}">Announcements Archive</a></h1>
+{% endblock %}
+
+{% block structured_data %}
+    {# All announcement views include breadcrumb structured data under #}
+    {# the context variable sd #}
+    {{ block.super }}
+    {% render_json_ld sd %}
 {% endblock %}
 
 {% block content_main %}
