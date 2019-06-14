@@ -1,0 +1,42 @@
+.. This Source Code Form is subject to the terms of the Mozilla Public
+.. License, v. 2.0. If a copy of the MPL was not distributed with this
+.. file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+Notes to Webmasters
+===================
+
+CI & Coverage
+-------------
+
+Travis CI
+^^^^^^^^^
+
+The Troop 89 website uses `Travis CI`_ for `continuous integration`_. Documentation for Travis is `available online`_, though you will likley never need to worry about changing the configuration.
+
+.. _Travis CI: https://travis-ci.com/blueschu/troop89medfield.org
+.. _continuous integration: https://docs.travis-ci.com/user/for-beginners/#what-is-continuous-integration-ci
+.. _available online: https://docs.travis-ci.com/
+
+All configuration for Travis CI is contained in the ``.travis.yml`` file.
+
+Coveralls
+^^^^^^^^^
+
+The Troop 89 website uses `Coveralls.io`_ to display its code coverage data. Code coverage analysis is performed by the Python `coverage`_ package. If you have installed the development dependencies, you can generate a manual coverage report by running the following commands
+
+.. code-block:: console
+
+    $ coverage run manage.py test
+    $ coverage report
+
+Documentation for ``coverage`` is avaiable on `coverage Read the Docs`_.
+
+.. _Coveralls.io: https://coveralls.io/github/blueschu/troop89medfield.org
+.. _coverage: https://pypi.org/project/coverage/
+.. _coverage Read the Docs: https://coverage.readthedocs.io/en/v4.5.x/
+
+
+Coverage data is submitted to `Coveralls.io`_ by a `Travis CI`_ job phase. This step is handled by the `coveralls-python`_ package. Note that the coveralls API key is stored by Travis CI in an environment variable.
+
+.. _coveralls-python: https://github.com/coveralls-clients/coveralls-python
+
