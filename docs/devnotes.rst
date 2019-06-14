@@ -5,8 +5,8 @@
 Notes to Webmasters
 ===================
 
-CI & Coverage
--------------
+External Services
+-----------------
 
 Travis CI
 ^^^^^^^^^
@@ -29,7 +29,7 @@ The Troop 89 website uses `Coveralls.io`_ to display its code coverage data. Cod
     $ coverage run manage.py test
     $ coverage report
 
-Documentation for ``coverage`` is avaiable on `coverage Read the Docs`_.
+Documentation for ``coverage`` is available on `coverage Read the Docs`_.
 
 .. _Coveralls.io: https://coveralls.io/github/blueschu/troop89medfield.org
 .. _coverage: https://pypi.org/project/coverage/
@@ -40,3 +40,10 @@ Coverage data is submitted to `Coveralls.io`_ by a `Travis CI`_ job phase. This 
 
 .. _coveralls-python: https://github.com/coveralls-clients/coveralls-python
 
+Uptime Robot
+^^^^^^^^^^^^
+
+`Uptime Robot`_ periodically monitors the Troop 89 Website for server issues. Uptime statistics are available on the `Troop 89 Website Public Status page`_.
+
+.. _Uptime Robot: https://stats.uptimerobot.com/
+.. _Troop 89 Website Public Status page: https://stats.uptimerobot.com/5WPm9SmQZ
