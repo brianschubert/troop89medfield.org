@@ -1,0 +1,13 @@
+language: python
+python:
+  - "3.6"
+services:
+  - postgresql
+env:
+  - DJANGO_SETTINGS_SECRETS=.secrets.json.travis
+install:
+  - pip3 install -r requirements/prod.txt
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+script:
+  - python manage.py test
