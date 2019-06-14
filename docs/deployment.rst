@@ -101,7 +101,7 @@ For production, you must manually create the ``Site`` model. This can be accompl
 Database Configuration
 ----------------------
 
-The Troop 89 website is designed and tested with a `PostgreSQL`_ database server. It is highly recommended that you continue to use a PostgreSQL database in production to ensure that no compatibility errors occur. See the `Django database installation docs`_ for further details on how to run Django with a PostgreSQL backend.
+The Troop 89 website is designed and tested with a `PostgreSQL`_ database server. It is highly recommended that you continue to use a PostgreSQL database in production to ensure that no compatibility errors occur. At the time of this writing, Django requires PostregreSQL 9.4 or higher. See the `Django database installation docs`_ for further details on how to run Django with a PostgreSQL backend.
 
 .. _PostgreSQL: https://www.postgresql.org/
 .. _Django database installation docs: https://docs.djangoproject.com/en/2.2/topics/install/#database-installation
