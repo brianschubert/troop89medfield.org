@@ -29,7 +29,7 @@ The Troop 89 website uses `Coveralls.io`_ to display its code coverage data. Cod
     $ coverage run manage.py test
     $ coverage report
 
-Documentation for ``coverage`` is avaiable on `coverage Read the Docs`_.
+Documentation for ``coverage`` is available on `coverage Read the Docs`_.
 
 .. _Coveralls.io: https://coveralls.io/github/blueschu/troop89medfield.org
 .. _coverage: https://pypi.org/project/coverage/
