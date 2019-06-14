@@ -5,8 +5,8 @@
 Notes to Webmasters
 ===================
 
-CI & Coverage
--------------
+External Services
+-----------------
 
 Travis CI
 ^^^^^^^^^
@@ -40,3 +40,10 @@ Coverage data is submitted to `Coveralls.io`_ by a `Travis CI`_ job phase. This 
 
 .. _coveralls-python: https://github.com/coveralls-clients/coveralls-python
 
+Uptime Robot
+^^^^^^^^^^^^
+
+`Uptime Robot`_ periodically monitors the Troop 89 Website for server issues. Uptime statistics are available on the `Troop 89 Website Public Status page`_.
+
+.. _Uptime Robot: https://stats.uptimerobot.com/
+.. _Troop 89 Website Public Status page: https://stats.uptimerobot.com/5WPm9SmQZ
