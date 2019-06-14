@@ -48,10 +48,18 @@ Uptime Robot
 .. _Uptime Robot: https://stats.uptimerobot.com/
 .. _Troop 89 Website Public Status page: https://stats.uptimerobot.com/5WPm9SmQZ
 
-Read The Docs
+Read the Docs
 ^^^^^^^^^^^^^
 
-Documentation for the Troop 89 website is automatically built and published by `ReadTheDocs.org`_. If you are not already, you can `browse this documentation online`_ through Read the Docs.
+Documentation for the Troop 89 website is automatically built and published by `ReadTheDocs.org`_. If you are not already, you can `browse this documentation online`_ through Read the Docs. Otherwise, you can manually build the documentation using `Sphinx`_ by running the following commands.
+
+.. code-block:: console
+
+    $ cd docs
+    $ make html
+
+The documentation will then be available in ``_build/html``. Open the ``index.html`` file in a browser to begin browsing the documentation.
 
 .. _ReadTheDocs.org: https://readthedocs.org/
 .. _browse this documentation online: https://troop89medfieldorg.readthedocs.io/en/latest/
+.. _Sphinx: http://www.sphinx-doc.org/en/master/
