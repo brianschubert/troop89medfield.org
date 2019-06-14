@@ -6,3 +6,4 @@ __pycache__/
 /assets/css/*.css
 *.css.map
 /docs/_build
+.coverage
