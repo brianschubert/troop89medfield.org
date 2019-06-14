@@ -153,6 +153,11 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "../assets"),
 )
 
+# Fixture files
+# https://docs.djangoproject.com/en/2.2/howto/initial-data/#providing-data-with-fixtures
+
+FIXTURE_DIRS = [os.path.join(BASE_DIR, "../fixtures")]
+
 # User auth model
 AUTH_USER_MODEL = 'troop89_auth.User'
 

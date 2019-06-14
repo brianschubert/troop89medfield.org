@@ -1,0 +1,6 @@
+[run]
+branch = true
+source = troop89
+
+[report]
+omit = *migrations*,*tests*

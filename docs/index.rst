@@ -26,3 +26,4 @@ This site intended to be designed and maintained by the youth members of Troop 8
    testing
    contributing
    deployment
+   devnotes

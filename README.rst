@@ -1,14 +1,21 @@
 Troop 89 Medfield Website
 =========================
 
-.. image:: https://img.shields.io/website/https/www.troop89medfield.org.svg
-    :target: https://www.troop89medfield.org
-
 .. image:: https://img.shields.io/uptimerobot/ratio/m782767776-61ebaadedcec63347e9f5459.svg
-    :target: https://www.troop89medfield.org
+    :target: https://stats.uptimerobot.com/5WPm9SmQZ
+    :alt: Uptime Robot Status
 
 .. image:: https://img.shields.io/mozilla-observatory/grade/troop89medfield.org.svg
     :target: https://observatory.mozilla.org/analyze/troop89medfield.org
+    :alt: Mozilla observatory grade
+
+.. image:: https://travis-ci.com/blueschu/troop89medfield.org.svg?branch=master
+    :target: https://travis-ci.com/blueschu/troop89medfield.org
+    :alt: Travis CI Build
+
+.. image:: https://coveralls.io/repos/github/blueschu/troop89medfield.org/badge.svg?branch=development
+    :target: https://coveralls.io/github/blueschu/troop89medfield.org?branch=development
+    :alt: Coverage
 
 .. image:: https://readthedocs.org/projects/troop89medfieldorg/badge/?version=latest
     :target: https://troop89medfieldorg.readthedocs.io/en/latest/?badge=latest

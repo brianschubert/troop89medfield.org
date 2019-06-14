@@ -1,0 +1,15 @@
+language: python
+python:
+  - "3.6"
+addons:
+  postgresql: "9.4"
+env:
+  - DJANGO_SETTINGS_SECRETS=.secrets.json.travis
+install:
+  - pip3 install -r requirements/prod.txt
+  - pip3 install coveralls
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+script:
+  - coverage run manage.py test
+after_success: coveralls
