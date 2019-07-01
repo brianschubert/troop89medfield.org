@@ -20,8 +20,8 @@ def render_upcoming_events(limit: int = None, **kwargs) -> dict:
     Render a list of the next `limit` upcoming events.
 
 
-    All `kwargs` are used to create a `timedelta` that determines the upper
-    bound for upcoming events.
+    All `kwargs`, with the exception of `empty`, are used to create a
+    `timedelta` that determines the upper bound for upcoming events.
 
     All events whose `end_date` is greater than or equal to the current time and
     whose `start_date` is less than or equal to the **date** corresponding to the
@@ -30,12 +30,19 @@ def render_upcoming_events(limit: int = None, **kwargs) -> dict:
     As an example, `render_upcoming_events(3, days=1)` will return the first 3
     events whose start time is less than or equal to midnight tonight (i.e.
     time 00:00 tomorrow) and whose end time has not yet occurred.
+
+    If no events are found, the `empty` test is displayed.
     """
+    try:
+        error_msg = kwargs.pop('empty')
+    except KeyError:
+        error_msg = 'There are no events to display.'
     if not kwargs:
         raise ValueError('render_upcoming_events kwargs MUST not be empty')
     today = timezone.now()
     end_date = timezone.localtime(today + timedelta(**kwargs))
     end_date = end_date.replace(hour=0, minute=0)  # Compare only the date of the end bound
     return {
-        'events': Event.objects.filter(start__lte=end_date, end__gte=today)
+        'events': Event.objects.filter(start__lte=end_date, end__gte=today),
+        'error_msg': error_msg,
     }
