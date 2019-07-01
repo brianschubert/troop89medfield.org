@@ -1,5 +1,9 @@
-<ul class="listing">
-    {% for event in events %}
-        <li><h3><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3><span class="meta">{% include "events/includes/event_time.html" %}</span></li>
-    {% endfor %}
-</ul>
+{% if events %}
+    <ul class="listing">
+        {% for event in events %}
+            <li><h3><a href="{{ event.get_absolute_url }}">{{ event.title }}</a></h3><span class="meta">{% include "events/includes/event_time.html" %}</span></li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>{{ error_msg }}</p>
+{% endif %}
