@@ -9,19 +9,19 @@ import collections
 from datetime import date, datetime, timedelta
 from typing import Dict, List, NamedTuple, Sequence
 
-from django.utils.timezone import localtime
+from django.utils import timezone
 
 from .models import Event
 
 FIRST_DAY_OF_WEEK = 6
 
 
-def local_date_range(start: datetime, end: datetime, timezone=None) -> List[date]:
+def local_date_range(start: datetime, end: datetime, tz=None) -> List[date]:
     """
     Return a list of every date that occurs between two aware datetimes.
     """
-    start_date = localtime(start, timezone).date()
-    delta = localtime(end, timezone).date() - start_date
+    start_date = timezone.localtime(start, tz).date()
+    delta = timezone.localtime(end, tz).date() - start_date
 
     return [start_date + timedelta(days=d) for d in range(delta.days + 1)]
 
