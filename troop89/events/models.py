@@ -64,6 +64,6 @@ class Event(models.Model):
         return self.start.date() == self.end.date()
 
     def local_date_range(self, timezone: tzinfo = None):
-        from .util import local_date_range
+        from .utils import local_date_range
 
         return local_date_range(self.start, self.end, timezone)

@@ -11,6 +11,7 @@ from typing import Dict, List, NamedTuple, Sequence
 
 from django.utils import timezone
 
+from troop89.trooporg.models import Member, PositionType, Term
 from .models import Event
 
 FIRST_DAY_OF_WEEK = 6
@@ -64,3 +65,37 @@ class EventCalendar:
             result.append(week_events)
 
         return result
+
+
+def render_datetime_range(start: datetime, end: datetime, date_format: str, time_format: str) -> str:
+    """
+    Render the specified start and end times into a string representing
+    their time span using the provided date and time formats.
+    """
+    start, end = timezone.localtime(start), timezone.localtime(end)
+    start_format = f'{date_format} {time_format}'
+    if start.date() == end.date():
+        end_format = date_format
+    else:
+        end_format = start_format
+    return ''.join([
+        start.strftime(start_format),
+        ' - ',
+        end.strftime(end_format),
+    ])
+
+
+def fetch_event_position_incumbents(event: Event, position_title: str) -> List[Member]:
+    """
+    Fetch the positions instances with the given title that were in effect
+    at the start time of the specified event.
+    """
+    try:
+        position_type = PositionType.objects.get(title=position_title)
+        term = Term.objects.for_date(event.start)
+        return list(Member.objects.filter(
+            position_instances__type=position_type,
+            position_instances__term=term,
+        ))
+    except (Term.DoesNotExist, PositionType.DoesNotExist):
+        return []

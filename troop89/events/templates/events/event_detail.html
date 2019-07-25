@@ -1,5 +1,6 @@
 {% extends "events/base.html" %}
 {% load event_format %}
+{% load event_flatpage %}
 
 {% block title %}{{ event.title }}{% endblock %}
 
@@ -19,6 +20,9 @@
     </div>
 
     <div class="event-detail">
+        <div class="notice">
+            {% render_flatpage_link event request.user %}
+        </div>
         <h2>{{ event.title }}</h2>
         <span class="meta">
             {% if event.start.date == event.end.date %}
