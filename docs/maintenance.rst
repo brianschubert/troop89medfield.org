@@ -13,7 +13,7 @@ Accessing the Admin site
 
 Link: `The Troop 89 admin site`_.
 
-Most management of the Troop 89 website can be accomplished within the customized `admin site`_. If you are already logged in to the Troop 89 and have been granted access to the admin site, you should be able to access it by the link listed above. If you unable to reach the admin site and beleive that you should have access, contact a webmaster.
+Most management of the Troop 89 website can be accomplished within the customized `admin site`_. If you are already logged in to the Troop 89 and have been granted access to the admin site, you should be able to access it by the link listed above. If you unable to reach the admin site and believe that you should have access, contact a webmaster.
 
 .. _The Troop 89 admin site: https://www.troop89medfield.org/admin/
 .. _admin site: https://www.troop89medfield.org/admin/
@@ -49,6 +49,8 @@ From the admin site, navigate to the Events | Events | Add Event.
 
 In the announcement creation form, provide a title, type, description, and start and end time for the event. Currently, event descriptions can be written in either plain text or `Markdown`_. For a brief tutorial on how to stylize writing with Markdown, see GitHub's `Mastering Markdown`_ guide. In the future, a rich WYSIWYG editor may be provided for announcement creation, such as the one available for flatpage creation.
 
+For information on how to create a report for an event, see :ref:`create-event-report`.
+
 .. admonition:: Advanced
 
     At the bottom of the event creation form, you will find a collapsed fieldset title "Advanced". Expanding this fieldset will give you access to one additional fields: the slug.
@@ -76,10 +78,23 @@ Take particular care when picking the URL for the new page. The URL that you pro
 
     The "template name" field specifies the Django template from source control to use to render the page. This field defaults to ``flatpages/default.html``. You should only edit this field if you need to heavily customize the rendering of your flatpage, such as loading a custom template tags or querying additional data from the database.
 
+.. _create-event-report:
+
+Creating an Event Report
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Event Reports are a specific type of flat page that can be automatically generated from an Event.
+
+To create a new Event Report, navigate to the event you intend to describe in the calendar. On the event's detail page, you will find a large button underneath the navigation toolbar that says "Create an Event Report". If you cannot see this button, you likely do not have permission to post new flatpages.
+
+After clicking the "Create an Event Report" button, you will be redirected to a form  that is prepopulated with information to create a flatpage from the event's details. From here, write the content of your report for the event in the space provided.
+
+Be sure to save your report before closing the page.
+
 Updating the newsletter archive
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The newsletter archive can be edited in the same way as any other flat page. The view all of the current newsletter archive, navigate to the Flat page app in the admin and select ``/records/newsletters/`` under the parent page filter.
+The newsletter archive can be edited in the same way as any other flat page. To view all of the current newsletter archive, navigate to the Flat page app in the admin and select ``/records/newsletters/`` under the parent page filter.
 
 To update the archive, first upload the most recent newsletter and its supplementary document to the Troop 89 Google Drive. You may direct any questions regarding the upload process to a webmaster or past troop historian.
 

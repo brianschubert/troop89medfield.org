@@ -38,4 +38,9 @@ urlpatterns = [
         views.EventMonthView.as_view(month_format=MONTH_FORMAT),
         name='event-archive-month'
     ),
+    path(
+        'report/<int:pk>/',
+        views.RedirectAddEventReportFlatpage.as_view(),
+        name='event-redirect-add-report-flatpage'
+    ),
 ]

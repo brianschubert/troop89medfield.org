@@ -1,0 +1,5 @@
+{% if flatpage %}
+    <h2><a href="{{ flatpage.get_absolute_url }}">View this Event's Report</a></h2>
+{% elif creation_url %}
+    <h2><a href="{{ creation_url }}">Create an Event Report</a></h2>
+{% endif %}
