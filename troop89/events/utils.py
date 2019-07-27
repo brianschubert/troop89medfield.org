@@ -75,7 +75,7 @@ def render_datetime_range(start: datetime, end: datetime, date_format: str, time
     start, end = timezone.localtime(start), timezone.localtime(end)
     start_format = f'{date_format} {time_format}'
     if start.date() == end.date():
-        end_format = date_format
+        end_format = time_format
     else:
         end_format = start_format
     return ''.join([
