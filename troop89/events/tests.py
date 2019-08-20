@@ -11,7 +11,7 @@ import pytz
 from django.shortcuts import reverse
 from django.test import TestCase, override_settings
 
-from .util import local_date_range
+from .utils import local_date_range
 
 
 class DateRangeTest(unittest.TestCase):

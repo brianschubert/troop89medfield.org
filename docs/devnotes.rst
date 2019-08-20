@@ -5,6 +5,101 @@
 Notes to Webmasters
 ===================
 
+Repository Structure
+--------------------
+
+The notable parts of the Troop 89 website repository are listed below:
+
+.. code-block:: console
+
+    $ tree -a -L 2 --dirsfirst
+    .
+    ├── assets
+    │   ├── img
+    │   ├── scss
+    │   └── robots.txt
+    ├── bin
+    ├── docs
+    ├── fixtures
+    ├── requirements
+    │   ├── base.txt
+    │   ├── dev.txt
+    │   └── prod.txt
+    ├── static
+    ├── templates
+    │   ├── admin
+    │   ├── includes
+    ├── troop89
+    │   ├── announcements
+    │   ├── auth
+    │   ├── date_range
+    │   ├── events
+    │   ├── flatpages
+    │   ├── json_ld
+    │   ├── settings
+    │   ├── trooporg
+    │   ├── __init__.py
+    │   ├── urls.py
+    │   └── wsgi.py
+    ├── CONTRIBUTING.rst
+    ├── demo.secrets.json
+    ├── LICENSE
+    ├── manage.py
+    ├── README.rst
+    └── requirements.txt
+    ├── .coveragerc
+    ├── .secrets.json
+    ├── .secrets.json.travis
+    ├── .travis.yml
+
+Briefly, the purpose of each file and directory is as follows:
+
+* ``assets``: A directory containing the site-wide `static files`_
+
+    * ``scss``: The site's `Sass`_ stylesheets, which are describe to overall appearance of the site. These files are compiled to CSS before being served by the production server.
+    * ``img``: The static media and graphics used by the website.
+    * ``robots.txt``: A file that contains instructions for web crawlers, such as those used by Google and other search engines.
+
+* ``bin``: A directory containing executable scripts to help manage the site.
+* ``docs``: The root directory for the site's Sphinx documentation.
+* ``fixture``: A directory containing `data fixtures`_ for the site's Django models.
+* ``requirements``: A directory containing the site's Python package dependencies, which can be installed using ``pip``.
+
+    * ``base.txt``: Fundamental package requirements for both production and development
+    * ``prod.txt``: Production-only package requirements
+    * ``dev.txt``:  Development-only package requirements, e.g. debug tools, test coverage
+
+* ``static``: The root directory for servable static media. The ``assets`` directory and all ``*/static`` directories are copied here to be served by the production server.
+* ``templates``: The root directory for site-wide Django templates, such as the homepage and the error pages.
+* ``troop89``: A Python package containing the site's Django apps and configuration files
+
+    * ``announcements``: A Django app for troop announcements.
+    * ``auth``: A Django app for custom user authentication.
+    * ``date_range``: A helper app for creating models that can reason about ranges of dates.
+    * ``events``: A Django app for handling event creation and calendar display.
+    * ``flatpages``: A Django app for customized hierarchical flatpages.
+    * ``json_ld``: A helper app for rendering json-ld formatted structured data.
+    * ``settings``: A Python module for site settings.
+    * ``trooporg``: A Django app for troop organization (patrols, election terms, positions, etc).
+    * ``__init__.py``: The Python package file.
+    * ``urls.py``: The root url configuration.
+    * ``wsgi.py``: The WSGI application entry-point.
+
+* ``CONTRIBUTING.rst`` and ``README.rst``: Files containing documentation for the site's repository.
+* ``demon.secrets.json``: A configuration file for jump-starting a new site instance for development.
+* ``LICENSE``: The project license file (MPL-2.0).
+* ``manage.py``: A Python script `provided by Django`_ for managing the site's Django apps.
+* ``requirements.txt``: A requirements file that references the production package dependencies. It is equivalent to ``requirements/prod.txt``.
+* ``.coveragerc``: A configuration file for the ``coverage`` Python package, which is used generate test coverage data.
+* ``.travis.yml`` and ``.secrets.json.travis``: Configuration files for Travis-CI continuous integration.
+* ``.secrets.json``: A configuration file for sensitive data, such as database passwords and encryption keys. This file is not kept in version control.
+
+
+.. _static files: https://docs.djangoproject.com/en/2.2/howto/static-files/
+.. _Sass: https://sass-lang.com/
+.. _data fixtures: https://docs.djangoproject.com/en/2.2/howto/initial-data/#providing-data-with-fixtures
+.. _provided by Django: https://docs.djangoproject.com/en/2.2/ref/django-admin/
+
 External Services
 -----------------
 
