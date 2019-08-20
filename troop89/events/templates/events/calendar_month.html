@@ -58,4 +58,8 @@
     </div>
 {% endblock %}
 
+{% block content_sidebar %}
+    {{  block.super }}
+     <h2><a href="{% url "events:event-archive-month" month.year month.month %}">See all {{ month|date:"F Y" }} Events &raquo;</a></h2>
+{% endblock %}
 
